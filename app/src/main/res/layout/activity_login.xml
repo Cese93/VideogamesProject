@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp">
+
+    <!-- Username Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/login_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:hint="Username" />
+    </android.support.design.widget.TextInputLayout>
+
+
+
+    <!-- Password Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <!-- Login Button -->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/loginBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="15dp"
+        android:text="Login"
+        android:onClick="ClickLogin"/>
+
+
+    <!-- Link Registration -->
+    <TextView android:id="@+id/signup_link"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:onClick="OpenRegister"
+        android:text="Non hai un account? Registrati"
+        android:gravity="center"
+        android:textSize="16dip"/>
+
+</LinearLayout>
