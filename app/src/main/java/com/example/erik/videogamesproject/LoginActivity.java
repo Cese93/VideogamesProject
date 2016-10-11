@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void ClickLogin(View view) {
-        String email = txtLoginEmail.getText().toString();
-        String password = txtLoginPassword.getText().toString();
+        String email = txtLoginEmail.getText().toString().trim();
+        String password = txtLoginPassword.getText().toString().trim();
 
         progressDialog.setMessage("Attendere...");
         progressDialog.show();
