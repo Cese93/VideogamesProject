@@ -28,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity{
     private EditText txtLoginEmail;
     private EditText txtLoginPassword;
-    private Button btnLogin;
 
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
@@ -43,7 +42,6 @@ public class LoginActivity extends AppCompatActivity{
         txtLoginPassword = (EditText) findViewById(R.id.txtLoginPassword);
 
         progressDialog = new ProgressDialog(this);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -76,7 +74,6 @@ public class LoginActivity extends AppCompatActivity{
                 }
             });
         }
-
 
 
     }

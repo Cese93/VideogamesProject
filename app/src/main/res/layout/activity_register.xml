@@ -5,7 +5,34 @@
     android:paddingLeft="40dp"
     android:paddingRight="40dp">
 
-    <!-- Email Label -->
+    <!-- Name Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/txtRegisterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:hint="Nome" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <!-- Cognome Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/txtRegisterSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:hint="Cognome"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Email label  -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,13 +41,13 @@
         <EditText android:id="@+id/txtRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:hint="Email" />
+            android:inputType="textEmailAddress"
+            android:hint="Email"/>
     </android.support.design.widget.TextInputLayout>
 
 
+    <!-- Password label -->
 
-    <!-- Password Label -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,16 +60,28 @@
             android:hint="Password"/>
     </android.support.design.widget.TextInputLayout>
 
+    <!-- confirm password -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/txtRegisterConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Conferma Password"/>
+    </android.support.design.widget.TextInputLayout>
+
 
     <!-- Register Button -->
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnRegister"
+        android:id="@+id/registerBtn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:padding="12dp"
-        android:text="Registrer"
-        android:onClick="ClickRegister"/>
-
+        android:text="Conferma"
+        android:onClick="clickRegister"/>
 
 </LinearLayout>
