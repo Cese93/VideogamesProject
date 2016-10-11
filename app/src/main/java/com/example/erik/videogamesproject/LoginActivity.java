@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.TextViewCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -20,12 +18,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 /**
  * Created by Erik on 10/10/2016.
  */
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
     private EditText txtLoginEmail;
     private EditText txtLoginPassword;
 
@@ -38,6 +37,9 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         Firebase.setAndroidContext(this);
 
+        ActionBar titleBar = getSupportActionBar();
+        titleBar.hide();
+
         txtLoginEmail = (EditText) findViewById(R.id.txtLoginEmail);
         txtLoginPassword = (EditText) findViewById(R.id.txtLoginPassword);
 
@@ -45,7 +47,7 @@ public class LoginActivity extends AppCompatActivity{
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
     }
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity{
         progressDialog.setMessage("Attendere...");
         progressDialog.show();
 
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             txtLoginEmail.setError("Email errata");
             progressDialog.dismiss();
         } else if (TextUtils.isEmpty(password)) {
@@ -65,16 +67,30 @@ public class LoginActivity extends AppCompatActivity{
             progressDialog.dismiss();
         } else {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
+
+                    if (task.isSuccessful()) {
                         progressDialog.dismiss();
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    } else {
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this, "Credenziali errate", Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+
                 }
             });
-        }
 
+
+        }
 
     }
 

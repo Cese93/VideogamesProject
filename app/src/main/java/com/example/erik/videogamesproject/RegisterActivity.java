@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,16 +38,17 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         Firebase.setAndroidContext(this);
+
+        ActionBar titleBar = getSupportActionBar();
+        titleBar.hide();
+
         firebaserAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
-
-
     }
 
-    public void clickRegister(View view){
+    public void clickRegister(View view) {
 
         nameText = (EditText) findViewById(R.id.txtRegisterName);
         surnameText = (EditText) findViewById(R.id.txtRegisterSurname);
@@ -61,29 +63,29 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordText.getText().toString().trim();
         String confirmPassword = confirmPasswordTxt.getText().toString().trim();
 
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             nameText.setError("Inserire nome");
             return;
 
         }
 
-        if(surname.isEmpty()){
+        if (surname.isEmpty()) {
             nameText.setError("Inserire cognome");
             return;
         }
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
 
             nameText.setError("Email errata o già esistente");
             return;
         }
 
-        if(password.isEmpty() || password.length() < 6){
+        if (password.isEmpty() || password.length() < 6) {
             passwordText.setError("Password troppo corta, almeno 6 caratteri");
             return;
         }
 
-        if(!password.equals(confirmPassword)){
+        if (!password.equals(confirmPassword)) {
             Toast.makeText(RegisterActivity.this, "Password e conferma Password errate", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -91,17 +93,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressDialog.setMessage("Registrazione User");
         progressDialog.show();
-        firebaserAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+        firebaserAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     progressDialog.dismiss();
-                    Toast.makeText(RegisterActivity.this,"Utente Inserito",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this,HomeActivity.class));
-                }else{
+                    Toast.makeText(RegisterActivity.this, "Utente Inserito", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                } else {
                     progressDialog.dismiss();
-                    Toast.makeText(RegisterActivity.this,"Utente Non Inserito",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Utente Non Inserito", Toast.LENGTH_SHORT).show();
                 }
             }
         });
