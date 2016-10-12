@@ -2,11 +2,12 @@ package com.example.erik.videogamesproject;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Firebase.setAndroidContext(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -51,8 +55,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 //Controlla se un elemento è cliccato o meno, se non lo è lo imposta a true
-                if(menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
+                if(menuItem.isChecked()) menuItem.setChecked(true);
+                else menuItem.setChecked(false);
 
                 //Chiude il Drawer una volta cliccato un elemento
                 drawerLayout.closeDrawers();
@@ -62,11 +66,9 @@ public class HomeActivity extends AppCompatActivity {
 
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
-                        VideogamesFragment fragment = new VideogamesFragment();
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, fragment);
-                        fragmentTransaction.commit();
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+                        VideogamesFragment videogamesFragment = new VideogamesFragment();
+                        setFragment(videogamesFragment);
                         return true;
                     case R.id.starred:
                         Toast.makeText(getApplicationContext(),"Stared Selected",Toast.LENGTH_SHORT).show();
@@ -96,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Inizializzaione Drawer Layout e ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.openDrawer,R.string.closeDrawer){
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.openDrawer,R.string.closeDrawer){
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -112,10 +114,16 @@ public class HomeActivity extends AppCompatActivity {
         };
 
         //Imposta l'actionbarToggle
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         //Chiamata al metodo syncState necessaria per visualizzare l'icona hamburger del Drawer
         actionBarDrawerToggle.syncState();
+    }
+
+    public void setFragment(Fragment fragment){
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override

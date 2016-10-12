@@ -37,9 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Firebase.setAndroidContext(this);
 
-        ActionBar titleBar = getSupportActionBar();
-        titleBar.hide();
-
         txtLoginEmail = (EditText) findViewById(R.id.txtLoginEmail);
         txtLoginPassword = (EditText) findViewById(R.id.txtLoginPassword);
 

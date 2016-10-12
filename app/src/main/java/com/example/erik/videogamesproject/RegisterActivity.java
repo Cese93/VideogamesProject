@@ -40,9 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Firebase.setAndroidContext(this);
 
-        ActionBar titleBar = getSupportActionBar();
-        titleBar.hide();
-
         firebaserAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);

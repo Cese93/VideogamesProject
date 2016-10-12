@@ -21,7 +21,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:text="username"
+        android:textSize="16sp"
         android:textColor="#FFF"
         android:textStyle="bold"
         android:gravity="left"
@@ -30,10 +31,11 @@
         android:layout_above="@+id/headerEmail"
         android:layout_marginLeft="5dp" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Akash.bangad93@gmail.com"
+        android:text="emaildiprova@gmail.com"
         android:id="@+id/headerEmail"
         android:gravity="left"
         android:layout_marginBottom="8dp"
@@ -42,5 +44,4 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/headerUsername"
         android:layout_alignStart="@+id/headerUsername" />
-
 </RelativeLayout>
