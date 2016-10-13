@@ -22,7 +22,10 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
@@ -143,9 +146,11 @@ public class HomeActivity extends AppCompatActivity {
                     DataSnapshot data = list.iterator().next();
 
                     ArrayList listPlatform = (ArrayList) data.child("Platform").getValue();
+
                     Date releaseDate = new Date(Integer.parseInt(data.child("Release date").child("Anno").getValue().toString()),
                             Integer.parseInt(data.child("Release date").child("Mese").getValue().toString()),
                             Integer.parseInt(data.child("Release date").child("Giorno").getValue().toString()));
+
 
 
                     Videogame videogame = new Videogame(data.child("Title").getValue().toString(), data.child("Genres").getValue().toString(),
@@ -153,7 +158,13 @@ public class HomeActivity extends AppCompatActivity {
                             releaseDate, Double.parseDouble(data.child("Rating").getValue().toString()), data.child("Plot").getValue().toString(),
                             data.child("Trailer").getValue().toString(), data.child("Image").getValue().toString());
 
-                    Log.e("Ciaooooooooo", videogame.getReleaseDate().toString());
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, Integer.parseInt(data.child("Release date").child("Anno").getValue().toString()));
+                    cal.set(Calendar.MONTH, (Integer.parseInt(data.child("Release date").child("Mese").getValue().toString()))-1);
+                    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.child("Release date").child("Giorno").getValue().toString()));
+
+                    Log.e("Ciaooooooooo", new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime()));
 
                 }
                 //dataSnapshot.child("Videogames").child("Dragon Age Origins ");
