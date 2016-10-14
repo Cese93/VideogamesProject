@@ -41,17 +41,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:padding="15dp"
-        android:text="Login"
-        android:onClick="ClickLogin"/>
+        android:text="Login" />
 
 
     <!-- Link Login -->
-    <TextView android:id="@+id/signup_link"
+    <TextView android:id="@+id/txtRegisterLink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginTop="12dp"
-        android:onClick="OpenRegister"
         android:text="Non hai un account? Registrati"
         android:gravity="center"
         android:textSize="16dip"/>
