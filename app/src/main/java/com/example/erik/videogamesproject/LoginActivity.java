@@ -10,7 +10,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -20,6 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Erik on 10/10/2016.
  */
@@ -27,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 public class LoginActivity extends AppCompatActivity {
     private EditText txtLoginEmail;
     private EditText txtLoginPassword;
+    private Button btnLogin;
+    private TextView txtRegisterLink;
 
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
@@ -39,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
 
         txtLoginEmail = (EditText) findViewById(R.id.txtLoginEmail);
         txtLoginPassword = (EditText) findViewById(R.id.txtLoginPassword);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        txtRegisterLink = (TextView) findViewById(R.id.txtRegisterLink);
 
         progressDialog = new ProgressDialog(this);
 
@@ -47,9 +55,23 @@ public class LoginActivity extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClickLogin();
+            }
+        });
+
+        txtRegisterLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenRegister();
+            }
+        });
     }
 
-    public void ClickLogin(View view) {
+    private void ClickLogin() {
         String email = txtLoginEmail.getText().toString().trim();
         String password = txtLoginPassword.getText().toString().trim();
 
@@ -91,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void OpenRegister(View view) {
+    private void OpenRegister() {
         Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(i);
     }

@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText emailText;
     private EditText passwordText;
     private EditText confirmPasswordTxt;
+    private Button btnRegister;
 
     private ProgressDialog progressDialog;
 
@@ -40,12 +42,21 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Firebase.setAndroidContext(this);
 
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+
         firebaserAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickRegister();
+            }
+        });
     }
 
-    public void clickRegister(View view) {
+    private void clickRegister() {
 
         nameText = (EditText) findViewById(R.id.txtRegisterName);
         surnameText = (EditText) findViewById(R.id.txtRegisterSurname);
