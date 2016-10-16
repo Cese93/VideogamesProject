@@ -88,9 +88,6 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.starred:
                         Toast.makeText(getApplicationContext(), "Stared Selected", Toast.LENGTH_SHORT).show();
                         return true;
-                    case R.id.sent_mail:
-                        Toast.makeText(getApplicationContext(), "Send Selected", Toast.LENGTH_SHORT).show();
-                        return true;
                     case R.id.drafts:
                         Toast.makeText(getApplicationContext(), "Drafts Selected", Toast.LENGTH_SHORT).show();
                         return true;
@@ -139,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Iterable<DataSnapshot> list = dataSnapshot.child("Videogames").getChildren();
+               /* Iterable<DataSnapshot> list = dataSnapshot.child("Videogames").getChildren();
 
                 while (list.iterator().hasNext()) {
 
@@ -147,9 +144,9 @@ public class HomeActivity extends AppCompatActivity {
 
                     ArrayList listPlatform = (ArrayList) data.child("Platform").getValue();
 
-                    Date releaseDate = new Date(Integer.parseInt(data.child("Release date").child("Anno").getValue().toString()),
-                            Integer.parseInt(data.child("Release date").child("Mese").getValue().toString()),
-                            Integer.parseInt(data.child("Release date").child("Giorno").getValue().toString()));
+                    Date releaseDate = new Date(Integer.parseInt(data.child("release date").child("anno").getValue().toString()),
+                            Integer.parseInt(data.child("release date").child("mese").getValue().toString()),
+                            Integer.parseInt(data.child("release date").child("giorno").getValue().toString()));
 
 
 
@@ -166,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     Log.e("Ciaooooooooo", new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime()));
 
-                }
+                }*/
                 //dataSnapshot.child("Videogames").child("Dragon Age Origins ");
             }
 
