@@ -21,6 +21,9 @@ public class Videogame {
     private String trailer;
     private String image;
 
+    public Videogame(){
+
+    }
 
     public Videogame(String title, String genres, String developer, String publishers, ArrayList<String> platforms,
                      Date releaseDate, double rating, String plot, String trailer,String image) {

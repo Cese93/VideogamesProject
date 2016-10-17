@@ -3,13 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+
+    <ListView
+        android:id="@+id/listViewVideogames"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/android_black"
-        android:padding="8dp"
-        android:textColor="#fff"
-        android:id="@+id/imgHomeDefault"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content">
+    </ListView>
+
+
 </RelativeLayout>
