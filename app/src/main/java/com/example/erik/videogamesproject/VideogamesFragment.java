@@ -1,6 +1,7 @@
 package com.example.erik.videogamesproject;
 
 import android.graphics.Color;
+import android.icu.util.Calendar;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class VideogamesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.videogames_fragment, container, false);
 
-        RecyclerView recyclerViewVideogames = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
+        recyclerViewVideogames = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
         recyclerViewVideogames.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewVideogames.setHasFixedSize(true);
         recyclerViewVideogames.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -50,6 +51,10 @@ public class VideogamesFragment extends Fragment {
             @Override
             protected void populateViewHolder(ViewHolderVideogames viewHolder, Videogame model, final int position) {
                 viewHolder.txtTitle.setText(model.getTitle().toString());
+                viewHolder.txtPublisher.setText(model.getPublishers().toString());
+                int year = model.getReleaseDate().getYear();
+                viewHolder.txtYear.setError(String.valueOf(year));
+                Log.e("afdfdfdf", String.valueOf(model.getReleaseDate().getYear()));
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -62,7 +67,6 @@ public class VideogamesFragment extends Fragment {
         };
 
         recyclerViewVideogames.setAdapter(videogamesAdapter);
-
         return v;
     }
 
@@ -74,11 +78,15 @@ public class VideogamesFragment extends Fragment {
 
     public static class ViewHolderVideogames extends RecyclerView.ViewHolder {
         TextView txtTitle;
+        TextView txtPublisher;
+        TextView txtYear;
 
         public ViewHolderVideogames(View itemView) {
             super(itemView);
             itemView.setSelected(true);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
+            txtPublisher = (TextView) itemView.findViewById(R.id.txtPublisher);
+            txtYear = (TextView) itemView.findViewById(R.id.txtYear);
 
         }
     }

@@ -5,11 +5,46 @@
     android:orientation="vertical"
     android:background="?android:attr/selectableItemBackground">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/txtTitle"
-                android:padding="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/imgVideogame"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/android_black"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/txtTitle"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_toEndOf="@+id/imgVideogame" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgVideogame"
+        android:layout_toEndOf="@+id/imgVideogame"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/txtPublisher" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:id="@+id/txtYear"
+        android:layout_alignBaseline="@+id/txtPublisher"
+        android:layout_alignBottom="@+id/txtPublisher"
+        android:layout_toEndOf="@+id/txtPublisher" />
+
 
 </RelativeLayout>
