@@ -3,13 +3,13 @@
         <item
             android:id="@+id/home"
             android:checked="false"
-            android:icon="@drawable/videogames"
+            android:icon="@drawable/android_black"
             android:title="Videogiochi" />
 
         <item
             android:id="@+id/starred"
             android:checked="false"
-            android:icon="@drawable/headset"
+            android:icon="@drawable/android_black"
             android:title="Accessori" />
 
     <item android:title="I miei ordini">
@@ -18,13 +18,13 @@
         <item
             android:id="@+id/drafts"
             android:checked="false"
-            android:icon="@drawable/myorder"
+            android:icon="@drawable/android_black"
             android:title="I miei ordini" />
 
         <item
             android:id="@+id/allmail"
             android:checked="false"
-            android:icon="@drawable/cart"
+            android:icon="@drawable/android_black"
             android:title="Carrello" />
         </menu>
     </item>
@@ -34,12 +34,12 @@
         <item
             android:id="@+id/trash"
             android:checked="false"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/android_black"
             android:title="Impostazioni" />
         <item
             android:id="@+id/spam"
             android:checked="false"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/android_black"
             android:title="Logout" />
             </menu>
         </item>
