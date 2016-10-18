@@ -13,11 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Erik on 10/10/2016.
@@ -29,12 +39,15 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText surnameText;
     private EditText emailText;
     private EditText passwordText;
-    private EditText confirmPasswordTxt;
+    private EditText confirmPasswordText;
+    private EditText usernameText;
     private Button btnRegister;
 
-    private ProgressDialog progressDialog;
 
+    private DatabaseReference rootRef;
+    private ProgressDialog progressDialog;
     private FirebaseAuth firebaserAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
+        rootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User");
+
         firebaserAuth = FirebaseAuth.getInstance();
+
 
         progressDialog = new ProgressDialog(this);
 
@@ -62,14 +78,19 @@ public class RegisterActivity extends AppCompatActivity {
         surnameText = (EditText) findViewById(R.id.txtRegisterSurname);
         emailText = (EditText) findViewById(R.id.txtRegisterEmail);
         passwordText = (EditText) findViewById(R.id.txtRegisterPassword);
-        confirmPasswordTxt = (EditText) findViewById(R.id.txtRegisterConfirmPassword);
+        confirmPasswordText = (EditText) findViewById(R.id.txtRegisterConfirmPassword);
+        usernameText = (EditText) findViewById(R.id.txtRegisterUsername);
 
 
-        String name = nameText.getText().toString().trim();
-        String surname = surnameText.getText().toString().trim();
-        String email = emailText.getText().toString().trim();
-        String password = passwordText.getText().toString().trim();
-        String confirmPassword = confirmPasswordTxt.getText().toString().trim();
+
+
+        final  String name = nameText.getText().toString().trim();
+        final String surname = surnameText.getText().toString().trim();
+        final String email = emailText.getText().toString().trim();
+        final String password = passwordText.getText().toString().trim();
+        final String confirmPassword = confirmPasswordText.getText().toString().trim();
+        final String username = usernameText.getText().toString().trim();
+
 
         if (name.isEmpty()) {
             nameText.setError("Inserire nome");
@@ -99,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
+
         progressDialog.setMessage("Registrazione User");
         progressDialog.show();
         firebaserAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -107,8 +129,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
                     progressDialog.dismiss();
+                    User user = new User();
+                    user.setName(name);
+                    user.setSurname(surname);
+                    user.setEmail(email);
+                    user.setPassword(password);
+                    user.setUsername(username);
+
                     Toast.makeText(RegisterActivity.this, "Utente Inserito", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+
+                    rootRef.child(name).setValue(user);
+
+
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "Utente Non Inserito", Toast.LENGTH_SHORT).show();
@@ -117,4 +150,5 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
 }
