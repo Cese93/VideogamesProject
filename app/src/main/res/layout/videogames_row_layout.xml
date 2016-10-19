@@ -3,12 +3,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="5dp"
     android:background="?android:attr/selectableItemBackground">
 
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:id="@+id/imgVideogame"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -31,20 +32,22 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgVideogame"
-        android:layout_toEndOf="@+id/imgVideogame"
-        android:layout_marginBottom="12dp"
-        android:id="@+id/txtPublisher" />
+        android:layout_marginStart="46dp"
+        android:id="@+id/txtYear"
+        android:layout_alignBaseline="@+id/txtPublisher"
+        android:layout_alignBottom="@+id/txtPublisher"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_toEndOf="@+id/txtPublisher" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:id="@+id/txtYear"
-        android:layout_alignBaseline="@+id/txtPublisher"
-        android:layout_alignBottom="@+id/txtPublisher"
-        android:layout_toEndOf="@+id/txtPublisher" />
+        android:layout_marginBottom="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:id="@+id/txtPublisher"
+        android:layout_alignBottom="@+id/imgVideogame"
+        android:layout_toEndOf="@+id/imgVideogame" />
 
 
 </RelativeLayout>

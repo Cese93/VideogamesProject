@@ -10,6 +10,7 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="5dp"
         card_view:cardCornerRadius="4dp">
 
     </android.support.v7.widget.RecyclerView>
