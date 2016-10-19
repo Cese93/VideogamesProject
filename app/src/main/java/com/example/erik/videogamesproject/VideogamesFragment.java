@@ -31,6 +31,7 @@ public class VideogamesFragment extends Fragment {
     private RecyclerView recyclerViewVideogames;
     private FirebaseRecyclerAdapter videogamesAdapter;
     private DatabaseReference databaseReference;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.videogames_fragment, container, false);
@@ -41,6 +42,7 @@ public class VideogamesFragment extends Fragment {
         recyclerViewVideogames.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
+        Log.v("Videogamess",databaseReference.toString());
         videogamesAdapter = new FirebaseRecyclerAdapter<Videogame, ViewHolderVideogames>(
                 Videogame.class,
                 R.layout.videogames_row_layout,

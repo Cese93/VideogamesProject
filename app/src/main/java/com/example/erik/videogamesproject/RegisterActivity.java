@@ -83,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-
         final  String name = nameText.getText().toString().trim();
         final String surname = surnameText.getText().toString().trim();
         final String email = emailText.getText().toString().trim();
