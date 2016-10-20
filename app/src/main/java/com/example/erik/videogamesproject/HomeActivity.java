@@ -1,7 +1,9 @@
 package com.example.erik.videogamesproject;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -9,25 +11,34 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private ImageView imgProfile;
+    private ProgressDialog progressDialog;
 
-    private Firebase rootRef;
+    private StorageReference storageReference;
 
+    private static final int GALLERY_INTENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +52,14 @@ public class HomeActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        rootRef = new Firebase("https://videogamesproject-cfd9f.firebaseio.com/");
-
+        storageReference = FirebaseStorage.getInstance().getReference();
+        progressDialog = new ProgressDialog(this);
         if (firebaseAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
+        user = firebaseAuth.getCurrentUser();
         Toast.makeText(this, "Benvenuto " + user.getEmail(), Toast.LENGTH_SHORT).show();
-
         //Inizializzazione NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
@@ -60,7 +69,6 @@ public class HomeActivity extends AppCompatActivity {
             //Metodo invocato dal click di un elemento del Drawer
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-
 
 
                 //Controlla se un elemento è cliccato o meno, se non lo è lo imposta a true
@@ -123,6 +131,16 @@ public class HomeActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 //Codice eseguito all'apertura del Drawer
                 super.onDrawerOpened(drawerView);
+                imgProfile = (ImageView) findViewById(R.id.imgProfile);
+                Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
+                imgProfile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, GALLERY_INTENT);
+                    }
+                });
             }
         };
 
@@ -132,48 +150,30 @@ public class HomeActivity extends AppCompatActivity {
         //Chiamata al metodo syncState necessaria per visualizzare l'icona hamburger del Drawer
         actionBarDrawerToggle.syncState();
 
+    }
 
-        rootRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-               /* Iterable<DataSnapshot> list = dataSnapshot.child("Videogames").getChildren();
-
-                while (list.iterator().hasNext()) {
-
-                    DataSnapshot data = list.iterator().next();
-
-                    ArrayList listPlatform = (ArrayList) data.child("Platform").getValue();
-
-                    Date releaseDate = new Date(Integer.parseInt(data.child("release date").child("anno").getValue().toString()),
-                            Integer.parseInt(data.child("release date").child("mese").getValue().toString()),
-                            Integer.parseInt(data.child("release date").child("giorno").getValue().toString()));
-
-
-
-                    Videogame videogame = new Videogame(data.child("Title").getValue().toString(), data.child("Genres").getValue().toString(),
-                            data.child("Developer").getValue().toString(), data.child("Publishers").getValue().toString(), listPlatform,
-                            releaseDate, Double.parseDouble(data.child("Rating").getValue().toString()), data.child("Plot").getValue().toString(),
-                            data.child("Trailer").getValue().toString(), data.child("Image").getValue().toString());
-
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.YEAR, Integer.parseInt(data.child("Release date").child("Anno").getValue().toString()));
-                    cal.set(Calendar.MONTH, (Integer.parseInt(data.child("Release date").child("Mese").getValue().toString()))-1);
-                    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data.child("Release date").child("Giorno").getValue().toString()));
-
-                    Log.e("Ciaooooooooo", new SimpleDateFormat("dd-MM-yyyy").format(cal.getTime()));
-
-                }*/
-                //dataSnapshot.child("Videogames").child("Dragon Age Origins ");
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+            progressDialog.setMessage("Caricamento in corso...");
+            progressDialog.show();
+            Uri uri = data.getData();
+            StorageReference filepath = storageReference.child("Photos").child(uri.getLastPathSegment());
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+                    UserProfileChangeRequest a = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build();
+                    user.updateProfile(a);
+                    Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
+                    progressDialog.dismiss();
+                    drawerLayout.closeDrawers();
+                    Toast.makeText(HomeActivity.this, "Immagine caricata", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     //Metodo che server per settare un fragment, utilizzato nel navigation drawer quando si clicca su un elemento del menu
