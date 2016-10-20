@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,12 +20,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -69,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
 
+
                 //Controlla se un elemento è cliccato o meno, se non lo è lo imposta a true
                 if (menuItem.isChecked()) menuItem.setChecked(true);
                 else menuItem.setChecked(false);
@@ -85,8 +79,15 @@ public class HomeActivity extends AppCompatActivity {
                         VideogamesFragment videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
+                    case R.id.console:
+                        Toast.makeText(getApplicationContext(), "Console", Toast.LENGTH_SHORT).show();
+                        ConsoleFragment consoleFragment = new ConsoleFragment();
+                        setFragment(consoleFragment);
+                        return true;
                     case R.id.starred:
                         Toast.makeText(getApplicationContext(), "Stared Selected", Toast.LENGTH_SHORT).show();
+                        AccessoryFragment accessoryFragment = new AccessoryFragment();
+                        setFragment(accessoryFragment);
                         return true;
                     case R.id.drafts:
                         Toast.makeText(getApplicationContext(), "Drafts Selected", Toast.LENGTH_SHORT).show();

@@ -45,6 +45,18 @@
             android:hint="Email"/>
     </android.support.design.widget.TextInputLayout>
 
+    <!-- username label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
+        <EditText android:id="@+id/txtRegisterUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:hint="Cognome"/>
+    </android.support.design.widget.TextInputLayout>
 
     <!-- Password label -->
 
