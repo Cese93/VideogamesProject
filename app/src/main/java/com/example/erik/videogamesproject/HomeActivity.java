@@ -11,11 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -29,16 +29,19 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser user;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ImageView imgProfile;
+    private TextView txtHeaderUsername;
+    private TextView txtHeaderEmail;
+
     private ProgressDialog progressDialog;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     private StorageReference storageReference;
 
-    private static final int GALLERY_INTENT = 2;
+    private static final int GALLERY_INTENT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +54,17 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         storageReference = FirebaseStorage.getInstance().getReference();
         progressDialog = new ProgressDialog(this);
+
         if (firebaseAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
         user = firebaseAuth.getCurrentUser();
-        Toast.makeText(this, "Benvenuto " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+
         //Inizializzazione NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
@@ -83,17 +88,14 @@ public class HomeActivity extends AppCompatActivity {
 
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
                         VideogamesFragment videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
                     case R.id.console:
-                        Toast.makeText(getApplicationContext(), "Console", Toast.LENGTH_SHORT).show();
                         ConsoleFragment consoleFragment = new ConsoleFragment();
                         setFragment(consoleFragment);
                         return true;
-                    case R.id.starred:
-                        Toast.makeText(getApplicationContext(), "Stared Selected", Toast.LENGTH_SHORT).show();
+                    case R.id.accessory:
                         AccessoryFragment accessoryFragment = new AccessoryFragment();
                         setFragment(accessoryFragment);
                         return true;
@@ -106,8 +108,9 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.trash:
                         Toast.makeText(getApplicationContext(), "Trash Selected", Toast.LENGTH_SHORT).show();
                         return true;
-                    case R.id.spam:
-                        Toast.makeText(getApplicationContext(), "Spam Selected", Toast.LENGTH_SHORT).show();
+                    case R.id.logout:
+                        firebaseAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         return true;
                     default:
                         Toast.makeText(getApplicationContext(), "Errore", Toast.LENGTH_SHORT).show();
@@ -132,7 +135,12 @@ public class HomeActivity extends AppCompatActivity {
                 //Codice eseguito all'apertura del Drawer
                 super.onDrawerOpened(drawerView);
                 imgProfile = (ImageView) findViewById(R.id.imgProfile);
+                txtHeaderUsername = (TextView) findViewById(R.id.txtHeaderUsername);
+                txtHeaderEmail = (TextView) findViewById(R.id.txtHeaderEmail);
                 Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
+                txtHeaderUsername.setText("Benvenuto " + user.getDisplayName());
+                txtHeaderEmail.setText(user.getEmail());
+
                 imgProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -165,8 +173,8 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    UserProfileChangeRequest a = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build();
-                    user.updateProfile(a);
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build();
+                    user.updateProfile(userProfileChangeRequest);
                     Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
                     progressDialog.dismiss();
                     drawerLayout.closeDrawers();

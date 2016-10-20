@@ -16,7 +16,7 @@
                 />
 
             <item
-            android:id="@+id/starred"
+            android:id="@+id/accessory"
             android:checked="false"
             android:icon="@drawable/headset"
             android:title="Accessori" />
@@ -49,7 +49,7 @@
             android:icon="@drawable/settings"
             android:title="Impostazioni" />
         <item
-            android:id="@+id/spam"
+            android:id="@+id/logout"
             android:checked="false"
             android:icon="@drawable/logout"
             android:title="Logout" />

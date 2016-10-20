@@ -38,7 +38,6 @@ public class ConsoleFragment extends Fragment {
         recyclerViewConsole.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Console");
-        Log.v("Consolleeee",databaseReference.toString());
         consoleAdapter = new FirebaseRecyclerAdapter<Console, ViewHolderConsole>(
                 Console.class,
                 R.layout.console_row_layout,
