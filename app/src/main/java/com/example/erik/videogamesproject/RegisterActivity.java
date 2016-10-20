@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -94,7 +95,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (name.isEmpty()) {
             nameText.setError("Inserire nome");
             return;
-
         }
 
         if (surname.isEmpty()) {
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-        progressDialog.setMessage("Registrazione User");
+        progressDialog.setMessage("Registrazione...");
         progressDialog.show();
         firebaserAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -135,15 +135,22 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setPassword(password);
                     user.setUsername(username);
 
-                    Toast.makeText(RegisterActivity.this, "Utente Inserito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
 
                     rootRef.child(name).setValue(user);
 
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(user.getName()).build();
+                    firebaserAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
+
+                    firebaserAuth.getCurrentUser().sendEmailVerification();
+                    firebaserAuth.getCurrentUser().reload();
+
+
 
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Utente Non Inserito", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Utente non inserito", Toast.LENGTH_SHORT).show();
                 }
             }
         });
