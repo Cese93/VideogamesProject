@@ -8,12 +8,14 @@ package com.example.erik.videogamesproject;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.widget.ImageView;
         import android.widget.TextView;
         import android.widget.Toast;
 
         import com.firebase.ui.database.FirebaseRecyclerAdapter;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
+        import com.squareup.picasso.Picasso;
         import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 /**
@@ -46,6 +48,7 @@ public class ConsoleFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(ViewHolderConsole viewHolder, Console model, final int position) {
+                Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgConsole);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getDeveloper().toString());
                 viewHolder.txtPrice.setText(String.valueOf(model.getPrice()));
@@ -71,6 +74,7 @@ public class ConsoleFragment extends Fragment {
         TextView txtName;
         TextView txtDeveloper;
         TextView txtPrice;
+        ImageView imgConsole;
 
         public ViewHolderConsole(View itemView) {
 
@@ -81,6 +85,7 @@ public class ConsoleFragment extends Fragment {
             txtName = (TextView) itemView.findViewById(R.id.txtNameConsole);
             txtDeveloper = (TextView) itemView.findViewById(R.id.txtDeveloperConsole);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPriceConsole);
+            imgConsole = (ImageView)itemView.findViewById(R.id.imgConsole);
 
         }
     }
