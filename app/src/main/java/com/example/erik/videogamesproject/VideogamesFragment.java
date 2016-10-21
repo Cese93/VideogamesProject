@@ -33,6 +33,7 @@ public class VideogamesFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         getPageIcon();
 
+
         return v;
     }
 
@@ -43,7 +44,8 @@ public class VideogamesFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
     }

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +30,13 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ImageView imgProfile;
     private TextView txtHeaderUsername;
     private TextView txtHeaderEmail;
-private VideogamesFragment videogamesFragment;
+    private VideogamesFragment videogamesFragment;
     private ConsoleFragment consoleFragment;
     private ProgressDialog progressDialog;
 
@@ -50,7 +52,7 @@ private VideogamesFragment videogamesFragment;
         setContentView(R.layout.activity_home);
         Firebase.setAndroidContext(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
 
@@ -63,7 +65,6 @@ private VideogamesFragment videogamesFragment;
         }
 
         user = firebaseAuth.getCurrentUser();
-
         Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
         //Inizializzazione NavigationView
@@ -187,7 +188,7 @@ private VideogamesFragment videogamesFragment;
 
     //Metodo che server per settare un fragment, utilizzato nel navigation drawer quando si clicca su un elemento del menu
     public void setFragment(Fragment fragment) {
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
