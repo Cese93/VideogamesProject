@@ -29,7 +29,7 @@ public class AccessoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.videogames_fragment, container, false);
+        View v = inflater.inflate(R.layout.products_fragment, container, false);
 
         recyclerViewAccessory = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
         recyclerViewAccessory.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());

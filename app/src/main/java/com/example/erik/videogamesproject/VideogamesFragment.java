@@ -1,13 +1,9 @@
 package com.example.erik.videogamesproject;
 
-import android.graphics.Color;
-import android.icu.util.Calendar;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.collection.LLRBNode;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
-
-import org.w3c.dom.Text;
 
 
 /**
@@ -35,7 +28,7 @@ public class VideogamesFragment extends Fragment {
     private DatabaseReference databaseReference;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.videogames_fragment, container, false);
+        View v = inflater.inflate(R.layout.products_fragment, container, false);
 
         recyclerViewVideogames = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
         //Aggiunta decorator a ogni elemento della listview

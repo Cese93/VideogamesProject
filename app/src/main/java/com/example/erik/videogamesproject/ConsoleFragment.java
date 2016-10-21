@@ -4,7 +4,6 @@ package com.example.erik.videogamesproject;
         import android.support.v4.app.Fragment;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class ConsoleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.videogames_fragment, container, false);
+        View v = inflater.inflate(R.layout.products_fragment, container, false);
 
         recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
         recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
