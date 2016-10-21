@@ -29,9 +29,9 @@ public class ConsoleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.products_fragment, container, false);
+        View v = inflater.inflate(R.layout.activity_home, container, false);
 
-        recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
+        /*recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewConsole.setHasFixedSize(true);
         recyclerViewConsole.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -63,11 +63,11 @@ public class ConsoleFragment extends Fragment {
 
         };
 
-        recyclerViewConsole.setAdapter(consoleAdapter);
+        recyclerViewConsole.setAdapter(consoleAdapter);*/
         return v;
     }
 
-    public static class ViewHolderConsole extends RecyclerView.ViewHolder {
+   /* public static class ViewHolderConsole extends RecyclerView.ViewHolder {
 
         TextView txtName;
         TextView txtDeveloper;
@@ -86,6 +86,6 @@ public class ConsoleFragment extends Fragment {
             imgConsole = (ImageView)itemView.findViewById(R.id.imgConsole);
 
         }
-    }
+    }*/
 
 }

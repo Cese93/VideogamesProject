@@ -1,7 +1,8 @@
 package com.example.erik.videogamesproject;
 
-import android.support.v4.app.Fragment;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
  * Created by Erik on 21/10/2016.
  */
 
-public class TopRatedVideogames extends Fragment {
+public class TopSellerVideogames extends Fragment {
     private RecyclerView recyclerViewVideogames;
     private FirebaseRecyclerAdapter videogamesAdapter;
     private DatabaseReference databaseReference;
@@ -83,4 +84,3 @@ public class TopRatedVideogames extends Fragment {
         }
     }
 }
-

@@ -1,7 +1,7 @@
 package com.example.erik.videogamesproject;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
  * Created by Erik on 21/10/2016.
  */
 
-public class TopRatedVideogames extends Fragment {
+public class LastReleaseVideogames extends Fragment {
     private RecyclerView recyclerViewVideogames;
     private FirebaseRecyclerAdapter videogamesAdapter;
     private DatabaseReference databaseReference;
@@ -38,15 +38,15 @@ public class TopRatedVideogames extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
         //Creazione adapter per la recyclerView
-        videogamesAdapter = new FirebaseRecyclerAdapter<Videogame, LastReleaseVideogames.ViewHolderVideogames>(
+        videogamesAdapter = new FirebaseRecyclerAdapter<Videogame, ViewHolderVideogames>(
                 Videogame.class,
                 R.layout.videogames_row_layout,
-                LastReleaseVideogames.ViewHolderVideogames.class,
+                ViewHolderVideogames.class,
                 databaseReference
 
         ) {
             @Override
-            protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder, Videogame model, final int position) {
+            protected void populateViewHolder(ViewHolderVideogames viewHolder, Videogame model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                 viewHolder.txtTitle.setText(model.getTitle().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -83,4 +83,3 @@ public class TopRatedVideogames extends Fragment {
         }
     }
 }
-

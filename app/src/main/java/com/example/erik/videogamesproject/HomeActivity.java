@@ -34,7 +34,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView imgProfile;
     private TextView txtHeaderUsername;
     private TextView txtHeaderEmail;
-
+private VideogamesFragment videogamesFragment;
+    private ConsoleFragment consoleFragment;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -85,14 +86,13 @@ public class HomeActivity extends AppCompatActivity {
 
                 //Controlla quale elemento viene cliccato ed esegue un azione appropriata per ogni elemento del Drawer
                 switch (menuItem.getItemId()) {
-
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        VideogamesFragment videogamesFragment = new VideogamesFragment();
+                        videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
                     case R.id.console:
-                        ConsoleFragment consoleFragment = new ConsoleFragment();
+                        consoleFragment = new ConsoleFragment();
                         setFragment(consoleFragment);
                         return true;
                     case R.id.accessory:
@@ -159,6 +159,7 @@ public class HomeActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

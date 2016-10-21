@@ -31,7 +31,7 @@ public class AccessoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.products_fragment, container, false);
 
-        recyclerViewAccessory = (RecyclerView) v.findViewById(R.id.recyclerViewVideogames);
+        /*recyclerViewAccessory = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         recyclerViewAccessory.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewAccessory.setHasFixedSize(true);
         recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -63,11 +63,11 @@ public class AccessoryFragment extends Fragment {
 
         };
 
-        recyclerViewAccessory.setAdapter(accessoryAdapter);
+        recyclerViewAccessory.setAdapter(accessoryAdapter);*/
         return v;
     }
 
-    public static class ViewHolderAccessory extends RecyclerView.ViewHolder {
+    /*public static class ViewHolderAccessory extends RecyclerView.ViewHolder {
 
         TextView txtName;
         TextView txtDeveloper;
@@ -86,5 +86,5 @@ public class AccessoryFragment extends Fragment {
             imgAccessory = (ImageView)itemView.findViewById(R.id.imgAccessory);
 
         }
-    }
+    }*/
 }
