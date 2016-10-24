@@ -1,21 +1,13 @@
 package com.example.erik.videogamesproject;
 
-        import android.os.Bundle;
-        import android.support.v4.app.Fragment;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-        import com.firebase.ui.database.FirebaseRecyclerAdapter;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.squareup.picasso.Picasso;
-        import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 /**
  * Created by Marco on 18/10/2016.
@@ -23,69 +15,44 @@ package com.example.erik.videogamesproject;
 
 public class ConsoleFragment extends Fragment {
 
-    private RecyclerView recyclerViewConsole;
-    private FirebaseRecyclerAdapter consoleAdapter;
-    private DatabaseReference databaseReference;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private ViewPagerAdapter viewPagerAdapter;
+    private int[] tabIcons = {
+            R.drawable.android_black,
+            R.drawable.ic_email_black,
+            R.drawable.ic_delete_black
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_home, container, false);
+        View v = inflater.inflate(R.layout.products_fragment, container, false);
 
-        /*recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
-        recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
-        recyclerViewConsole.setHasFixedSize(true);
-        recyclerViewConsole.setLayoutManager(new LinearLayoutManager(getContext()));
+        viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        setupViewPager(viewPager);
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Console");
-        consoleAdapter = new FirebaseRecyclerAdapter<Console, ViewHolderConsole>(
-                Console.class,
-                R.layout.console_row_layout,
-                ViewHolderConsole.class,
-                databaseReference
-
-        ) {
-            @Override
-            protected void populateViewHolder(ViewHolderConsole viewHolder, Console model, final int position) {
-                Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgConsole);
-                viewHolder.txtName.setText(model.getName().toString());
-                viewHolder.txtDeveloper.setText(model.getDeveloper().toString());
-                viewHolder.txtPrice.setText(String.valueOf(model.getPrice()));
+        tabLayout = (TabLayout) v.findViewById(R.id.tabsLayout);
+        tabLayout.setupWithViewPager(viewPager);
+        getPageIcon();
 
 
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getContext(), "Posizione: " + position, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-        };
-
-        recyclerViewConsole.setAdapter(consoleAdapter);*/
         return v;
     }
 
-   /* public static class ViewHolderConsole extends RecyclerView.ViewHolder {
+    public void getPageIcon() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    }
 
-        TextView txtName;
-        TextView txtDeveloper;
-        TextView txtPrice;
-        ImageView imgConsole;
+    private void setupViewPager(ViewPager viewPager) {
 
-        public ViewHolderConsole(View itemView) {
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        viewPagerAdapter.addFragment(new LastReleaseConsole());
+        viewPagerAdapter.addFragment(new TopSellerConsole());
+        viewPagerAdapter.addFragment(new TopRatedConsole());
+        viewPager.setAdapter(viewPagerAdapter);
 
-            super(itemView);
-
-            itemView.setSelected(true);
-
-            txtName = (TextView) itemView.findViewById(R.id.txtNameConsole);
-            txtDeveloper = (TextView) itemView.findViewById(R.id.txtDeveloperConsole);
-            txtPrice = (TextView) itemView.findViewById(R.id.txtPriceConsole);
-            imgConsole = (ImageView)itemView.findViewById(R.id.imgConsole);
-
-        }
-    }*/
+    }
 
 }
