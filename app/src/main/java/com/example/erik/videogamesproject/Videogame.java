@@ -17,6 +17,7 @@ public class Videogame {
     private Date releaseDate;
     private double rating;
     private String plot;
+    private double price;
     //private String description;
     private String trailer;
     private String image;
@@ -26,7 +27,7 @@ public class Videogame {
     }
 
     public Videogame(String title, String genres, String developer, String publishers, ArrayList<String> platforms,
-                     Date releaseDate, double rating, String plot, String trailer,String image) {
+                     Date releaseDate, double rating, String plot, String trailer,String image,double price) {
 
         this.title = title;
         this.genres = genres;
@@ -38,6 +39,7 @@ public class Videogame {
         this.plot = plot;
         this.trailer = trailer;
         this.image = image;
+        this.price = price;
 
     }
 
@@ -116,6 +118,10 @@ public class Videogame {
     public String getImage(){ return image; }
 
     public void setImage(String image) { this.image = image; }
+
+    public void setPrice(double price){ this.price = price; }
+
+    public double getPrice(){ return price; }
 
 
 }
