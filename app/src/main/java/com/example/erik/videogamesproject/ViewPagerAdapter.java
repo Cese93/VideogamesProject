@@ -13,27 +13,24 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
+    private ArrayList<Fragment> fragmentsList = new ArrayList<>();
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new LastReleaseVideogames();
-            case 1:
-                return new TopSellerVideogames();
-            case 2:
-                return new TopRatedVideogames();
-            default:
-                return null;
-        }
+        return fragmentsList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return fragmentsList.size();
+    }
+
+    public void addFragment(Fragment fragment) {
+        fragmentsList.add(fragment);
+
     }
 
 }
