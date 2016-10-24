@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +30,14 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ImageView imgProfile;
     private TextView txtHeaderUsername;
     private TextView txtHeaderEmail;
-
+    private VideogamesFragment videogamesFragment;
+    private ConsoleFragment consoleFragment;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -49,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Firebase.setAndroidContext(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
 
@@ -62,7 +65,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         user = firebaseAuth.getCurrentUser();
-
         Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
         //Inizializzazione NavigationView
@@ -85,14 +87,13 @@ public class HomeActivity extends AppCompatActivity {
 
                 //Controlla quale elemento viene cliccato ed esegue un azione appropriata per ogni elemento del Drawer
                 switch (menuItem.getItemId()) {
-
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        VideogamesFragment videogamesFragment = new VideogamesFragment();
+                        videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
                     case R.id.console:
-                        ConsoleFragment consoleFragment = new ConsoleFragment();
+                        consoleFragment = new ConsoleFragment();
                         setFragment(consoleFragment);
                         return true;
                     case R.id.accessory:
@@ -160,6 +161,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -186,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Metodo che server per settare un fragment, utilizzato nel navigation drawer quando si clicca su un elemento del menu
     public void setFragment(Fragment fragment) {
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
