@@ -25,6 +25,7 @@ public class LastReleaseAccessory extends Fragment {
     private RecyclerView recyclerViewAccessory;
     private FirebaseRecyclerAdapter accessoryAdapter;
     private DatabaseReference databaseReference;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class LastReleaseAccessory extends Fragment {
         recyclerViewAccessory = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         recyclerViewAccessory.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewAccessory.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi accessori usciti in cima
         recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
@@ -40,7 +43,7 @@ public class LastReleaseAccessory extends Fragment {
                 Accessory.class,
                 R.layout.accessory_row_layout,
                 ViewHolderAccessory.class,
-                databaseReference
+                databaseReference.orderByChild("releaseDate/year")
 
         ) {
             @Override

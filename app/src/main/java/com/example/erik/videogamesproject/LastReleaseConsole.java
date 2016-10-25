@@ -25,6 +25,7 @@ public class LastReleaseConsole extends Fragment {
     private RecyclerView recyclerViewConsole;
     private FirebaseRecyclerAdapter consoleAdapter;
     private DatabaseReference databaseReference;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,14 +34,16 @@ public class LastReleaseConsole extends Fragment {
         recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewConsole.setHasFixedSize(true);
-        recyclerViewConsole.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere le ultime console uscite in cima la lista
+        recyclerViewConsole.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Console");
         consoleAdapter = new FirebaseRecyclerAdapter<Console, ViewHolderConsole>(
                 Console.class,
                 R.layout.console_row_layout,
                 ViewHolderConsole.class,
-                databaseReference
+                databaseReference.orderByChild("releaseDate/year")
 
         ) {
             @Override

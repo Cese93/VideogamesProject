@@ -32,22 +32,23 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:id="@+id/txtYear"
-        android:layout_alignBaseline="@+id/txtPublisher"
-        android:layout_alignBottom="@+id/txtPublisher"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_toEndOf="@+id/txtPublisher" />
+        android:layout_marginBottom="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:id="@+id/txtPublisher"
+        android:layout_alignBottom="@+id/imgVideogame"
+        android:layout_toEndOf="@+id/imgVideogame" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:id="@+id/txtPublisher"
-        android:layout_alignBottom="@+id/imgVideogame"
-        android:layout_toEndOf="@+id/imgVideogame" />
+        android:layout_marginStart="300dp"
+        android:id="@+id/txtYear"
+        android:layout_alignBaseline="@+id/txtPublisher"
+        android:layout_alignBottom="@+id/txtPublisher"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+
 
 
 </RelativeLayout>
