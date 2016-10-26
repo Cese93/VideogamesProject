@@ -25,6 +25,7 @@ public class LastReleaseVideogames extends Fragment {
     private RecyclerView recyclerViewVideogames;
     private FirebaseRecyclerAdapter videogamesAdapter;
     private DatabaseReference databaseReference;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class LastReleaseVideogames extends Fragment {
         //Aggiunta decorator a ogni elemento della listview
         recyclerViewVideogames.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewVideogames.setHasFixedSize(true);
-        recyclerViewVideogames.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi videogiochi usciti in cima
+        recyclerViewVideogames.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
         //Creazione adapter per la recyclerView
@@ -42,7 +45,7 @@ public class LastReleaseVideogames extends Fragment {
                 Videogame.class,
                 R.layout.videogames_row_layout,
                 ViewHolderVideogames.class,
-                databaseReference
+                databaseReference.orderByChild("releaseDate/year")
 
         ) {
             @Override
