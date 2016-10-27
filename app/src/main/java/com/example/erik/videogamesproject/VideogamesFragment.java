@@ -4,9 +4,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +24,7 @@ public class VideogamesFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ViewPagerAdapter viewPagerAdapter;
+
     private int[] tabIcons = {
             R.drawable.android_black,
             R.drawable.ic_email_black,
@@ -32,7 +40,6 @@ public class VideogamesFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tabsLayout);
         tabLayout.setupWithViewPager(viewPager);
         getPageIcon();
-
 
         return v;
     }

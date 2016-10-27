@@ -1,5 +1,6 @@
 package com.example.erik.videogamesproject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import java.util.Date;
  * Created by Marco on 13/10/2016.
  */
 
-public class Videogame {
+public class Videogame implements Serializable {
 
     private String title;
     private String genres;
@@ -21,13 +22,15 @@ public class Videogame {
     //private String description;
     private String trailer;
     private String image;
+    private String imageTitle;
 
     public Videogame(){
 
     }
 
+
     public Videogame(String title, String genres, String developer, String publishers, ArrayList<String> platforms,
-                     Date releaseDate, double rating, String plot, String trailer,String image,double price) {
+                     Date releaseDate, double rating, String plot, String trailer, String image, double price) {
 
         this.title = title;
         this.genres = genres;
@@ -122,6 +125,14 @@ public class Videogame {
     public void setPrice(double price){ this.price = price; }
 
     public double getPrice(){ return price; }
+
+    public String getImageTitle() {
+        return imageTitle;
+    }
+
+    public void setImageTitle(String imageTitle) {
+        this.imageTitle = imageTitle;
+    }
 
 
 }
