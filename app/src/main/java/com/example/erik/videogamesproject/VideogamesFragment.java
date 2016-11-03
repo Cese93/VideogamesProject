@@ -53,6 +53,7 @@ public class VideogamesFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
 
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+
         viewPagerAdapter.addFragment(new LastReleaseVideogames());
         viewPagerAdapter.addFragment(new TopSellerVideogames());
         viewPagerAdapter.addFragment(new TopRatedVideogames());
