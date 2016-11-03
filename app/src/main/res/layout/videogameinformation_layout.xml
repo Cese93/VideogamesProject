@@ -238,6 +238,31 @@
                       android:layout_alignParentStart="true"
                       android:layout_alignEnd="@+id/plot" />
 
+                      <View
+                          android:layout_width="match_parent"
+                          android:layout_height="2dp"
+                          android:background="@color/colorPrimaryDark"
+                          android:layout_marginTop="10dp"
+                          android:layout_marginBottom="10dp"
+                          />
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Trailer"
+                          android:layout_gravity="center"
+                          android:textSize="30dp"
+                          android:textStyle="bold"
+                          android:layout_marginBottom="5dp"
+                          />
+
+                      <com.google.android.youtube.player.YouTubePlayerView
+                          android:id="@+id/youtubeView"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent">
+
+                      </com.google.android.youtube.player.YouTubePlayerView>
+
                   </LinearLayout>
                 <!--
                   <View

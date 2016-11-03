@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -19,6 +20,10 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -27,7 +32,7 @@ import org.w3c.dom.Text;
  * Created by Marco on 26/10/2016.
  */
 
-public class VideogameDisplay extends AppCompatActivity {
+public class VideogameDisplay extends YouTubeBaseActivity {
 
     private ImageView cover;
     private ImageView imgTitle;
@@ -39,50 +44,87 @@ public class VideogameDisplay extends AppCompatActivity {
     private VideoView trailer;
     private TextView price;
     private NestedScrollView scrollView;
+    private YouTubeBaseActivity youTubeBaseActivity;
+    private YouTubePlayerView youTubePlayerView;
+    private YouTubePlayer.OnInitializedListener onInitializedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videogameinformation_layout);
 
+        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);
+
         Intent intent = getIntent();
         final Videogame item = (Videogame) intent.getSerializableExtra("Item");
 
+        onInitializedListener = new YouTubePlayer.OnInitializedListener(){
 
-
-        scrollView = (NestedScrollView)findViewById(R.id.scroll);
-
-        scrollView.post(new Runnable() {
             @Override
-            public void run() {
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
+                youTubePlayer.loadVideo("B3t0TQDdONQ");
+                youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener(){
 
-                scrollView.fullScroll(NestedScrollView.FOCUS_UP);
+                    @Override
+                    public void onLoading() {
+                    }
+
+                    @Override
+                    public void onLoaded(String s) {
+                        youTubePlayer.pause();
+
+                    }
+
+                    @Override
+                    public void onAdStarted() {
+                    }
+
+                    @Override
+                    public void onVideoStarted() {
+
+
+                    }
+
+                    @Override
+                    public void onVideoEnded() {
+                    }
+
+                    @Override
+                    public void onError(YouTubePlayer.ErrorReason errorReason) {
+                    }
+                });
+
             }
-        });
 
-        scrollView.startNestedScroll(NestedScrollView.FOCUS_UP);
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
-        collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+            }
+        };
+
+        youTubePlayerView.initialize("AIzaSyABeoS0O_2ZG4kVb-6CcxWbCFHS1ys8LSo", onInitializedListener);
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
 
-        AppBarLayout appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener(){
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 
 
             boolean isShow = false;
-            int scrollRange = -1 ;
+            int scrollRange = -1;
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
-                if(scrollRange == -1){
+                if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-                if(scrollRange + verticalOffset == 0){
+                if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.setTitle(item.getTitle());
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                     isShow = true;
-                }else if(isShow){
+                } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
                     isShow = false;
                 }
@@ -92,20 +134,19 @@ public class VideogameDisplay extends AppCompatActivity {
 
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
-        plot = (TextView)findViewById(R.id.plot);
-        development = (TextView)findViewById(R.id.txtDevelopperDisplay);
-        publisher = (TextView)findViewById(R.id.textPublisherDisplay);
+        plot = (TextView) findViewById(R.id.plot);
+        development = (TextView) findViewById(R.id.txtDevelopperDisplay);
+        publisher = (TextView) findViewById(R.id.textPublisherDisplay);
         //trailer = (VideoView)findViewById(R.id.trailer);
-        price = (TextView)findViewById(R.id.txtPrice);
+        price = (TextView) findViewById(R.id.txtPrice);
 
 
-
-        Picasso.with(this).load(item.getImage()).resize(200,300).into(cover);
-        Picasso.with(this).load(item.getImageTitle()).resize(800,400).into(imgTitle);
+        Picasso.with(this).load(item.getImage()).resize(200, 300).into(cover);
+        Picasso.with(this).load(item.getImageTitle()).resize(800, 400).into(imgTitle);
 
         plot.setText(item.getPlot());
         development.setText(item.getDeveloper());
-        price.setText(String.valueOf(item.getPrice()) +"€");
+        price.setText(String.valueOf(item.getPrice()) + "€");
         publisher.setText(item.getPublishers());
 
     }
