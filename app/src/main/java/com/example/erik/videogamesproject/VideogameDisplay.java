@@ -62,7 +62,7 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("B3t0TQDdONQ");
+                youTubePlayer.loadVideo(item.getTrailer());
                 youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener(){
 
                     @Override
