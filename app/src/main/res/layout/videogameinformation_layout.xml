@@ -2,10 +2,9 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/coordinationLayout"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
 
@@ -13,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:fitsSystemWindows="true"
-        android:focusableInTouchMode="true"
-        >
+        android:focusableInTouchMode="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
 
@@ -26,16 +24,13 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-
             <ImageView
                 android:id="@+id/imgTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="center"
                 app:layout_collapseMode="pin"
-                app:srcCompat="@drawable/background_material"
-                />
-
+                app:srcCompat="@drawable/background_material" />
 
 
             <android.support.v7.widget.Toolbar
@@ -43,8 +38,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="89dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -60,184 +55,245 @@
 
         >
 
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-          <android.support.v7.widget.CardView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/cardInf"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentStart="true"
-              android:layout_marginTop="30dp"
-              android:layout_alignTop="@+id/txtTitle"
-              android:padding="10dp"
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardInf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/txtTitle"
+                android:layout_marginTop="30dp"
+                android:padding="10dp"
 
-              >
+                >
 
-              <RelativeLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-              <ImageView
-                  android:id="@+id/imgCover"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_margin="16dp"
-                  android:minHeight="121dp"
-                  app:srcCompat="@drawable/android_black"
-                  app:layout_anchorGravity="bottom|left|end"
+                    <ImageView
+                        android:id="@+id/imgCover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:minHeight="121dp"
+                        app:layout_anchorGravity="bottom|left|end"
+                        app:srcCompat="@drawable/android_black"
 
-                  />
+                        />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toEndOf="@+id/imgCover"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtDevelopper"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:text="Sviluppatore:"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/txtDevelopperDisplay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ciaoone" />
+
+
+                        <TextView
+                            android:id="@+id/txtPublisher"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Produttore:"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/textPublisherDisplay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="txtPublisher" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Prezzo"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/txtPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="prezzo" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardPlot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignStart="@+id/cardInf"
+                android:layout_below="@+id/cardInf"
+                android:layout_marginTop="30dp"
+
+                >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_toEndOf="@+id/imgCover"
-                    android:layout_alignParentRight="true"
-                    >
+                    android:padding="20dp">
 
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Sviluppatore:"
-                      android:textSize="20dp"
-                      android:gravity="center"
-                      android:layout_marginTop="20dp"
-                      android:id="@+id/txtDevelopper"
-                   />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="ciaoone"
-                      android:id="@+id/txtDevelopperDisplay"
-                      />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="Trama"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
 
+                            />
 
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Produttore:"
-                      android:textSize="20dp"
-                      android:id="@+id/txtPublisher"
-                      android:layout_centerVertical="true"
-                      />
+                        <TextView
+                            android:id="@+id/plot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginEnd="15dp"
+                            android:text="TextView">
 
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="txtPublisher"
-                      android:id="@+id/textPublisherDisplay"
-                      />
+                        </TextView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Prezzo"
-                        android:textSize="20dp"
-                        />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="prezzo"
-                        android:id="@+id/txtPrice"
-                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorPrimaryDark" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-              </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="Valuazione"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
 
-          </android.support.v7.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="Valutazione community"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            />
 
-          <android.support.v7.widget.CardView
-              android:layout_height="match_parent"
-              android:layout_width="match_parent"
-              android:layout_marginTop="30dp"
-              android:id="@+id/cardPlot"
-              android:layout_below="@+id/cardInf"
-              android:layout_alignStart="@+id/cardInf"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:id="@+id/numOfReview"
+                            android:text="0 recensioni"
+                            android:textSize="13dp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="5dp"
+                            />
 
-              >
+                        <RatingBar
+                            android:id="@+id/ratingBarCommunity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_alignEnd="@+id/plot"
+                            android:layout_marginBottom="5dp"
+                            android:scaleY="0.7"
+                            android:scaleX="0.7"
+                            android:isIndicator="true"
+                            android:layout_gravity="center"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/plot"
+                            android:numStars="5"
+                            android:stepSize="0.5" />
 
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  android:padding="20dp"
-                  >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="La tua valutazione"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:gravity="center_vertical"
-                      android:orientation="vertical"
-                      >
+                        <RatingBar
+                            android:id="@+id/ratingBarUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_alignEnd="@+id/plot"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/plot"
+                            android:layout_gravity="center"
+                            android:scaleX="0.7"
+                            android:scaleY="0.7"
+                            android:numStars="5"
+                            android:rating="0.0"
+                            android:stepSize="0.5"
+                            />
 
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Trama"
-                          android:textSize="30dp"
-                          android:layout_gravity="center"
-                          android:textStyle="bold"
-                          android:layout_marginBottom="5dp"
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/colorPrimaryDark" />
 
-                          />
-                      <TextView
-                      android:id="@+id/plot"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="TextView"
-                      android:layout_alignParentTop="true"
-                      android:layout_alignParentEnd="true"
-                      android:layout_marginEnd="15dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:text="Trailer"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
 
-                     </TextView>
+                        <com.google.android.youtube.player.YouTubePlayerView
+                            android:id="@+id/youtubeView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                  </LinearLayout>
+                        </com.google.android.youtube.player.YouTubePlayerView>
 
-                  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="2dp"
-                      android:background="@color/colorPrimaryDark"
-                      android:layout_marginTop="10dp"
-                      android:layout_marginBottom="10dp"
-                      />
-
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:orientation="vertical"
-                      >
-
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Valuazione"
-                          android:layout_gravity="center"
-                          android:textSize="30dp"
-                          android:textStyle="bold"
-                          android:layout_marginBottom="5dp"
-                          />
-
-                      <RatingBar
-                      android:id="@+id/ratingBar"
-                      android:layout_width="wrap_content"
-                      android:layout_height="40dp"
-                      android:numStars="5"
-                      android:rating="2.0"
-                      android:stepSize="0.5"
-                      android:layout_below="@+id/plot"
-                      android:layout_alignParentStart="true"
-                      android:layout_alignEnd="@+id/plot" />
-
+                    </LinearLayout>
+                    <!--
                       <View
                           android:layout_width="match_parent"
                           android:layout_height="2dp"
@@ -251,102 +307,75 @@
                           android:layout_height="wrap_content"
                           android:text="Trailer"
                           android:layout_gravity="center"
-                          android:textSize="30dp"
                           android:textStyle="bold"
-                          android:layout_marginBottom="5dp"
                           />
 
-                      <com.google.android.youtube.player.YouTubePlayerView
-                          android:id="@+id/youtubeView"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent">
+                      <Button
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center"
+                          android:text="Play"
+                          android:id="@+id/playVideo"
+                          />
 
-                      </com.google.android.youtube.player.YouTubePlayerView>
+                      <VideoView
+                          android:layout_width="300dp"
+                          android:layout_height="100dp"
+                          android:layout_gravity="center"
+                          android:id="@+id/trailer"
+                          />
 
-                  </LinearLayout>
-                <!--
-                  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="2dp"
-                      android:background="@color/colorPrimaryDark"
-                      android:layout_marginTop="10dp"
-                      android:layout_marginBottom="10dp"
-                      />
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Trailer"
-                      android:layout_gravity="center"
-                      android:textStyle="bold"
-                      />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center"
-                      android:text="Play"
-                      android:id="@+id/playVideo"
-                      />
-
-                  <VideoView
-                      android:layout_width="300dp"
-                      android:layout_height="100dp"
-                      android:layout_gravity="center"
-                      android:id="@+id/trailer"
-                      />
-
-                    -->
-              </LinearLayout>
+                        -->
+                </LinearLayout>
 
 
-          </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
 
-          <!--
-           <TextView
-                   android:id="@+id/txtDevelopmentDisplay"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_above="@+id/plot"
-                   android:layout_alignStart="@+id/txtPubisherDisplay"
-                   android:text="TextView"
-                   android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            <!--
+             <TextView
+                     android:id="@+id/txtDevelopmentDisplay"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_above="@+id/plot"
+                     android:layout_alignStart="@+id/txtPubisherDisplay"
+                     android:text="TextView"
+                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-               <TextView
-                   android:id="@+id/txtPubisherDisplay"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="TextView"
-                   android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                   android:layout_below="@+id/plot"
-                   android:layout_toEndOf="@+id/ratingBar"
-                   android:layout_marginStart="24dp"
-                   android:layout_marginTop="61dp" />
+                 <TextView
+                     android:id="@+id/txtPubisherDisplay"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="TextView"
+                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                     android:layout_below="@+id/plot"
+                     android:layout_toEndOf="@+id/ratingBar"
+                     android:layout_marginStart="24dp"
+                     android:layout_marginTop="61dp" />
 
-               <TextView
-                   android:id="@+id/plot"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="TextView"
-                   android:layout_alignParentTop="true"
-                   android:layout_alignParentStart="true"
-                   android:layout_marginStart="27dp"
-                   android:layout_marginTop="135dp"></TextView>
+                 <TextView
+                     android:id="@+id/plot"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="TextView"
+                     android:layout_alignParentTop="true"
+                     android:layout_alignParentStart="true"
+                     android:layout_marginStart="27dp"
+                     android:layout_marginTop="135dp"></TextView>
 
-               <RatingBar
-                   android:id="@+id/ratingBar"
-                   android:layout_width="wrap_content"
-                   android:layout_height="40dp"
-                   android:numStars="5"
-                   android:rating="2.0"
-                   android:stepSize="0.5"
-                   android:layout_below="@+id/plot"
-                   android:layout_alignParentStart="true" />
-               -->
+                 <RatingBar
+                     android:id="@+id/ratingBar"
+                     android:layout_width="wrap_content"
+                     android:layout_height="40dp"
+                     android:numStars="5"
+                     android:rating="2.0"
+                     android:stepSize="0.5"
+                     android:layout_below="@+id/plot"
+                     android:layout_alignParentStart="true" />
+                 -->
 
 
-      </RelativeLayout>
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
 

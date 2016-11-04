@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/VideogamesMobileProject.iml" filepath="$PROJECT_DIR$/VideogamesMobileProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/VideogamesProject.iml" filepath="$PROJECT_DIR$/VideogamesProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
