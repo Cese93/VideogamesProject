@@ -45,6 +45,10 @@ public class VideogameDisplay extends YouTubeBaseActivity {
     private RatingBar userRatingBar;
     private TextView numOfReview;
 
+    private Float communityRating;
+    private Float ris;
+    private int totalRating;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +66,8 @@ public class VideogameDisplay extends YouTubeBaseActivity {
         price = (TextView) findViewById(R.id.txtPrice);
         youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
-        userRatingBar = (RatingBar)findViewById(R.id.ratingBarUser);
-        numOfReview = (TextView)findViewById(R.id.numOfReview);
+        userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
+        numOfReview = (TextView) findViewById(R.id.numOfReview);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + item.getTitle());
@@ -148,33 +152,28 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
         databaseReference.addValueEventListener(new ValueEventListener() {
 
-            private Float communityRating;
-            private Float ris;
-            private int totalRating;
 
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
+
+                totalRating = Integer.parseInt(dataSnapshot.child("totalRating").getValue().toString());
+                numOfReview.setText(totalRating + " valutazioni");
 
                 userRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-                        communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
+                        communityRating = ((communityRating * totalRating) + userRatingBar.getRating()) / (totalRating + 1);
 
-                        totalRating = Integer.parseInt(dataSnapshot.child("totalRating").getValue().toString());
+                        databaseReference.child("totalRating").setValue(totalRating + 1);
 
-                        communityRating = ((communityRating * totalRating) + userRatingBar.getRating())/(totalRating + 1);
-
-                        databaseReference.child("totalRating").setValue(totalRating+1);
-                        numOfReview.setText(totalRating +" valutazioni");
                         databaseReference.child("rating").setValue(communityRating);
-                        communityRatingBar.setRating(Float.parseFloat(dataSnapshot.child("rating").getValue().toString()));
-
 
                     }
                 });
 
-
+                communityRatingBar.setRating(Float.parseFloat(dataSnapshot.child("rating").getValue().toString()));
 
             }
 
@@ -183,7 +182,6 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
             }
         });
-
 
 
         plot.setText(item.getPlot());
