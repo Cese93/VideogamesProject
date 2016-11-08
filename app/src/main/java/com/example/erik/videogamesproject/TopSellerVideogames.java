@@ -65,7 +65,7 @@ public class TopSellerVideogames extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder,final Videogame model, final int position) {
+            protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                 viewHolder.txtTitle.setText(model.getTitle().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -74,12 +74,9 @@ public class TopSellerVideogames extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-
-                        Intent intent = new Intent(getActivity(),VideogameDisplay.class);
-                        Intent intent1 = intent.putExtra("Item",  model);
+                        Intent intent = new Intent(getActivity(), VideogameDisplay.class);
+                        intent.putExtra("Videogame", model);
                         startActivity(intent);
-
-                        Toast.makeText(getContext(), "Posizione: " + position, Toast.LENGTH_LONG).show();
                     }
                 });
             }

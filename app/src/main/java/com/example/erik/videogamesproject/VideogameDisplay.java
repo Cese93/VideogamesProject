@@ -33,11 +33,8 @@ public class VideogameDisplay extends YouTubeBaseActivity {
     private TextView plot;
     private TextView development;
     private TextView publisher;
-    private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private TextView price;
-    private NestedScrollView scrollView;
-    private YouTubeBaseActivity youTubeBaseActivity;
     private YouTubePlayerView youTubePlayerView;
     private YouTubePlayer.OnInitializedListener onInitializedListener;
     private DatabaseReference databaseReference;
@@ -46,7 +43,6 @@ public class VideogameDisplay extends YouTubeBaseActivity {
     private TextView numOfReview;
 
     private Float communityRating;
-    private Float ris;
     private int totalRating;
 
     @Override
@@ -56,7 +52,7 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
 
         Intent intent = getIntent();
-        final Videogame item = (Videogame) intent.getSerializableExtra("Item");
+        final Videogame item = (Videogame) intent.getSerializableExtra("Videogame");
 
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
@@ -148,7 +144,10 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
         Picasso.with(this).load(item.getImage()).resize(200, 300).into(cover);
         Picasso.with(this).load(item.getImageTitle()).resize(800, 400).into(imgTitle);
-
+        plot.setText(item.getPlot());
+        development.setText(item.getDeveloper());
+        price.setText(String.valueOf(item.getPrice()) + "€");
+        publisher.setText(item.getPublishers());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
 
@@ -174,7 +173,6 @@ public class VideogameDisplay extends YouTubeBaseActivity {
                 });
 
                 communityRatingBar.setRating(Float.parseFloat(dataSnapshot.child("rating").getValue().toString()));
-
             }
 
             @Override
@@ -182,12 +180,6 @@ public class VideogameDisplay extends YouTubeBaseActivity {
 
             }
         });
-
-
-        plot.setText(item.getPlot());
-        development.setText(item.getDeveloper());
-        price.setText(String.valueOf(item.getPrice()) + "€");
-        publisher.setText(item.getPublishers());
 
     }
 }
