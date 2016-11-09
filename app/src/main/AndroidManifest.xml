@@ -21,7 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".HomeActivity"/>
 
-        <activity android:name=".VideogameDisplay"
+        <activity android:name=".VideogameInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

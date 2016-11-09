@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +58,7 @@ public class TopRatedVideogames extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), VideogameDisplay.class);
+                        Intent intent = new Intent(getActivity(), VideogameInfo.class);
                         intent.putExtra("Videogame", model);
                         startActivity(intent);
 

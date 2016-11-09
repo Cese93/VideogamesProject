@@ -1,5 +1,6 @@
 package com.example.erik.videogamesproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +49,7 @@ public class LastReleaseVideogames extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(ViewHolderVideogames viewHolder, Videogame model, final int position) {
+            protected void populateViewHolder(ViewHolderVideogames viewHolder, final Videogame model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                 viewHolder.txtTitle.setText(model.getTitle().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -58,7 +58,9 @@ public class LastReleaseVideogames extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "Posizione: " + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), VideogameInfo.class);
+                        intent.putExtra("Videogame", model);
+                        startActivity(intent);
                     }
                 });
             }

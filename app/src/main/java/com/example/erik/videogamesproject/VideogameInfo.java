@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
  * Created by Marco on 26/10/2016.
  */
 
-public class VideogameDisplay extends YouTubeBaseActivity {
+public class VideogameInfo extends YouTubeBaseActivity {
 
     private ImageView cover;
     private ImageView imgTitle;
