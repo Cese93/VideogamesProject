@@ -46,5 +46,4 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:layout_marginStart="300dp" />
 
-
 </RelativeLayout>
