@@ -40,12 +40,11 @@
         android:text="Price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
         android:id="@+id/txtPriceConsole"
         android:layout_alignBaseline="@+id/txtDeveloperConsole"
         android:layout_alignBottom="@+id/txtDeveloperConsole"
-        android:layout_toEndOf="@+id/txtDeveloperConsole"
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="97dp" />
 
 
 </RelativeLayout>
