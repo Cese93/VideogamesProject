@@ -43,8 +43,8 @@
         android:id="@+id/txtPriceConsole"
         android:layout_alignBaseline="@+id/txtDeveloperConsole"
         android:layout_alignBottom="@+id/txtDeveloperConsole"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="97dp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_marginStart="300dp" />
 
 
 </RelativeLayout>
