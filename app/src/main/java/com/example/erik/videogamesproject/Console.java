@@ -1,12 +1,13 @@
 package com.example.erik.videogamesproject;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Marco on 18/10/2016.
  */
 
-public class Console {
+public class Console implements Serializable{
 
     private String name;
     private String developer;
@@ -14,6 +15,8 @@ public class Console {
     private String description;
     private String image;
     private Date releaseDate;
+    private String imageTitle;
+    private double rating;
 
     public Console(){}
 
@@ -63,5 +66,21 @@ public class Console {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getImageTitle() {
+        return imageTitle;
+    }
+
+    public void setImageTitle(String imageTitle) {
+        this.imageTitle = imageTitle;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

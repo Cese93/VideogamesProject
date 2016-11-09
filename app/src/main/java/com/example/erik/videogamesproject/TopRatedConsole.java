@@ -51,7 +51,7 @@ public class TopRatedConsole extends Fragment {
                 Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgConsole);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getDeveloper().toString());
-                viewHolder.txtPrice.setText(String.valueOf(model.getPrice()));
+                viewHolder.txtPrice.setText(String.valueOf(model.getPrice() + "€"));
 
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -24,6 +24,9 @@
         <activity android:name=".VideogameInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".ConsoleInfo"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
