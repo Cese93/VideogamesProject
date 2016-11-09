@@ -1,35 +1,40 @@
 package com.example.erik.videogamesproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ExpandedMenuView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by erik_ on 09/11/2016.
  */
 
-public class ConsoleInfo extends AppCompatActivity {
+public class ConsoleInfo extends Activity {
     private CollapsingToolbarLayout collapsingToolbar;
     private AppBarLayout appBarLayout;
     private ImageView cover;
     private ImageView imgTitle;
-    private TextView description;
+    private ExpandableTextView description;
     private TextView development;
     private TextView releaseDate;
     private TextView price;
@@ -54,7 +59,7 @@ public class ConsoleInfo extends AppCompatActivity {
         development = (TextView) findViewById(R.id.txtDevelopper);
         price = (TextView) findViewById(R.id.txtPrice);
         releaseDate = (TextView) findViewById(R.id.txtReleaseDate);
-        description = (TextView) findViewById(R.id.txtDescription);
+        description = (ExpandableTextView) findViewById(R.id.expandable_text);
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
@@ -96,7 +101,7 @@ public class ConsoleInfo extends AppCompatActivity {
         price.setText(String.valueOf(console.getPrice()) + "€");
         description.setText(console.getDescription());
 
-        /*databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
 
 
             @Override
@@ -126,7 +131,7 @@ public class ConsoleInfo extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
     }
 }
