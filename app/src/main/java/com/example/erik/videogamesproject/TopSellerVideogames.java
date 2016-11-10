@@ -67,7 +67,6 @@ public class TopSellerVideogames extends Fragment {
 
         };
 
-
         recyclerViewVideogames.setAdapter(videogamesAdapter);
         return v;
     }
@@ -88,5 +87,4 @@ public class TopSellerVideogames extends Fragment {
 
         }
     }
-
 }

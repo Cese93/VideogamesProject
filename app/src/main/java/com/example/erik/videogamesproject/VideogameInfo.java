@@ -7,6 +7,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,7 +24,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Marco on 26/10/2016.
@@ -30,7 +40,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
 
     private ImageView cover;
     private ImageView imgTitle;
-    private TextView plot;
+    private ExpandableTextView plot;
     private TextView development;
     private TextView publisher;
     private CollapsingToolbarLayout collapsingToolbar;
@@ -41,6 +51,9 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private RatingBar communityRatingBar;
     private RatingBar userRatingBar;
     private TextView numOfReview;
+    private TextView releaseDate;
+    private TextView genres;
+    private TextView consoleAvailable;
 
     private Float communityRating;
     private int totalRating;
@@ -51,12 +64,16 @@ public class VideogameInfo extends YouTubeBaseActivity {
         setContentView(R.layout.videogameinformation_layout);
 
 
+
+
+
+
         Intent intent = getIntent();
         final Videogame item = (Videogame) intent.getSerializableExtra("Videogame");
 
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
-        plot = (TextView) findViewById(R.id.plot);
+        plot = (ExpandableTextView) this.findViewById(R.id.expandable_plot).findViewById(R.id.expand_text_view);
         development = (TextView) findViewById(R.id.txtDevelopperDisplay);
         publisher = (TextView) findViewById(R.id.textPublisherDisplay);
         price = (TextView) findViewById(R.id.txtPrice);
@@ -64,11 +81,13 @@ public class VideogameInfo extends YouTubeBaseActivity {
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
+        releaseDate = (TextView)findViewById(R.id.txtDateRelease);
+        genres = (TextView)findViewById(R.id.txtGenres);
+        consoleAvailable = (TextView)findViewById(R.id.txtConsoleAvaible);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + item.getTitle());
         //Creazione adapter per la recyclerView
-
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
 
@@ -144,13 +163,40 @@ public class VideogameInfo extends YouTubeBaseActivity {
 
         Picasso.with(this).load(item.getImage()).resize(200, 300).into(cover);
         Picasso.with(this).load(item.getImageTitle()).resize(800, 400).into(imgTitle);
+
+        
         plot.setText(item.getPlot());
+
         development.setText(item.getDeveloper());
         price.setText(String.valueOf(item.getPrice()) + "€");
         publisher.setText(item.getPublishers());
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
 
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = new GregorianCalendar(item.getReleaseDate().getYear(), item.getReleaseDate().getMonth(), item.getReleaseDate().getDate());
+
+        releaseDate.setText(simpleDateFormat.format(calendar.getTime()));
+        genres.setText(item.getGenres());
+
+        StringBuilder builder = new StringBuilder();
+
+        for(int i=0;i<item.getPlatforms().size();i++){
+
+            if(i == item.getPlatforms().size()-1){
+
+                builder.append(item.getPlatforms().get(i));
+
+            }else {
+
+                builder.append(item.getPlatforms().get(i)+",");
+
+            }
+        }
+
+        consoleAvailable.setText(builder.toString());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -180,6 +226,5 @@ public class VideogameInfo extends YouTubeBaseActivity {
 
             }
         });
-
     }
 }
