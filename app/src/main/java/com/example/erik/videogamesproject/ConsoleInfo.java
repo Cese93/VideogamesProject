@@ -59,14 +59,15 @@ public class ConsoleInfo extends Activity {
         development = (TextView) findViewById(R.id.txtDevelopper);
         price = (TextView) findViewById(R.id.txtPrice);
         releaseDate = (TextView) findViewById(R.id.txtReleaseDate);
-        description = (ExpandableTextView) findViewById(R.id.expandable_text);
+
+        description = (ExpandableTextView) this.findViewById(R.id.expandable_description).findViewById(R.id.expand_text_view);
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + console.getName());
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Console/" + console.getName());
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 
@@ -135,3 +136,4 @@ public class ConsoleInfo extends Activity {
 
     }
 }
+
