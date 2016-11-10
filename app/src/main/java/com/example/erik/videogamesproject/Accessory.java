@@ -1,16 +1,20 @@
 package com.example.erik.videogamesproject;
 
+import java.io.Serializable;
+
 /**
  * Created by Marco on 18/10/2016.
  */
 
-public class Accessory {
+public class Accessory implements Serializable {
 
     private String name;
     private int price;
     private String producer;
     private String features;
     private String image;
+    private String imageTitle;
+    private double rating;
 
     public Accessory(){}
 
@@ -52,5 +56,21 @@ public class Accessory {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImageTitle() {
+        return imageTitle;
+    }
+
+    public void setImageTitle(String imageTitle) {
+        this.imageTitle = imageTitle;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

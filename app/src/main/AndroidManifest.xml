@@ -27,6 +27,9 @@
         <activity android:name=".ConsoleInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".AccessoryInfo"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
