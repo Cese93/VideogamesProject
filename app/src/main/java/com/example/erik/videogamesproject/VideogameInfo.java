@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -37,40 +40,39 @@ import java.util.GregorianCalendar;
  */
 
 public class VideogameInfo extends YouTubeBaseActivity {
-
+    private CoordinatorLayout coordinatorLayout;
+    private CollapsingToolbarLayout collapsingToolbar;
+    private YouTubePlayer.OnInitializedListener onInitializedListener;
+    private DatabaseReference databaseReference;
     private ImageView cover;
     private ImageView imgTitle;
     private ExpandableTextView plot;
     private TextView development;
     private TextView publisher;
-    private CollapsingToolbarLayout collapsingToolbar;
     private TextView price;
-    private YouTubePlayerView youTubePlayerView;
-    private YouTubePlayer.OnInitializedListener onInitializedListener;
-    private DatabaseReference databaseReference;
     private RatingBar communityRatingBar;
     private RatingBar userRatingBar;
     private TextView numOfReview;
     private TextView releaseDate;
     private TextView genres;
     private TextView consoleAvailable;
-
+    private YouTubePlayerView youTubePlayerView;
+    private Button btnAddToCart;
     private Float communityRating;
     private int totalRating;
+    private Snackbar.SnackbarLayout layout;
+    private Snackbar snackbar;
+    private View snackView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.videogameinformation_layout);
 
-
-
-
-
-
         Intent intent = getIntent();
         final Videogame item = (Videogame) intent.getSerializableExtra("Videogame");
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinationLayout);
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
         plot = (ExpandableTextView) this.findViewById(R.id.expandable_plot).findViewById(R.id.expand_text_view);
@@ -84,6 +86,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
         releaseDate = (TextView)findViewById(R.id.txtDateRelease);
         genres = (TextView)findViewById(R.id.txtGenres);
         consoleAvailable = (TextView)findViewById(R.id.txtConsoleAvaible);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + item.getTitle());
@@ -224,6 +227,37 @@ public class VideogameInfo extends YouTubeBaseActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        // Create the Snackbar
+        snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_LONG);
+// Get the Snackbar's layout view
+        layout = (Snackbar.SnackbarLayout) snackbar.getView();
+// Hide the text
+        TextView textView = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setVisibility(View.INVISIBLE);
+
+// Inflate our custom view
+        snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
+// Configure the view
+        TextView textViewTop = (TextView) snackView.findViewById(R.id.prova1);
+        textViewTop.setText("bababa");
+        TextView textViewCheneso = (TextView) snackView.findViewById(R.id.prova2);
+        textViewCheneso.setText("dfsdfsdfd");
+        textViewCheneso.setTextColor(Color.WHITE);
+
+
+
+// Add the view to the Snackbar's layout
+        layout.addView(snackView, 0);
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+// Show the Snackbar
+                snackbar.show();
             }
         });
     }
