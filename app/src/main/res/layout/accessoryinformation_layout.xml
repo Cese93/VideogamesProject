@@ -95,13 +95,6 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/txtProducer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ciaoone" />
-
-
-                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -109,10 +102,10 @@
                             android:textSize="20dp" />
 
                         <TextView
-                            android:id="@+id/textProducer"
+                            android:id="@+id/txtProducer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="txtPublisher" />
+                            android:text="txtProducer" />
 
 
                         <TextView
@@ -160,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
-                            android:text="Trama"
+                            android:text="Caratteristiche"
                             android:textSize="30dp"
                             android:textStyle="bold"
 
@@ -196,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginBottom="5dp"
-                            android:text="Valuazione"
+                            android:text="Valutazione"
                             android:textSize="30dp"
                             android:textStyle="bold" />
 

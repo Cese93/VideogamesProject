@@ -3,7 +3,7 @@ package com.example.erik.videogamesproject;
 import java.io.Serializable;
 
 /**
- * Created by Marco on 18/10/2016.
+ * Created by Andrea on 10/11/2016.
  */
 
 public class Accessory implements Serializable {

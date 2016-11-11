@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by Marco on 26/10/2016.
+ * Created by Andrea on 10/11/2016.
  */
 
 public class AccessoryInfo extends Activity {
@@ -77,7 +77,7 @@ public class AccessoryInfo extends Activity {
                 }
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.setTitle(accessory.getName());
-                    collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+                    collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
@@ -99,7 +99,7 @@ public class AccessoryInfo extends Activity {
 
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
+                    communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
 
                 totalRating = Integer.parseInt(dataSnapshot.child("totalRating").getValue().toString());
                 numOfReview.setText(totalRating + " valutazioni");
