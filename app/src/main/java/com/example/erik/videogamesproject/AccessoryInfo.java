@@ -88,8 +88,8 @@ public class AccessoryInfo extends Activity {
         });
 
 
-        Picasso.with(this).load(accessory.getImage()).resize(200, 300).into(cover);
-        Picasso.with(this).load(accessory.getImageTitle()).resize(800, 400).into(imgTitle);
+        Picasso.with(this).load(accessory.getImage()).resize(200, 200).into(cover);
+        Picasso.with(this).load(accessory.getImageTitle()).resize(750, 750).into(imgTitle);
         features.setText(accessory.getFeatures());
         producer.setText(accessory.getProducer());
         price.setText(String.valueOf(accessory.getPrice()) + "€");

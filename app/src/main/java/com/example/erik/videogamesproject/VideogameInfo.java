@@ -7,17 +7,13 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -32,7 +28,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -60,9 +55,6 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private Button btnAddToCart;
     private Float communityRating;
     private int totalRating;
-    private Snackbar.SnackbarLayout layout;
-    private Snackbar snackbar;
-    private View snackView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +75,9 @@ public class VideogameInfo extends YouTubeBaseActivity {
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
-        releaseDate = (TextView)findViewById(R.id.txtDateRelease);
-        genres = (TextView)findViewById(R.id.txtGenres);
-        consoleAvailable = (TextView)findViewById(R.id.txtConsoleAvaible);
+        releaseDate = (TextView) findViewById(R.id.txtDateRelease);
+        genres = (TextView) findViewById(R.id.txtGenres);
+        consoleAvailable = (TextView) findViewById(R.id.txtConsoleAvaible);
         btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
 
@@ -167,13 +159,12 @@ public class VideogameInfo extends YouTubeBaseActivity {
         Picasso.with(this).load(item.getImage()).resize(200, 300).into(cover);
         Picasso.with(this).load(item.getImageTitle()).resize(800, 400).into(imgTitle);
 
-        
+
         plot.setText(item.getPlot());
 
         development.setText(item.getDeveloper());
         price.setText(String.valueOf(item.getPrice()) + "€");
         publisher.setText(item.getPublishers());
-
 
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -184,15 +175,15 @@ public class VideogameInfo extends YouTubeBaseActivity {
 
         StringBuilder builder = new StringBuilder();
 
-        for(int i=0;i<item.getPlatforms().size();i++){
+        for (int i = 0; i < item.getPlatforms().size(); i++) {
 
-            if(i == item.getPlatforms().size()-1){
+            if (i == item.getPlatforms().size() - 1) {
 
                 builder.append(item.getPlatforms().get(i));
 
-            }else {
+            } else {
 
-                builder.append(item.getPlatforms().get(i)+",");
+                builder.append(item.getPlatforms().get(i) + ",");
 
             }
         }
@@ -230,35 +221,57 @@ public class VideogameInfo extends YouTubeBaseActivity {
             }
         });
 
-        // Create the Snackbar
-        snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_LONG);
-// Get the Snackbar's layout view
-        layout = (Snackbar.SnackbarLayout) snackbar.getView();
-// Hide the text
-        TextView textView = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setVisibility(View.INVISIBLE);
-
-// Inflate our custom view
-        snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
-// Configure the view
-        TextView textViewTop = (TextView) snackView.findViewById(R.id.prova1);
-        textViewTop.setText("bababa");
-        TextView textViewCheneso = (TextView) snackView.findViewById(R.id.prova2);
-        textViewCheneso.setText("dfsdfsdfd");
-        textViewCheneso.setTextColor(Color.WHITE);
-
-
-
-// Add the view to the Snackbar's layout
-        layout.addView(snackView, 0);
+        final SnackbarManagement snackbar = new SnackbarManagement();
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-// Show the Snackbar
-                snackbar.show();
+                snackbar.openSnackbar();
+                snackbar.getSnackbar().show();
             }
         });
     }
+
+
+    private class SnackbarManagement {
+
+        private Snackbar.SnackbarLayout snackbarLayout;
+        private Snackbar snackbar;
+        private View snackView;
+        private ElegantNumberButton btnQuantity;
+        private TextView textViewCheneso;
+
+        public SnackbarManagement() {
+
+        }
+
+        public void openSnackbar() {
+            snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE);
+            snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            TextView textView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setVisibility(View.INVISIBLE);
+
+
+            snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
+
+            TextView textViewTop = (TextView) snackView.findViewById(R.id.prova1);
+            textViewTop.setText("bababa");
+            textViewCheneso = (TextView) snackView.findViewById(R.id.prova2);
+            btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
+            btnQuantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String num = btnQuantity.getNumber();
+                    textViewCheneso.setText(num);
+                }
+            });
+            textViewCheneso.setTextColor(Color.WHITE);
+            snackbarLayout.addView(snackView, 0);
+        }
+
+        public Snackbar getSnackbar() {
+            return snackbar;
+        }
+    }
 }
+
