@@ -3,15 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/prova1"/>
 
-    <TextView
+    <Spinner
+        android:id="@+id/consoleSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/prova2"/>
+        android:layout_height="wrap_content"></Spinner>
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
         android:id="@+id/btnQuantity"

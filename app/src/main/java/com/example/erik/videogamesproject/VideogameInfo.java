@@ -8,9 +8,12 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
@@ -27,6 +30,7 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -55,6 +59,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private Button btnAddToCart;
     private Float communityRating;
     private int totalRating;
+    private Videogame videogame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +67,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
         setContentView(R.layout.videogameinformation_layout);
 
         Intent intent = getIntent();
-        final Videogame item = (Videogame) intent.getSerializableExtra("Videogame");
+        videogame = (Videogame) intent.getSerializableExtra("Videogame");
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinationLayout);
         cover = (ImageView) findViewById(R.id.imgCover);
@@ -81,14 +86,14 @@ public class VideogameInfo extends YouTubeBaseActivity {
         btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + item.getTitle());
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + videogame.getTitle());
         //Creazione adapter per la recyclerView
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo(item.getTrailer());
+                youTubePlayer.loadVideo(videogame.getTrailer());
                 youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
 
                     @Override
@@ -144,7 +149,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(item.getTitle());
+                    collapsingToolbar.setTitle(videogame.getTitle());
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                     isShow = true;
                 } else if (isShow) {
@@ -156,34 +161,34 @@ public class VideogameInfo extends YouTubeBaseActivity {
         });
 
 
-        Picasso.with(this).load(item.getImage()).resize(200, 300).into(cover);
-        Picasso.with(this).load(item.getImageTitle()).resize(800, 400).into(imgTitle);
+        Picasso.with(this).load(videogame.getImage()).resize(200, 300).into(cover);
+        Picasso.with(this).load(videogame.getImageTitle()).resize(800, 400).into(imgTitle);
 
 
-        plot.setText(item.getPlot());
+        plot.setText(videogame.getPlot());
 
-        development.setText(item.getDeveloper());
-        price.setText(String.valueOf(item.getPrice()) + "€");
-        publisher.setText(item.getPublishers());
+        development.setText(videogame.getDeveloper());
+        price.setText(String.valueOf(videogame.getPrice()) + "€");
+        publisher.setText(videogame.getPublishers());
 
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar calendar = new GregorianCalendar(item.getReleaseDate().getYear(), item.getReleaseDate().getMonth(), item.getReleaseDate().getDate());
+        Calendar calendar = new GregorianCalendar(videogame.getReleaseDate().getYear(), videogame.getReleaseDate().getMonth(), videogame.getReleaseDate().getDate());
 
         releaseDate.setText(simpleDateFormat.format(calendar.getTime()));
-        genres.setText(item.getGenres());
+        genres.setText(videogame.getGenres());
 
         StringBuilder builder = new StringBuilder();
 
-        for (int i = 0; i < item.getPlatforms().size(); i++) {
+        for (int i = 0; i < videogame.getPlatforms().size(); i++) {
 
-            if (i == item.getPlatforms().size() - 1) {
+            if (i == videogame.getPlatforms().size() - 1) {
 
-                builder.append(item.getPlatforms().get(i));
+                builder.append(videogame.getPlatforms().get(i));
 
             } else {
 
-                builder.append(item.getPlatforms().get(i) + ",");
+                builder.append(videogame.getPlatforms().get(i) + ",");
 
             }
         }
@@ -239,33 +244,28 @@ public class VideogameInfo extends YouTubeBaseActivity {
         private Snackbar snackbar;
         private View snackView;
         private ElegantNumberButton btnQuantity;
-        private TextView textViewCheneso;
+        private Spinner consoleSpinner;
 
         public SnackbarManagement() {
-
         }
 
         public void openSnackbar() {
             snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE);
             snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-            TextView textView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setVisibility(View.INVISIBLE);
-
-
             snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
-
-            TextView textViewTop = (TextView) snackView.findViewById(R.id.prova1);
-            textViewTop.setText("bababa");
-            textViewCheneso = (TextView) snackView.findViewById(R.id.prova2);
+            consoleSpinner = (Spinner) snackView.findViewById(R.id.consoleSpinner);
             btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, videogame.getPlatforms());
+            consoleSpinner.setAdapter(adapter);
+
+
             btnQuantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String num = btnQuantity.getNumber();
-                    textViewCheneso.setText(num);
                 }
             });
-            textViewCheneso.setTextColor(Color.WHITE);
             snackbarLayout.addView(snackView, 0);
         }
 
