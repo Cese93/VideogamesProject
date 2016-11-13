@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,6 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         Firebase.setAndroidContext(this);
 
+        nameText = (EditText) findViewById(R.id.txtRegisterName);
+        surnameText = (EditText) findViewById(R.id.txtRegisterSurname);
+        emailText = (EditText) findViewById(R.id.txtRegisterEmail);
+        passwordText = (EditText) findViewById(R.id.txtRegisterPassword);
+        confirmPasswordText = (EditText) findViewById(R.id.txtRegisterConfirmPassword);
+        usernameText = (EditText) findViewById(R.id.txtRegisterUsername);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
         rootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User");
@@ -74,14 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void clickRegister() {
-
-        nameText = (EditText) findViewById(R.id.txtRegisterName);
-        surnameText = (EditText) findViewById(R.id.txtRegisterSurname);
-        emailText = (EditText) findViewById(R.id.txtRegisterEmail);
-        passwordText = (EditText) findViewById(R.id.txtRegisterPassword);
-        confirmPasswordText = (EditText) findViewById(R.id.txtRegisterConfirmPassword);
-        usernameText = (EditText) findViewById(R.id.txtRegisterUsername);
-
 
 
         final  String name = nameText.getText().toString().trim();
@@ -119,6 +118,38 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
+       rootRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+           @Override
+           public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+
+               if(dataSnapshot.hasChild(username)){
+
+                   Log.v("Usernameee Ugualeeee",username);
+                   Toast.makeText(RegisterActivity.this,"Username Gia inserito",Toast.LENGTH_LONG).show();
+
+               }else{
+
+                   saveUser();
+
+               }
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
+
+    }
+
+    public void saveUser(){
+
+
+        final String name = nameText.getText().toString().trim();
+        final String surname = surnameText.getText().toString().trim();
+        final String email = emailText.getText().toString().trim();
+        final String password = passwordText.getText().toString().trim();
+        final String username = usernameText.getText().toString().trim();
 
         progressDialog.setMessage("Registrazione...");
         progressDialog.show();
@@ -138,9 +169,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
 
-                    rootRef.child(name).setValue(user);
+                    rootRef.child(username).setValue(user);
 
-                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(user.getName()).build();
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(user.getUsername()).build();
                     firebaserAuth.getCurrentUser().updateProfile(userProfileChangeRequest);
 
                     firebaserAuth.getCurrentUser().sendEmailVerification();
@@ -154,6 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 
