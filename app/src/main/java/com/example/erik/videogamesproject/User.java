@@ -1,5 +1,7 @@
 package com.example.erik.videogamesproject;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by Marco on 16/10/2016.
  */
@@ -11,6 +13,15 @@ public class User {
     private String email;
     private String password;
     private String username;
+    private Cart<Object> cart;
+
+    public Cart<Object> getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart<Object> cart) {
+        this.cart = cart;
+    }
 
 
     User(){}

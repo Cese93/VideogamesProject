@@ -1,6 +1,5 @@
 package com.example.erik.videogamesproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,10 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -35,11 +31,8 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Marco on 26/10/2016.
@@ -67,6 +60,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private Float communityRating;
     private int totalRating;
     private Videogame videogame;
+    private Cart<Videogame> cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,12 +246,24 @@ public class VideogameInfo extends YouTubeBaseActivity {
         private View snackView;
         private ElegantNumberButton btnQuantity;
         private Spinner consoleSpinner;
+        private FirebaseAuth firebaseAuth;
 
         public SnackbarManagement() {
         }
 
         public void openSnackbar() {
-            snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE);
+            firebaseAuth = FirebaseAuth.getInstance();
+            snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Aggiungi", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cart = new Cart<>(firebaseAuth.getCurrentUser());
+                    cart.addProduct(videogame, videogame.getTitle());
+                    Log.v("ArrayCart", String.valueOf(cart.getCart().size()));
+                    /*Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
+                    snackbar1.show();*/
+                }
+            }).setActionTextColor(Color.WHITE);
             snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
             snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
             consoleSpinner = (Spinner) snackView.findViewById(R.id.consoleSpinner);
