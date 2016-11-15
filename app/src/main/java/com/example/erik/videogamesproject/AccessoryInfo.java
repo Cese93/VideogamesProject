@@ -77,7 +77,7 @@ public class AccessoryInfo extends Activity {
                 }
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.setTitle(accessory.getName());
-                    collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
+                    collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
