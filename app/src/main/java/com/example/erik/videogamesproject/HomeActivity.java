@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,9 +139,13 @@ public class HomeActivity extends AppCompatActivity {
                 imgProfile = (ImageView) findViewById(R.id.imgProfile);
                 txtHeaderUsername = (TextView) findViewById(R.id.txtHeaderUsername);
                 txtHeaderEmail = (TextView) findViewById(R.id.txtHeaderEmail);
-                Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
                 txtHeaderUsername.setText("Benvenuto " + user.getDisplayName());
                 txtHeaderEmail.setText(user.getEmail());
+                if(user.getPhotoUrl() == null){
+                    imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.profile1));
+                }else {
+                    Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
+                }
 
                 imgProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
