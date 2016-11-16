@@ -18,16 +18,20 @@ import java.util.List;
 
 public class Cart<Object> {
     DatabaseReference databaseReference;
+    List<Object> productCart;
+    List<Object> cart;
 
-    public Cart (FirebaseUser user){
+    public Cart(FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
+        productCart = new ArrayList<>();
     }
 
-    public void addProduct(final Object product, final String name){
-        databaseReference.addValueEventListener(new ValueEventListener() {
+    public void addProduct(final Object product, final String name) {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 databaseReference.child("Cart").child(name).setValue(product);
+                productCart.add((Object) dataSnapshot.child("Cart").getValue());
             }
 
             @Override
@@ -37,28 +41,34 @@ public class Cart<Object> {
         });
     }
 
-    public void deleteProduct(java.lang.Object product){
+    public void deleteProduct(java.lang.Object product) {
         //productCart.remove(product);
     }
 
-    public ArrayList<Object> getCart(){
-        final List<Object> productCart = new ArrayList<>();
-        databaseReference.child("Cart").addValueEventListener(new ValueEventListener() {
+    /*public ArrayList<Object> getCart() {
+        databaseReference.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot object : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot object : dataSnapshot.getChildren()) {
                     productCart.add((Object) object.getValue());
-                    Log.e("asdsadsad", String.valueOf(productCart.size()));
-                }
 
+                }
+                Log.e("asdsadsadsadas", String.valueOf(productCart));
+updateCart();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
+        return updateCart();
+    }*/
+
+    public ArrayList<Object> updateCart(){
+        Log.e("qualcosa", String.valueOf(productCart));
         return (ArrayList<Object>) productCart;
     }
+
 }

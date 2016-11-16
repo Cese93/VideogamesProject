@@ -31,8 +31,10 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by Marco on 26/10/2016.
@@ -247,6 +249,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
         private ElegantNumberButton btnQuantity;
         private Spinner consoleSpinner;
         private FirebaseAuth firebaseAuth;
+        List<Videogame> producCart;
 
         public SnackbarManagement() {
         }
@@ -255,15 +258,17 @@ public class VideogameInfo extends YouTubeBaseActivity {
             firebaseAuth = FirebaseAuth.getInstance();
             snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Aggiungi", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cart = new Cart<>(firebaseAuth.getCurrentUser());
-                    cart.addProduct(videogame, videogame.getTitle());
-                    Log.v("ArrayCart", String.valueOf(cart.getCart().size()));
+                        @Override
+                        public void onClick(View view) {
+                            cart = new Cart<>(firebaseAuth.getCurrentUser());
+                            cart.addProduct(videogame, videogame.getTitle());
+
+                            Log.e("asdsdxxxxxx", String.valueOf(cart.updateCart()));
+
                     /*Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
                     snackbar1.show();*/
-                }
-            }).setActionTextColor(Color.WHITE);
+                        }
+                    }).setActionTextColor(Color.WHITE);
             snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
             snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
             consoleSpinner = (Spinner) snackView.findViewById(R.id.consoleSpinner);
