@@ -2,18 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="5dp">
 
-    <Spinner
-        android:id="@+id/consoleSpinner"
+    <TextView
+
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="5dp"></Spinner>
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="#FFF"
+        android:text="Quantità: "></TextView>
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
         android:id="@+id/btnQuantity"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
         android:gravity="center">
 
     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>

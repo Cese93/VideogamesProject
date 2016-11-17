@@ -51,7 +51,7 @@ public class TopSellerVideogames extends Fragment {
             @Override
             protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
-                viewHolder.txtTitle.setText(model.getTitle().toString());
+                viewHolder.txtTitle.setText(model.getName().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
                 viewHolder.txtYear.setText(String.valueOf(model.getReleaseDate().getYear()));
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,8 +36,6 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView imgProfile;
     private TextView txtHeaderUsername;
     private TextView txtHeaderEmail;
-    private VideogamesFragment videogamesFragment;
-    private ConsoleFragment consoleFragment;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -90,11 +87,11 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        videogamesFragment = new VideogamesFragment();
+                        VideogamesFragment videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
                     case R.id.console:
-                        consoleFragment = new ConsoleFragment();
+                        ConsoleFragment consoleFragment = new ConsoleFragment();
                         setFragment(consoleFragment);
                         return true;
                     case R.id.accessory:
@@ -105,8 +102,8 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Drafts Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.allmail:
-                        CartActivity cartActivity = new CartActivity();
-                        setFragment(cartActivity);
+                        CartFragment cartFragment = new CartFragment();
+                        setFragment(cartFragment);
                         Toast.makeText(getApplicationContext(), "All Mail Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.trash:

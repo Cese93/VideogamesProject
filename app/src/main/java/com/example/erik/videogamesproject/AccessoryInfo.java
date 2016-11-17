@@ -6,10 +6,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +41,10 @@ public class AccessoryInfo extends Activity {
     private RatingBar communityRatingBar;
     private RatingBar userRatingBar;
     private TextView numOfReview;
+    private Button btnAddToCart;
+    private CoordinatorLayout coordinatorLayout;
+    private Accessory accessory;
+    private Cart<Accessory> accessoryCart;
 
     private Float communityRating;
     private int totalRating;
@@ -44,8 +56,9 @@ public class AccessoryInfo extends Activity {
 
 
         Intent intent = getIntent();
-        final Accessory accessory = (Accessory) intent.getSerializableExtra("Accessory");
+        accessory = (Accessory) intent.getSerializableExtra("Accessory");
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinationLayout);
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
         features = (TextView) findViewById(R.id.features);
@@ -54,6 +67,7 @@ public class AccessoryInfo extends Activity {
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory/" + accessory.getName());
@@ -126,5 +140,49 @@ public class AccessoryInfo extends Activity {
             }
         });
 
+        final SnackbarManagement snackbar = new SnackbarManagement();
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.openSnackbar();
+                snackbar.getSnackbar().show();
+            }
+        });
+
+    }
+
+    private class SnackbarManagement {
+
+        private Snackbar.SnackbarLayout snackbarLayout;
+        private Snackbar snackbar;
+        private View snackView;
+        private ElegantNumberButton btnQuantity;
+        private FirebaseAuth firebaseAuth;
+
+        public SnackbarManagement() {
+        }
+
+        public void openSnackbar() {
+            firebaseAuth = FirebaseAuth.getInstance();
+            snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Aggiungi", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            accessoryCart = new Cart<>(firebaseAuth.getCurrentUser());
+                            accessoryCart.addProduct(accessory, accessory.getName(),Integer.parseInt(btnQuantity.getNumber()));
+                            Toast.makeText(AccessoryInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
+                        }
+                    }).setActionTextColor(Color.WHITE);
+            snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            snackView = getLayoutInflater().inflate(R.layout.snackbar_acc_cons_layout, null);
+            btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
+            snackbarLayout.addView(snackView, 0);
+        }
+
+
+        public Snackbar getSnackbar() {
+            return snackbar;
+        }
     }
 }

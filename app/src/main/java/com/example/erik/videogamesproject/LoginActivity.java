@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
         }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
                         progressDialog.dismiss();
                     } else {
                         try {

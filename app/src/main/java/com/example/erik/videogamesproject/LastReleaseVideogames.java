@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class LastReleaseVideogames extends Fragment {
             @Override
             protected void populateViewHolder(ViewHolderVideogames viewHolder, final Videogame model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
-                viewHolder.txtTitle.setText(model.getTitle().toString());
+                viewHolder.txtTitle.setText(model.getName().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
                 viewHolder.txtYear.setText(String.valueOf(model.getReleaseDate().getYear()));
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

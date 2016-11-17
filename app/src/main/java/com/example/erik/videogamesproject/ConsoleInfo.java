@@ -6,13 +6,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.ExpandedMenuView;
-import android.util.Log;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -21,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -38,13 +43,16 @@ public class ConsoleInfo extends Activity {
     private TextView development;
     private TextView releaseDate;
     private TextView price;
+    private Button btnAddToCart;
     private DatabaseReference databaseReference;
     private RatingBar communityRatingBar;
     private RatingBar userRatingBar;
     private TextView numOfReview;
-
     private Float communityRating;
     private int totalRating;
+    private CoordinatorLayout coordinatorLayout;
+    private Console console;
+    private Cart<Console> consoleCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +60,19 @@ public class ConsoleInfo extends Activity {
         setContentView(R.layout.consoleinformation_layout);
 
         Intent intent = getIntent();
-        final Console console = (Console) intent.getSerializableExtra("Console");
+        console = (Console) intent.getSerializableExtra("Console");
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinationLayout);
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
         development = (TextView) findViewById(R.id.txtDevelopper);
         price = (TextView) findViewById(R.id.txtPrice);
         releaseDate = (TextView) findViewById(R.id.txtReleaseDate);
-
         description = (ExpandableTextView) this.findViewById(R.id.expandable_description).findViewById(R.id.expand_text_view);
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);
         userRatingBar = (RatingBar) findViewById(R.id.ratingBarUser);
         numOfReview = (TextView) findViewById(R.id.numOfReview);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
@@ -134,6 +143,50 @@ public class ConsoleInfo extends Activity {
             }
         });
 
+        final SnackbarManagement snackbar = new SnackbarManagement();
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.openSnackbar();
+                snackbar.getSnackbar().show();
+            }
+        });
+
+    }
+
+    private class SnackbarManagement {
+
+        private Snackbar.SnackbarLayout snackbarLayout;
+        private Snackbar snackbar;
+        private View snackView;
+        private ElegantNumberButton btnQuantity;
+        private FirebaseAuth firebaseAuth;
+
+        public SnackbarManagement() {
+        }
+
+        public void openSnackbar() {
+            firebaseAuth = FirebaseAuth.getInstance();
+            snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Aggiungi", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            consoleCart = new Cart<>(firebaseAuth.getCurrentUser());
+                            consoleCart.addProduct(console, console.getName(),Integer.parseInt(btnQuantity.getNumber()));
+                            Toast.makeText(ConsoleInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
+                        }
+                    }).setActionTextColor(Color.WHITE);
+            snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            snackView = getLayoutInflater().inflate(R.layout.snackbar_acc_cons_layout, null);
+            btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
+            snackbarLayout.addView(snackView, 0);
+        }
+
+
+        public Snackbar getSnackbar() {
+            return snackbar;
+        }
     }
 }
 

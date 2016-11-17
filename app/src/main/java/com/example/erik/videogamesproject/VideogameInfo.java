@@ -7,7 +7,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -31,7 +31,6 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -62,7 +61,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private Float communityRating;
     private int totalRating;
     private Videogame videogame;
-    private Cart<Videogame> cart;
+    private Cart<Videogame> videogameCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
         btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + videogame.getTitle());
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + videogame.getName());
         //Creazione adapter per la recyclerView
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
@@ -152,7 +151,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(videogame.getTitle());
+                    collapsingToolbar.setTitle(videogame.getName());
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                     isShow = true;
                 } else if (isShow) {
@@ -260,30 +259,19 @@ public class VideogameInfo extends YouTubeBaseActivity {
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            cart = new Cart<>(firebaseAuth.getCurrentUser());
-                            cart.addProduct(videogame, videogame.getTitle(),Integer.parseInt(btnQuantity.getNumber()));
-
-                            Log.e("asdsdxxxxxx", String.valueOf(cart.updateCart()));
-
-                    /*Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "Message is restored!", Snackbar.LENGTH_SHORT);
-                    snackbar1.show();*/
+                            videogameCart = new Cart<>(firebaseAuth.getCurrentUser());
+                            videogameCart.addProduct(videogame, videogame.getName(), Integer.parseInt(btnQuantity.getNumber()), videogame.getPrice());
+                            Toast.makeText(VideogameInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
             snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-            snackView = getLayoutInflater().inflate(R.layout.snackbarvideogame_layout, null);
+            snackView = getLayoutInflater().inflate(R.layout.snackbar_videogame_layout, null);
             consoleSpinner = (Spinner) snackView.findViewById(R.id.consoleSpinner);
             btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, videogame.getPlatforms());
             consoleSpinner.setAdapter(adapter);
             consoleSpinner.setBackgroundColor(Color.WHITE);
-
-            btnQuantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String num = btnQuantity.getNumber();
-                }
-            });
             snackbarLayout.addView(snackView, 0);
         }
 
