@@ -105,6 +105,8 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Drafts Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.allmail:
+                        CartActivity cartActivity = new CartActivity();
+                        setFragment(cartActivity);
                         Toast.makeText(getApplicationContext(), "All Mail Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.trash:

@@ -26,11 +26,12 @@ public class Cart<Object> {
         productCart = new ArrayList<>();
     }
 
-    public void addProduct(final Object product, final String name) {
+    public void addProduct(final Object product, final String name, final int quantity) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 databaseReference.child("Cart").child(name).setValue(product);
+                databaseReference.child("Cart").child(name).child("quantity").setValue(quantity);
                 productCart.add((Object) dataSnapshot.child("Cart").getValue());
             }
 

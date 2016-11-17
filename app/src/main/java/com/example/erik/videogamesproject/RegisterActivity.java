@@ -50,6 +50,12 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaserAuth;
 
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String confirmPassword;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPasswordText = (EditText) findViewById(R.id.txtRegisterConfirmPassword);
         usernameText = (EditText) findViewById(R.id.txtRegisterUsername);
         btnRegister = (Button) findViewById(R.id.btnRegister);
+
+
 
         rootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User");
 
@@ -82,14 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void clickRegister() {
 
-
-        final  String name = nameText.getText().toString().trim();
-        final String surname = surnameText.getText().toString().trim();
-        final String email = emailText.getText().toString().trim();
-        final String password = passwordText.getText().toString().trim();
-        final String confirmPassword = confirmPasswordText.getText().toString().trim();
-        final String username = usernameText.getText().toString().trim();
-
+        name = nameText.getText().toString().trim();
+        surname  = surnameText.getText().toString().trim();
+        email = emailText.getText().toString().trim();
+        password = passwordText.getText().toString().trim();
+        confirmPassword = confirmPasswordText.getText().toString().trim();
+        username = usernameText.getText().toString().trim();
 
         if (name.isEmpty()) {
             nameText.setError("Inserire nome");
@@ -97,13 +103,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (surname.isEmpty()) {
-            nameText.setError("Inserire cognome");
+            surnameText.setError("Inserire cognome");
             return;
         }
 
         if (email.isEmpty()) {
 
-            nameText.setError("Email errata o già esistente");
+            emailText.setError("Email errata o già esistente");
             return;
         }
 
@@ -128,9 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                    Toast.makeText(RegisterActivity.this,"Username Gia inserito",Toast.LENGTH_LONG).show();
 
                }else{
-
                    saveUser();
-
                }
            }
 
@@ -143,13 +147,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void saveUser(){
-
-
-        final String name = nameText.getText().toString().trim();
-        final String surname = surnameText.getText().toString().trim();
-        final String email = emailText.getText().toString().trim();
-        final String password = passwordText.getText().toString().trim();
-        final String username = usernameText.getText().toString().trim();
 
         progressDialog.setMessage("Registrazione...");
         progressDialog.show();
@@ -177,16 +174,12 @@ public class RegisterActivity extends AppCompatActivity {
                     firebaserAuth.getCurrentUser().sendEmailVerification();
                     firebaserAuth.getCurrentUser().reload();
 
-
-
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, "Utente non inserito", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
     }
 
 }

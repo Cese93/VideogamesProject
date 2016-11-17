@@ -261,7 +261,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
                         @Override
                         public void onClick(View view) {
                             cart = new Cart<>(firebaseAuth.getCurrentUser());
-                            cart.addProduct(videogame, videogame.getTitle());
+                            cart.addProduct(videogame, videogame.getTitle(),Integer.parseInt(btnQuantity.getNumber()));
 
                             Log.e("asdsdxxxxxx", String.valueOf(cart.updateCart()));
 
