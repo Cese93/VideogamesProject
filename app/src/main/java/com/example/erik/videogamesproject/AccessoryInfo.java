@@ -44,7 +44,7 @@ public class AccessoryInfo extends Activity {
     private Button btnAddToCart;
     private CoordinatorLayout coordinatorLayout;
     private Accessory accessory;
-    private Cart<Accessory> accessoryCart;
+    private Cart accessoryCart;
 
     private Float communityRating;
     private int totalRating;
@@ -169,8 +169,8 @@ public class AccessoryInfo extends Activity {
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            accessoryCart = new Cart<>(firebaseAuth.getCurrentUser());
-                            accessoryCart.addProduct(accessory, accessory.getName(),Integer.parseInt(btnQuantity.getNumber()));
+                            accessoryCart = new Cart(firebaseAuth.getCurrentUser());
+                            accessoryCart.addProduct(accessory, accessory.getName(),Integer.parseInt(btnQuantity.getNumber()),accessory.getPrice());
                             Toast.makeText(AccessoryInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
@@ -179,7 +179,6 @@ public class AccessoryInfo extends Activity {
             btnQuantity = (ElegantNumberButton) snackView.findViewById(R.id.btnQuantity);
             snackbarLayout.addView(snackView, 0);
         }
-
 
         public Snackbar getSnackbar() {
             return snackbar;

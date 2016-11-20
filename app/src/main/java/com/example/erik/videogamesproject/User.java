@@ -13,13 +13,13 @@ public class User {
     private String email;
     private String password;
     private String username;
-    private Cart<Object> cart;
+    private Cart cart;
 
-    public Cart<Object> getCart() {
+    public Cart getCart() {
         return cart;
     }
 
-    public void setCart(Cart<Object> cart) {
+    public void setCart(Cart cart) {
         this.cart = cart;
     }
 

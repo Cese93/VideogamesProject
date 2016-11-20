@@ -39,6 +39,7 @@ public class CartFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private TextView txtTotalPrice;
     private double totalPrice;
+    private Cart cart;
     int quantity;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cart_fragment_layout, container, false);
@@ -54,6 +55,8 @@ public class CartFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+        cart = new Cart(firebaseAuth.getCurrentUser());
+
         Log.v("UserInCart", user.getDisplayName());
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
 
@@ -61,14 +64,14 @@ public class CartFragment extends Fragment {
                 Product.class,
                 R.layout.cart_row_layout,
                 CartViewHolder.class,
-                databaseReference.child("Cart")
+                databaseReference.child("Cart").child("Cart")
 
 
         ) {
             @Override
             protected void populateViewHolder(final CartViewHolder viewHolder, final Product model, int position) {
 
-                databaseReference.child("Cart").child(model.getName()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Cart").child("Cart").child(model.getName()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         viewHolder.txtQuantity.setText(String.valueOf(dataSnapshot.child("quantity").getValue()));
@@ -83,11 +86,40 @@ public class CartFragment extends Fragment {
                 //totalPrice += model.getPrice() * Double.parseDouble(viewHolder.txtQuantity.getText().toString());
                 Picasso.with(getContext()).load(model.getImage()).resize(170, 210).into(viewHolder.imageView);
                 viewHolder.txtName.setText(model.getName().toString());
+
                 viewHolder.txtPrice.setText("Prezzo x1: " + String.valueOf(model.getPrice() + "€"));
-                txtTotalPrice.setText("Prezzo totale: " + totalPrice);
-                Log.e("asdasfgdhgghgh",String.valueOf(viewHolder.txtQuantity.getText()));
+                //txtTotalPrice.setText("Prezzo totale: " + totalPrice);
+                viewHolder.txtDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        cart.deleteProduct(model);
+
+                    }
+                });
             }
+
         };
+
+        databaseReference.child("Cart").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.child("totalPrice").getValue() == null){
+
+                    return;
+
+                }else {
+
+                    txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         recyclerViewCart.setAdapter(cartAdapter);
         return v;
@@ -97,6 +129,7 @@ public class CartFragment extends Fragment {
         TextView txtQuantity;
         TextView txtName;
         TextView txtPrice;
+        TextView txtDelete;
         ImageView imageView;
 
         public CartViewHolder(View itemView) {
@@ -105,6 +138,7 @@ public class CartFragment extends Fragment {
             txtName = (TextView) itemView.findViewById(R.id.txtTitle);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPrice);
             txtQuantity = (TextView) itemView.findViewById(R.id.txtQuantity);
+            txtDelete = (TextView) itemView.findViewById(R.id.deleteProductCart);
             imageView = (ImageView) itemView.findViewById(R.id.imageProductCart);
 
 

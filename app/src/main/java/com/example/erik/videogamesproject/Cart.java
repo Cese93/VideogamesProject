@@ -14,23 +14,34 @@ import java.util.List;
  * Created by erik_ on 10/11/2016.
  */
 
-public class Cart<Product> {
+public class Cart {
+
     DatabaseReference databaseReference;
-    List<Product> productCart;
     double totalPrice;
 
     public Cart(FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
-        productCart = new ArrayList<>();
     }
 
-    public void addProduct(final Product product, final String name, final int quantity, double price) {
+    public void addProduct(final Product product, final String name, final int quantity, final double price) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            private double totalPrice;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                databaseReference.child("Cart").child(name).setValue(product);
-                databaseReference.child("Cart").child(name).child("quantity").setValue(quantity);
-                productCart.add((Product) dataSnapshot.child("Cart").getValue());
+                databaseReference.child("Cart").child("Cart").child(name).setValue(product);
+                databaseReference.child("Cart").child("Cart").child(name).child("quantity").setValue(quantity);
+
+                if(dataSnapshot.child("Cart").child("totalPrice").getValue() == null){
+
+                    databaseReference.child("Cart").child("totalPrice").setValue(price*quantity);
+
+                }else {
+
+                    totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
+                    databaseReference.child("Cart").child("totalPrice").setValue((totalPrice) + (price * quantity));
+                }
             }
 
             @Override
@@ -46,8 +57,37 @@ public class Cart<Product> {
         return totalPrice;
     }
 
-    public void deleteProduct(java.lang.Object product) {
-        //productCart.remove(product);
+    public void deleteProduct(final Product product) {
+
+
+        databaseReference.child("Cart")/*.child("Cart").child(product.getName())*/.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue() == null){
+
+                    return;
+
+                } else if(dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class) <= 1){
+
+                    databaseReference.child("Cart").child("Cart").child(product.getName()).removeValue();
+
+                }else{
+
+                    databaseReference.child("Cart").child("Cart").child(product.getName())
+                            .child("quantity").setValue(dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class)-1);
+
+                }
+
+                databaseReference.child("Cart").child("totalPrice").setValue(dataSnapshot.child("totalPrice").getValue(Double.class)-product.getPrice());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

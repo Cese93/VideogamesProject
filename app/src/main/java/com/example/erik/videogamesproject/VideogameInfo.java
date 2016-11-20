@@ -61,7 +61,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
     private Float communityRating;
     private int totalRating;
     private Videogame videogame;
-    private Cart<Videogame> videogameCart;
+    private Cart videogameCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,7 +259,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            videogameCart = new Cart<>(firebaseAuth.getCurrentUser());
+                            videogameCart = new Cart(firebaseAuth.getCurrentUser());
                             videogameCart.addProduct(videogame, videogame.getName(), Integer.parseInt(btnQuantity.getNumber()), videogame.getPrice());
                             Toast.makeText(VideogameInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }

@@ -52,7 +52,7 @@ public class ConsoleInfo extends Activity {
     private int totalRating;
     private CoordinatorLayout coordinatorLayout;
     private Console console;
-    private Cart<Console> consoleCart;
+    private Cart consoleCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,8 +172,8 @@ public class ConsoleInfo extends Activity {
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            consoleCart = new Cart<>(firebaseAuth.getCurrentUser());
-                            consoleCart.addProduct(console, console.getName(),Integer.parseInt(btnQuantity.getNumber()));
+                            consoleCart = new Cart(firebaseAuth.getCurrentUser());
+                            consoleCart.addProduct(console, console.getName(),Integer.parseInt(btnQuantity.getNumber()),console.getPrice());
                             Toast.makeText(ConsoleInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
