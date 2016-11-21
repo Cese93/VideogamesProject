@@ -44,7 +44,9 @@ public class Cart {
                 }else {
 
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                    databaseReference.child("Cart").child("totalPrice").setValue((totalPrice) + (price * quantity));
+                    double totalPriceCart =((totalPrice) + (price*quantity));
+                    String.format("%.2f",totalPriceCart);
+                    databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
                 }
             }
 
@@ -54,12 +56,9 @@ public class Cart {
             }
 
         });
-        totalPrice +=  quantity * price;
+
     }
 
-    public double getTotal(){
-        return totalPrice;
-    }
 
     public void deleteProduct(final Product product) {
 
