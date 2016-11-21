@@ -29,6 +29,7 @@ public class Cart {
 
             private double totalPrice;
 
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 databaseReference.child("Cart").child("Cart").child(name).setValue(product);
