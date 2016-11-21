@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -33,7 +34,7 @@ public class AccessoryInfo extends Activity {
 
     private ImageView imgTitle;
     private ImageView cover;
-    private TextView features;
+    private ExpandableTextView features;
     private TextView producer;
     private CollapsingToolbarLayout collapsingToolbar;
     private TextView price;
@@ -61,7 +62,7 @@ public class AccessoryInfo extends Activity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinationLayout);
         cover = (ImageView) findViewById(R.id.imgCover);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
-        features = (TextView) findViewById(R.id.features);
+        features = (ExpandableTextView) this.findViewById(R.id.expandable_features).findViewById(R.id.expand_text_view);
         producer = (TextView) findViewById(R.id.txtProducer);
         price = (TextView) findViewById(R.id.txtPrice);
         communityRatingBar = (RatingBar) findViewById(R.id.ratingBarCommunity);

@@ -19,7 +19,7 @@
         android:text="Name Accesorio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/txtNameAccesory"
+        android:id="@+id/txtNameAccessory"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
@@ -27,13 +27,13 @@
         android:layout_toEndOf="@+id/imgAccessory" />
 
     <TextView
-        android:text="Developer"
+        android:text="Producer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imgAccessory"
         android:layout_toEndOf="@+id/imgAccessory"
         android:layout_marginBottom="12dp"
-        android:id="@+id/txtDeveloperAccesory" />
+        android:id="@+id/txtProducerAccessory" />
 
     <TextView
         android:text="Price"
@@ -41,8 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
         android:id="@+id/txtPriceAccessory"
-        android:layout_alignBaseline="@+id/txtDeveloperAccesory"
-        android:layout_alignBottom="@+id/txtDeveloperAccesory"
+        android:layout_alignBaseline="@+id/txtProducerAccessory"
+        android:layout_alignBottom="@+id/txtProducerAccessory"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         />
 

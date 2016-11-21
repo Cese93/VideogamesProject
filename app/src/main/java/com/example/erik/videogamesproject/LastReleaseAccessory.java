@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -86,8 +85,8 @@ public class LastReleaseAccessory extends Fragment {
 
             itemView.setSelected(true);
 
-            txtName = (TextView) itemView.findViewById(R.id.txtNameAccesory);
-            txtDeveloper = (TextView) itemView.findViewById(R.id.txtDeveloperAccesory);
+            txtName = (TextView) itemView.findViewById(R.id.txtNameAccessory);
+            txtDeveloper = (TextView) itemView.findViewById(R.id.txtProducerAccessory);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPriceAccessory);
             imgAccessory = (ImageView) itemView.findViewById(R.id.imgAccessory);
 
