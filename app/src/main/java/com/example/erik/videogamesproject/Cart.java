@@ -83,6 +83,7 @@ public class Cart {
 
                 }else{
 
+
                     databaseReference.child("Cart").child("Cart").child(product.getName())
                             .child("quantity").setValue(dataSnapshot.child("Cart")
                                .child(product.getName()).child("quantity").getValue(Integer.class)-1);
