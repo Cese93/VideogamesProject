@@ -19,9 +19,9 @@ public class ConsoleFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPagerAdapter viewPagerAdapter;
     private int[] tabIcons = {
-            R.drawable.android_black,
-            R.drawable.ic_email_black,
-            R.drawable.ic_delete_black
+            R.drawable.last_release,
+            R.drawable.best_seller,
+            R.drawable.top_rated
     };
 
     @Override
