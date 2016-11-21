@@ -1,5 +1,6 @@
 package com.example.erik.videogamesproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,7 +49,7 @@ public class TopSellerAccessory extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(LastReleaseAccessory.ViewHolderAccessory viewHolder, Accessory model, final int position) {
+            protected void populateViewHolder(LastReleaseAccessory.ViewHolderAccessory viewHolder, final Accessory model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgAccessory);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getProducer().toString());
@@ -59,7 +60,9 @@ public class TopSellerAccessory extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "Posizione: " + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), AccessoryInfo.class);
+                        intent.putExtra("Accessory", model);
+                        startActivity(intent);
                     }
                 });
             }
