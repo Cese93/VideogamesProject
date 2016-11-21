@@ -1,5 +1,7 @@
 package com.example.erik.videogamesproject;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,15 +40,19 @@ public class Cart {
                 if(dataSnapshot.child("Cart").child("totalPrice").getValue() == null){
 
                     double totalPriceCart = (price*quantity);
-                    String.format("%.2f",totalPriceCart);
+
                     databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
 
                 }else {
 
+
+
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
+
                     double totalPriceCart =((totalPrice) + (price*quantity));
-                    String.format("%.2f",totalPriceCart);
-                    databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
+                    double totalPrice = Math.round(totalPriceCart*100.0)/100.0;
+
+                    databaseReference.child("Cart").child("totalPrice").setValue(totalPrice);
                 }
             }
 
@@ -82,9 +88,10 @@ public class Cart {
                                .child(product.getName()).child("quantity").getValue(Integer.class)-1);
 
                 }
-
-                databaseReference.child("Cart").child("totalPrice").setValue(dataSnapshot
-                        .child("totalPrice").getValue(Double.class)-product.getPrice());
+                double totalPriceDecrease = dataSnapshot
+                        .child("totalPrice").getValue(Double.class)-product.getPrice();
+                 totalPriceDecrease = Math.round(totalPriceDecrease*100.0)/100.0;
+                databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
             }
 
             @Override
