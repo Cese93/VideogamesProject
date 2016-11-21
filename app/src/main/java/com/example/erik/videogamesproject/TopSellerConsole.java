@@ -1,5 +1,6 @@
 package com.example.erik.videogamesproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 /**
  * Created by Marco on 21/10/2016.
+ * Modify by Andrea on 22/11/2016
  */
 
 public class TopSellerConsole extends Fragment {
@@ -48,7 +50,7 @@ public class TopSellerConsole extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(LastReleaseConsole.ViewHolderConsole viewHolder, Console model, final int position) {
+            protected void populateViewHolder(LastReleaseConsole.ViewHolderConsole viewHolder, final Console model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgConsole);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getDeveloper().toString());
@@ -59,7 +61,9 @@ public class TopSellerConsole extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "Posizione: " + position, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), ConsoleInfo.class);
+                        intent.putExtra("Console", model);
+                        startActivity(intent);
                     }
                 });
             }

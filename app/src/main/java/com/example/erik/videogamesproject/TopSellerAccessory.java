@@ -50,7 +50,7 @@ public class TopSellerAccessory extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(LastReleaseAccessory.ViewHolderAccessory viewHolder, final Accessory model, final int position) {
-                Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgAccessory);
+                Picasso.with(getContext()).load(model.getImage()).resize(200, 200).into(viewHolder.imgAccessory);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getProducer().toString());
                 viewHolder.txtPrice.setText(String.valueOf(model.getPrice()) + "€");
