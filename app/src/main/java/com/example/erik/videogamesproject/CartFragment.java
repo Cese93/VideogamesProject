@@ -89,7 +89,7 @@ public class CartFragment extends Fragment {
 
                 viewHolder.txtPrice.setText("Prezzo x1: " + String.valueOf(model.getPrice() + "€"));
                 //txtTotalPrice.setText("Prezzo totale: " + totalPrice);
-                viewHolder.txtDelete.setOnClickListener(new View.OnClickListener() {
+                viewHolder.imgDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -111,7 +111,8 @@ public class CartFragment extends Fragment {
 
                 }else {
 
-                    txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue().toString());
+
+                    txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue());
                 }
             }
 
@@ -129,7 +130,7 @@ public class CartFragment extends Fragment {
         TextView txtQuantity;
         TextView txtName;
         TextView txtPrice;
-        TextView txtDelete;
+        ImageView imgDelete;
         ImageView imageView;
 
         public CartViewHolder(View itemView) {
@@ -138,7 +139,7 @@ public class CartFragment extends Fragment {
             txtName = (TextView) itemView.findViewById(R.id.txtTitle);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPrice);
             txtQuantity = (TextView) itemView.findViewById(R.id.txtQuantity);
-            txtDelete = (TextView) itemView.findViewById(R.id.deleteProductCart);
+            imgDelete = (ImageView) itemView.findViewById(R.id.deleteProductCar);
             imageView = (ImageView) itemView.findViewById(R.id.imageProductCart);
 
 

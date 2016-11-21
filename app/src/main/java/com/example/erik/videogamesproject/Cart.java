@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,9 @@ public class Cart {
 
                 if(dataSnapshot.child("Cart").child("totalPrice").getValue() == null){
 
-                    databaseReference.child("Cart").child("totalPrice").setValue(price*quantity);
+                    double totalPriceCart = (price*quantity);
+                    String.format("%.2f",totalPriceCart);
+                    databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
 
                 }else {
 
@@ -60,7 +63,7 @@ public class Cart {
     public void deleteProduct(final Product product) {
 
 
-        databaseReference.child("Cart")/*.child("Cart").child(product.getName())*/.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -75,11 +78,13 @@ public class Cart {
                 }else{
 
                     databaseReference.child("Cart").child("Cart").child(product.getName())
-                            .child("quantity").setValue(dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class)-1);
+                            .child("quantity").setValue(dataSnapshot.child("Cart")
+                               .child(product.getName()).child("quantity").getValue(Integer.class)-1);
 
                 }
 
-                databaseReference.child("Cart").child("totalPrice").setValue(dataSnapshot.child("totalPrice").getValue(Double.class)-product.getPrice());
+                databaseReference.child("Cart").child("totalPrice").setValue(dataSnapshot
+                        .child("totalPrice").getValue(Double.class)-product.getPrice());
             }
 
             @Override
