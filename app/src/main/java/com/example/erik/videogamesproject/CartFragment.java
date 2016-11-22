@@ -1,5 +1,6 @@
 package com.example.erik.videogamesproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +40,7 @@ public class CartFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private LinearLayoutManager linearLayoutManager;
     private TextView txtTotalPrice;
+    private Button btnProcessOrder;
     private double totalPrice;
     private Cart cart;
     int quantity;
@@ -46,6 +49,9 @@ public class CartFragment extends Fragment {
 
         recyclerViewCart = (RecyclerView) v.findViewById(R.id.recyclerViewCart);
         txtTotalPrice = (TextView) v.findViewById(R.id.txtTotalPrice);
+        btnProcessOrder = (Button) v.findViewById(R.id.btnProcessOrder);
+
+
 
         recyclerViewCart.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewCart.setHasFixedSize(true);
@@ -119,6 +125,15 @@ public class CartFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        btnProcessOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+              Intent intent = new Intent(getActivity(),VideogameInfo.class);
+              startActivity(intent);
             }
         });
 

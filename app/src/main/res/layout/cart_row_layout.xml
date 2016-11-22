@@ -59,4 +59,13 @@
         android:layout_alignParentRight="true"
         />
 
+    <Button
+        android:id="@+id/btnProcessOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/informationProduct"
+        android:text="Procedi con l'acquisto"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        />
 </RelativeLayout>

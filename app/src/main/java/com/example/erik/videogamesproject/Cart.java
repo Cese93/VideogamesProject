@@ -20,7 +20,7 @@ import java.util.List;
 public class Cart {
 
     DatabaseReference databaseReference;
-    double totalPrice;
+
 
     public Cart(FirebaseUser user) {
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
@@ -31,28 +31,38 @@ public class Cart {
 
             private double totalPrice;
 
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                databaseReference.child("Cart").child("Cart").child(name).setValue(product);
-                databaseReference.child("Cart").child("Cart").child(name).child("quantity").setValue(quantity);
 
-                if(dataSnapshot.child("Cart").child("totalPrice").getValue() == null){
+                if (dataSnapshot.child("Cart").child("Cart").hasChild(name)) {
 
-                    double totalPriceCart = (price*quantity);
-
-                    databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
-
-                }else {
+                    databaseReference.child("Cart").child("Cart").child(name).child("quantity")
+                            .setValue(dataSnapshot.child("Cart").child("Cart").child(name).child("quantity")
+                                    .getValue(Integer.class) + quantity);
 
 
 
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
+                    setTotalPrice(totalPrice,price,quantity);
 
-                    double totalPriceCart =((totalPrice) + (price*quantity));
-                    double totalPrice = Math.round(totalPriceCart*100.0)/100.0;
 
-                    databaseReference.child("Cart").child("totalPrice").setValue(totalPrice);
+                } else {
+
+                    databaseReference.child("Cart").child("Cart").child(name).setValue(product);
+                    databaseReference.child("Cart").child("Cart").child(name).child("quantity").setValue(quantity);
+
+                    if (dataSnapshot.child("Cart").child("totalPrice").getValue() == null) {
+
+                        double totalPriceCart = (price * quantity);
+
+                        databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
+
+                    } else {
+
+
+                        totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
+                        setTotalPrice(totalPrice,price,quantity);
+                    }
                 }
             }
 
@@ -83,7 +93,6 @@ public class Cart {
 
                 }else{
 
-
                     databaseReference.child("Cart").child("Cart").child(product.getName())
                             .child("quantity").setValue(dataSnapshot.child("Cart")
                                .child(product.getName()).child("quantity").getValue(Integer.class)-1);
@@ -100,6 +109,15 @@ public class Cart {
 
             }
         });
+
+    }
+
+    private void setTotalPrice(double totalPrice,double price,int quantity){
+
+        double totalPriceCart = ((totalPrice) + (price*quantity));
+        double formatTotalPrice = Math.round(totalPriceCart*100.0)/100.0;
+
+        databaseReference.child("Cart").child("totalPrice").setValue(formatTotalPrice);
 
     }
 
