@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.snapshot.DoubleNode;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,7 +41,7 @@ public class CartFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private LinearLayoutManager linearLayoutManager;
     private TextView txtTotalPrice;
-    private Button btnProcessOrder;
+    private TextView txtProcessOrder;
     private double totalPrice;
     private Cart cart;
     int quantity;
@@ -49,8 +50,14 @@ public class CartFragment extends Fragment {
 
         recyclerViewCart = (RecyclerView) v.findViewById(R.id.recyclerViewCart);
         txtTotalPrice = (TextView) v.findViewById(R.id.txtTotalPrice);
-        btnProcessOrder = (Button) v.findViewById(R.id.btnProcessOrder);
+        txtProcessOrder = (TextView) v.findViewById(R.id.txtProcessOrder);
 
+        txtProcessOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), OrderActivity.class));
+            }
+        });
 
 
         recyclerViewCart.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
@@ -125,15 +132,6 @@ public class CartFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        btnProcessOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-              Intent intent = new Intent(getActivity(),VideogameInfo.class);
-              startActivity(intent);
             }
         });
 

@@ -12,6 +12,7 @@ public class Product implements Serializable{
     private double rating;
     private String image;
     private String imageTitle;
+    private int quantity;
 
 
     public Product() {
@@ -56,6 +57,14 @@ public class Product implements Serializable{
 
     public void setImageTitle(String imageTitle) {
         this.imageTitle = imageTitle;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 

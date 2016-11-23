@@ -30,6 +30,9 @@
         <activity android:name=".AccessoryInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".OrderActivity"
+            android:theme="@style/AppThemeWithToolbar"/>
+
     </application>
 
 </manifest>
