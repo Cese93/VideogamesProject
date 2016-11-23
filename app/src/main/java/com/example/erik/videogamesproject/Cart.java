@@ -186,6 +186,7 @@ public class Cart {
 
                         totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
                         setTotalPrice(totalPrice,videogame.getPrice(),quantity);
+
                     }
                 }
             }
