@@ -59,7 +59,6 @@ public class CartFragment extends Fragment {
             }
         });
 
-
         recyclerViewCart.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewCart.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
