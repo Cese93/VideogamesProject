@@ -50,7 +50,7 @@ public class CartFragment extends Fragment {
 
         recyclerViewCart = (RecyclerView) v.findViewById(R.id.recyclerViewCart);
         txtTotalPrice = (TextView) v.findViewById(R.id.txtTotalPrice);
-        txtProcessOrder = (TextView) v.findViewById(R.id.btnProcessOrder);
+        txtProcessOrder = (TextView) v.findViewById(R.id.txtProcessOrder);
 
         txtProcessOrder.setOnClickListener(new View.OnClickListener() {
             @Override
