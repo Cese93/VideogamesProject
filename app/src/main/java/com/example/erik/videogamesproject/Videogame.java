@@ -3,6 +3,8 @@ package com.example.erik.videogamesproject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Marco on 13/10/2016.

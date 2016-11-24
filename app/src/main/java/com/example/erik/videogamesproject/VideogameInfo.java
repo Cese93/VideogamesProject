@@ -31,6 +31,7 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -254,13 +255,17 @@ public class VideogameInfo extends YouTubeBaseActivity {
         }
 
         public void openSnackbar() {
+
+
             firebaseAuth = FirebaseAuth.getInstance();
             snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             videogameCart = new Cart(firebaseAuth.getCurrentUser());
-                            videogameCart.addProduct(videogame, videogame.getName(), Integer.parseInt(btnQuantity.getNumber()), videogame.getPrice());
+                           // videogameCart.addProduct(videogame, videogame.getName(),Integer.parseInt(btnQuantity.getNumber()), videogame.getPrice());
+                            videogameCart.setProductVideogame(videogame,consoleSpinner.getSelectedItem().toString(),
+                                             Integer.parseInt(btnQuantity.getNumber()));
                             Toast.makeText(VideogameInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
