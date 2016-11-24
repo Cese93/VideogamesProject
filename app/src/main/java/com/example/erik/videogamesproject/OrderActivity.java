@@ -48,10 +48,6 @@ public class OrderActivity extends AppCompatActivity {
                 txtName.setText(model.getName());
                 TextView txtQuantity = (TextView) v.findViewById(android.R.id.text2);
                 txtQuantity.setText("Quantità: " + String.valueOf(model.getQuantity()));
-               /* TextView textView2 = (TextView) v.findViewById(android.R.id.text2);
-                textView2.setText(model.getQuantity());*/
-               /* TextView textView2 = (TextView) findViewById(android.R.id.text2);
-                textView2.setText(model.getQuantity());*/
             }
         };
         recapListView.setAdapter(adapter);
