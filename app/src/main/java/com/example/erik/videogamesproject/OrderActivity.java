@@ -38,17 +38,20 @@ public class OrderActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/" + firebaseAuth.getCurrentUser().getDisplayName() + "/Cart/Cart");
-
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + firebaseAuth.getCurrentUser().getDisplayName() + "/Cart/Cart");
+        Log.e("asdsad", String.valueOf(firebaseAuth.getCurrentUser().getDisplayName()));
         Log.e("databasereference", String.valueOf(databaseReference));
         adapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.two_line_list_item, databaseReference) {
             @Override
             protected void populateView(View v, Product model, int position) {
-                Log.e("Prova", String.valueOf(model));
-                TextView textView1 = (TextView) findViewById(android.R.id.text1);
-                textView1.setText(model.getName());
-                TextView textView2 = (TextView) findViewById(android.R.id.text2);
-                textView2.setText(model.getQuantity());
+                TextView txtName = (TextView) v.findViewById(android.R.id.text1);
+                txtName.setText(model.getName());
+                TextView txtQuantity = (TextView) v.findViewById(android.R.id.text2);
+                txtQuantity.setText("Quantità: " + String.valueOf(model.getQuantity()));
+               /* TextView textView2 = (TextView) v.findViewById(android.R.id.text2);
+                textView2.setText(model.getQuantity());*/
+               /* TextView textView2 = (TextView) findViewById(android.R.id.text2);
+                textView2.setText(model.getQuantity());*/
             }
         };
         recapListView.setAdapter(adapter);
