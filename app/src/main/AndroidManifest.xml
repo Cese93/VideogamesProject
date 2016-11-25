@@ -31,7 +31,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".OrderActivity"
-            android:theme="@style/AppThemeWithToolbar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 
