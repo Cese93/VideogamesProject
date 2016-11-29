@@ -2,6 +2,7 @@ package com.example.erik.videogamesproject;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -51,6 +52,10 @@ public class OrderActivity extends AppCompatActivity {
             }
         };
         recapListView.setAdapter(adapter);
+
+        double total = getIntent().getDoubleExtra("TOTAL", 0);
+
+        Log.e("Provaaaaaaaa", String.valueOf(total));
 
     }
 
