@@ -1,5 +1,7 @@
 package com.example.erik.videogamesproject;
 
+import java.util.ArrayList;
+
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
@@ -13,15 +15,13 @@ public class User {
     private String email;
     private String password;
     private String username;
-    private Cart cart;
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
+    private String state;
+    private String region;
+    private String city;
+    private String address;
+    private String streetNumber;
+    private int CAP;
+    private ArrayList<Card> payments;
 
 
     User(){}
@@ -61,4 +61,61 @@ public class User {
     }
 
     public void setUsername(String username) { this.username = username; }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public int getCAP() {
+        return CAP;
+    }
+
+    public void setCAP(int CAP) {
+        this.CAP = CAP;
+    }
+
+    public ArrayList<Card> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(ArrayList<Card> payments) {
+        this.payments = payments;
+    }
+
 }

@@ -56,9 +56,8 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), OrderActivity.class);
-                Log.e("Prezzo totale", String.valueOf(txtTotalPrice.getText()));
                 intent.putExtra("TOTAL", txtTotalPrice.getText());
-                startActivity(new Intent(getActivity(), OrderActivity.class));
+                startActivity(intent);
             }
         });
 
