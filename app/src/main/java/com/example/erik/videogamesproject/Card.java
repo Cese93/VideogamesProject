@@ -13,6 +13,10 @@ public class Card implements Serializable{
     private int pin;
     private Date expiredDate;
 
+    public Card(){
+
+    }
+
     public String getPaymentMethod() {
         return paymentMethod;
     }
