@@ -1,11 +1,15 @@
 package com.example.erik.videogamesproject;
 
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,7 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by erik_ on 22/11/2016.
@@ -44,9 +51,9 @@ public class OrderActivity extends AppCompatActivity {
     private Button btnProceedToRecap;
 
     String paymentMethod;
-    int code;
-    int pin;
-    Date expiredDate;
+    String code;
+    String pin;
+    private String expiredDate;
     String name;
     String surname;
     String state;
@@ -55,6 +62,8 @@ public class OrderActivity extends AppCompatActivity {
     String address;
     String streetNumber;
     String cap;
+
+    static final int DIALOG_ID = 0;
 
 
     @Override
@@ -80,7 +89,6 @@ public class OrderActivity extends AppCompatActivity {
         txtCAP = (TextView) findViewById(R.id.txtCAP);
         txtTotalPrice = (TextView) findViewById(R.id.txtTotalPrice);
         btnProceedToRecap = (Button) findViewById(R.id.btnProceedToRecap);
-
 
         txtTotalPrice.setText(getIntent().getExtras().getString("TOTAL") + "€");
 
@@ -114,12 +122,12 @@ public class OrderActivity extends AppCompatActivity {
         });
 
 
-
         btnProceedToRecap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                code = Integer.parseInt(txtCode.getText().toString().trim());
-                pin = Integer.parseInt(txtPIN.getText().toString().trim());
+                code = txtCode.getText().toString().trim();
+                pin = txtPIN.getText().toString().trim();
+                expiredDate = txtExpiredDate.getText().toString().trim();
                 name = txtName.getText().toString().trim();
                 surname = txtSurname.getText().toString().trim();
                 state = txtState.getText().toString().trim();
@@ -128,6 +136,18 @@ public class OrderActivity extends AppCompatActivity {
                 address = txtAddress.getText().toString().trim();
                 streetNumber = txtStreetNumber.getText().toString().trim();
                 cap = txtCAP.getText().toString().trim();
+                if (txtCode.getText().toString().trim().isEmpty()) {
+                    txtCode.setError("Inserire il codice della carta");
+                    return;
+                }
+                if (txtPIN.getText().toString().trim().isEmpty() || !code.matches("\\d+(?:\\.\\d+)?")) {
+                    txtPIN.setError("Inserire il PIN");
+                    return;
+                }
+                if(expiredDate.isEmpty()){
+                    txtExpiredDate.setError("Inserire la data di scadenza della propria carta");
+                    return;
+                }
                 if (state.isEmpty()) {
                     txtState.setError("Inserire lo stato");
                     return;
@@ -157,9 +177,9 @@ public class OrderActivity extends AppCompatActivity {
 
                 Card paymentCard = new Card();
                 paymentCard.setPaymentMethod(paymentMethod);
-                paymentCard.setCode(code);
-                paymentCard.setPin(pin);
-                //paymentCard.setExpiredDate();
+                paymentCard.setCode(Integer.parseInt(code));
+                paymentCard.setPin(Integer.parseInt(pin));
+                paymentCard.setExpiredDate(expiredDate);
                 //databaseReference.child("payments").setValue();
                 databaseReference.child("state").setValue(state);
                 databaseReference.child("region").setValue(region);
@@ -172,8 +192,5 @@ public class OrderActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 }
 
