@@ -34,7 +34,6 @@ import org.w3c.dom.Text;
 
 public class CartFragment extends Fragment {
 
-
     private DatabaseReference databaseReference;
     private FirebaseRecyclerAdapter cartAdapter;
     private RecyclerView recyclerViewCart;
@@ -42,10 +41,8 @@ public class CartFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private TextView txtTotalPrice;
     private TextView txtProcessOrder;
-    private double totalPrice;
     private Cart cart;
-    int quantity;
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cart_fragment_layout, container, false);
 
         recyclerViewCart = (RecyclerView) v.findViewById(R.id.recyclerViewCart);
@@ -74,6 +71,7 @@ public class CartFragment extends Fragment {
         Log.v("UserInCart", user.getDisplayName());
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
 
+        
         cartAdapter = new FirebaseRecyclerAdapter<Product, CartViewHolder>(
                 Product.class,
                 R.layout.cart_row_layout,
@@ -97,17 +95,16 @@ public class CartFragment extends Fragment {
                     }
                 });
 
-                //totalPrice += model.getPrice() * Double.parseDouble(viewHolder.txtQuantity.getText().toString());
+
                 Picasso.with(getContext()).load(model.getImage()).resize(170, 210).into(viewHolder.imageView);
                 viewHolder.txtName.setText(model.getName().toString());
 
                 viewHolder.txtPrice.setText("Prezzo x1: " + String.valueOf(model.getPrice() + "€"));
-                //txtTotalPrice.setText("Prezzo totale: " + totalPrice);
                 viewHolder.imgDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        cart.deleteProduct(model);
+                        cart.deleteProduct(model,getContext(),inflater);
 
                     }
                 });
@@ -125,7 +122,6 @@ public class CartFragment extends Fragment {
 
                 }else {
 
-
                     txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue());
                 }
             }
@@ -141,6 +137,7 @@ public class CartFragment extends Fragment {
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
+
         TextView txtQuantity;
         TextView txtName;
         TextView txtPrice;
@@ -155,7 +152,6 @@ public class CartFragment extends Fragment {
             txtQuantity = (TextView) itemView.findViewById(R.id.txtQuantity);
             imgDelete = (ImageView) itemView.findViewById(R.id.deleteProductCar);
             imageView = (ImageView) itemView.findViewById(R.id.imageProductCart);
-
 
         }
     }
