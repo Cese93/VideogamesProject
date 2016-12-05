@@ -11,7 +11,7 @@ public class Card implements Serializable{
     private String paymentMethod;
     private int code;
     private int pin;
-    private Date expiredDate;
+    private String expiredDate;
 
     public Card(){
 
@@ -42,11 +42,11 @@ public class Card implements Serializable{
         this.code = code;
     }
 
-    public Date getExpiredDate() {
+    public String getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(Date expiredDate) {
+    public void setExpiredDate(String expiredDate) {
         this.expiredDate = expiredDate;
     }
 
