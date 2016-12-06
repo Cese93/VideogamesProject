@@ -4,6 +4,7 @@ package com.example.erik.videogamesproject;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by erik_ on 22/11/2016.
@@ -38,7 +44,8 @@ public class OrderActivity extends AppCompatActivity {
     private RadioGroup radioGroupPayments;
     private TextView txtCode;
     private TextView txtPIN;
-    private TextView txtExpiredDate;
+    private TextView txtMonthExpiredDate;
+    private TextView txtYearExpiredDate;
     private TextView txtName;
     private TextView txtSurname;
     private TextView txtState;
@@ -50,20 +57,19 @@ public class OrderActivity extends AppCompatActivity {
     private TextView txtTotalPrice;
     private Button btnProceedToRecap;
 
-    String paymentMethod;
-    String code;
-    String pin;
-    private String expiredDate;
-    String name;
-    String surname;
-    String state;
-    String region;
-    String city;
-    String address;
-    String streetNumber;
-    String cap;
-
-    static final int DIALOG_ID = 0;
+    private String paymentMethod;
+    private String code;
+    private String pin;
+    private String monthExpiredDate;
+    private String yearExpiredDate;
+    private String name;
+    private String surname;
+    private String state;
+    private String region;
+    private String city;
+    private String address;
+    private String streetNumber;
+    private String cap;
 
 
     @Override
@@ -78,7 +84,8 @@ public class OrderActivity extends AppCompatActivity {
         radioGroupPayments = (RadioGroup) findViewById(R.id.radioPayments);
         txtCode = (TextView) findViewById(R.id.txtCode);
         txtPIN = (TextView) findViewById(R.id.txtPIN);
-        txtExpiredDate = (TextView) findViewById(R.id.txtExpiredDate);
+        txtMonthExpiredDate = (TextView) findViewById(R.id.txtMonthExpiredDate);
+        txtYearExpiredDate = (TextView) findViewById(R.id.txtYearExpiredDate);
         txtName = (TextView) findViewById(R.id.txtName);
         txtSurname = (TextView) findViewById(R.id.txtSurname);
         txtState = (TextView) findViewById(R.id.txtState);
@@ -105,6 +112,14 @@ public class OrderActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("payments").exists()){
+                    txtCode.setText(dataSnapshot.child("payments").child("code").getValue().toString());
+                    txtPIN.setText(dataSnapshot.child("payments").child("pin").getValue().toString());
+                    txtMonthExpiredDate.setText(dataSnapshot.child("payments").child("expiredDate").child("month").getValue().toString());
+                    txtYearExpiredDate.setText(dataSnapshot.child("payments").child("expiredDate").child("year").getValue().toString());
+                } else {
+                    dataSnapshot.child("payments");
+                }
                 txtName.setText(dataSnapshot.child("name").getValue().toString());
                 txtSurname.setText(dataSnapshot.child("surname").getValue().toString());
                 txtState.setText(dataSnapshot.child("state").getValue().toString());
@@ -127,7 +142,8 @@ public class OrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 code = txtCode.getText().toString().trim();
                 pin = txtPIN.getText().toString().trim();
-                expiredDate = txtExpiredDate.getText().toString().trim();
+                monthExpiredDate = txtMonthExpiredDate.getText().toString().trim();
+                yearExpiredDate = txtYearExpiredDate.getText().toString().trim();
                 name = txtName.getText().toString().trim();
                 surname = txtSurname.getText().toString().trim();
                 state = txtState.getText().toString().trim();
@@ -136,16 +152,29 @@ public class OrderActivity extends AppCompatActivity {
                 address = txtAddress.getText().toString().trim();
                 streetNumber = txtStreetNumber.getText().toString().trim();
                 cap = txtCAP.getText().toString().trim();
-                if (txtCode.getText().toString().trim().isEmpty()) {
+                if (txtCode.getText().toString().trim().isEmpty() || !isNumber(txtCode.getText().toString().trim())) {
                     txtCode.setError("Inserire il codice della carta");
                     return;
                 }
-                if (txtPIN.getText().toString().trim().isEmpty() || !code.matches("\\d+(?:\\.\\d+)?")) {
+                if (txtPIN.getText().toString().trim().isEmpty() || !isNumber(txtPIN.getText().toString().trim())) {
                     txtPIN.setError("Inserire il PIN");
                     return;
                 }
-                if(expiredDate.isEmpty()){
-                    txtExpiredDate.setError("Inserire la data di scadenza della propria carta");
+                if(txtYearExpiredDate.getText().toString().trim().isEmpty() || !isNumber(yearExpiredDate)) {
+                    Toast.makeText(getBaseContext(), "Errore! Inserire l'anno di scadenza della propria carta", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(txtMonthExpiredDate.getText().toString().trim().isEmpty() || !isNumber(monthExpiredDate) ||
+                        Integer.parseInt(monthExpiredDate) < 1 || Integer.parseInt(monthExpiredDate) > 12){
+                    Toast.makeText(getBaseContext(), "Errore! Inserire il mese di scadenza della propria carta", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(name.isEmpty()){
+                    txtName.setError("Inserire il nome");
+                    return;
+                }
+                if(surname.isEmpty()){
+                    txtSurname.setError("Inserire il cognome");
                     return;
                 }
                 if (state.isEmpty()) {
@@ -179,8 +208,11 @@ public class OrderActivity extends AppCompatActivity {
                 paymentCard.setPaymentMethod(paymentMethod);
                 paymentCard.setCode(Integer.parseInt(code));
                 paymentCard.setPin(Integer.parseInt(pin));
-                paymentCard.setExpiredDate(expiredDate);
-                //databaseReference.child("payments").setValue();
+                databaseReference.child("payments").setValue(paymentCard);
+                databaseReference.child("payments").child("expiredDate").child("year").setValue(yearExpiredDate);
+                databaseReference.child("payments").child("expiredDate").child("month").setValue(monthExpiredDate);
+                databaseReference.child("name").setValue(name);
+                databaseReference.child("surname").setValue(surname);
                 databaseReference.child("state").setValue(state);
                 databaseReference.child("region").setValue(region);
                 databaseReference.child("city").setValue(city);
@@ -188,9 +220,21 @@ public class OrderActivity extends AppCompatActivity {
                 databaseReference.child("streetNumber").setValue(streetNumber);
                 databaseReference.child("cap").setValue(cap);
 
+                Intent intent = new Intent(getBaseContext(), CompleteOrderActivity.class);
+                startActivity(intent);
+
             }
         });
 
+    }
+
+    private static boolean isNumber(String number) {
+        try {
+            Integer.parseInt(number);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
 

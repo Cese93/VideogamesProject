@@ -1,7 +1,7 @@
 package com.example.erik.videogamesproject;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Created by Erik on 30/11/2016.
@@ -11,7 +11,7 @@ public class Card implements Serializable{
     private String paymentMethod;
     private int code;
     private int pin;
-    private String expiredDate;
+    private ArrayList<String> expiredDate;
 
     public Card(){
 
@@ -42,11 +42,11 @@ public class Card implements Serializable{
         this.code = code;
     }
 
-    public String getExpiredDate() {
+    public ArrayList<String> getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(String expiredDate) {
+    public void setExpiredDate(ArrayList<String> expiredDate) {
         this.expiredDate = expiredDate;
     }
 

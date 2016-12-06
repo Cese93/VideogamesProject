@@ -123,12 +123,30 @@
                     android:layout_height="wrap_content"
                     android:text="Data di scadenza: "
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/txtMonthExpiredDate"
+        android:layout_width="30dp"
+        android:layout_height="40dp" />
 
-                <EditText
-                    android:id="@+id/txtExpiredDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:onClick="datePicker"/>
+    <EditText
+        android:id="@+id/txtYearExpiredDate"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/txtMonthExpiredDate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mm/aa"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        style="@android:style/TextAppearance.Small"/>
+</LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
