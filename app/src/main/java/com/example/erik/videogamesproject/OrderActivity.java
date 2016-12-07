@@ -31,7 +31,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by erik_ on 22/11/2016.
@@ -62,6 +64,7 @@ public class OrderActivity extends AppCompatActivity {
     private String pin;
     private String monthExpiredDate;
     private String yearExpiredDate;
+    private Map<String, Integer> expiredDate;
     private String name;
     private String surname;
     private String state;
@@ -80,6 +83,7 @@ public class OrderActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + firebaseAuth.getCurrentUser().getDisplayName());
 
+        expiredDate = new HashMap<>();
         shippingInfoPanel = (LinearLayout) findViewById(R.id.shippingInfoPanel);
         radioGroupPayments = (RadioGroup) findViewById(R.id.radioPayments);
         txtCode = (TextView) findViewById(R.id.txtCode);
@@ -205,12 +209,15 @@ public class OrderActivity extends AppCompatActivity {
                 }
 
                 Card paymentCard = new Card();
+                expiredDate.put("month", Integer.valueOf(monthExpiredDate));
+                expiredDate.put("year", Integer.valueOf(yearExpiredDate));
                 paymentCard.setPaymentMethod(paymentMethod);
                 paymentCard.setCode(Integer.parseInt(code));
                 paymentCard.setPin(Integer.parseInt(pin));
+                paymentCard.setExpiredDate(expiredDate);
                 databaseReference.child("payments").setValue(paymentCard);
-                databaseReference.child("payments").child("expiredDate").child("year").setValue(yearExpiredDate);
-                databaseReference.child("payments").child("expiredDate").child("month").setValue(monthExpiredDate);
+                //databaseReference.child("payments").child("expiredDate").child("year").setValue(yearExpiredDate);
+                //databaseReference.child("payments").child("expiredDate").child("month").setValue(monthExpiredDate);
                 databaseReference.child("name").setValue(name);
                 databaseReference.child("surname").setValue(surname);
                 databaseReference.child("state").setValue(state);
