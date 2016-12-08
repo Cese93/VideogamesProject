@@ -76,6 +76,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 txtCode.setText(dataSnapshot.child("payments").child("code").getValue().toString());
                 txtPIN.setText(dataSnapshot.child("payments").child("pin").getValue().toString());
                 txtName.setText(dataSnapshot.child("name").getValue().toString());
