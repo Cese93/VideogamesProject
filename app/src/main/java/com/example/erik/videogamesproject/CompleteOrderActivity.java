@@ -38,6 +38,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private TextView txtStreetNumber;
     private TextView txtCAP;
     private TextView txtTotalPrice;
+    private Button btnConfirmOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class CompleteOrderActivity extends AppCompatActivity {
         txtStreetNumber = (TextView) findViewById(R.id.txtStreetNumber);
         txtCAP = (TextView) findViewById(R.id.txtCAP);
         txtTotalPrice = (TextView) findViewById(R.id.txtTotalPrice);
+        btnConfirmOrder = (Button) findViewById(R.id.btnConfirmOrder);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + firebaseAuth.getCurrentUser().getDisplayName());
@@ -75,10 +78,11 @@ public class CompleteOrderActivity extends AppCompatActivity {
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                txtPaymentMethod.setText(dataSnapshot.child("payments").child("paymentMethod").getValue().toString());
                 txtCode.setText(dataSnapshot.child("payments").child("code").getValue().toString());
                 txtPIN.setText(dataSnapshot.child("payments").child("pin").getValue().toString());
+                txtExpiredDate.setText(dataSnapshot.child("payments").child("expiredDate").child("month").getValue().toString() + "/" + dataSnapshot.child("payments").child("expiredDate").child("year").getValue().toString());
                 txtName.setText(dataSnapshot.child("name").getValue().toString());
                 txtSurname.setText(dataSnapshot.child("surname").getValue().toString());
                 txtState.setText(dataSnapshot.child("state").getValue().toString());
@@ -87,6 +91,27 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 txtAddress.setText(dataSnapshot.child("address").getValue().toString());
                 txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
                 txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
+                txtTotalPrice.setText(dataSnapshot.child("Cart").child("totalPrice").getValue().toString() + "€");
+                btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*if(dataSnapshot.hasChild("Orders")){
+                            Log.e("Provaaa", "Sono qui");
+                            databaseReference.child("Orders").child("orderNumber").setValue(Integer.parseInt(dataSnapshot.child("Orders").child("orderNumber").getValue().toString()) + 1);
+                        } else {*/
+
+                        if(dataSnapshot.hasChild("Orders")){
+                            databaseReference.child("Orders").child("order " + Integer.parseInt(dataSnapshot.child("Orders").child("orderNumber").getValue().toString()) + 1).child("Product").setValue(dataSnapshot.child("Cart").child("Cart").getValue());
+                        } else {
+                            databaseReference.child("Orders").child("orderNumber").setValue(1);
+                            databaseReference.child("Orders").child("order " + 1).child("Product").setValue(dataSnapshot.child("Cart").child("Cart").getValue());
+                        }
+
+                            //databaseReference.child("Orders").child("totalPrice").setValue(dataSnapshot.child("Cart").child("totalPrice").getValue());
+
+
+                    }
+                });
             }
 
             @Override
