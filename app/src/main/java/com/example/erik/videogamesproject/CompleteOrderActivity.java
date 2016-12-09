@@ -1,8 +1,8 @@
 package com.example.erik.videogamesproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -15,6 +15,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Map;
 
 /**
  * Created by Erik on 06/12/2016.
@@ -39,6 +43,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private TextView txtCAP;
     private TextView txtTotalPrice;
     private Button btnConfirmOrder;
+    private Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,24 +97,23 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
                 txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
                 txtTotalPrice.setText(dataSnapshot.child("Cart").child("totalPrice").getValue().toString() + "€");
+                order = new Order();
+                order.setProducts((Map<String, Product>) dataSnapshot.child("Cart").child("Cart").getValue());
+                order.setTotal(Double.parseDouble(dataSnapshot.child("Cart").child("totalPrice").getValue().toString()));
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                order.setOrderDate(df.format(c.getTime()));
                 btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*if(dataSnapshot.hasChild("Orders")){
-                            Log.e("Provaaa", "Sono qui");
-                            databaseReference.child("Orders").child("orderNumber").setValue(Integer.parseInt(dataSnapshot.child("Orders").child("orderNumber").getValue().toString()) + 1);
-                        } else {*/
-
-                        if(dataSnapshot.hasChild("Orders")){
-                            databaseReference.child("Orders").child("order " + Integer.parseInt(dataSnapshot.child("Orders").child("orderNumber").getValue().toString()) + 1).child("Product").setValue(dataSnapshot.child("Cart").child("Cart").getValue());
+                        if (dataSnapshot.hasChild("Orders")) {
+                            //order.setNumberOrder(order.getNumberOrder() + 1);
+                            databaseReference.child("Orders").setValue(order);
                         } else {
-                            databaseReference.child("Orders").child("orderNumber").setValue(1);
-                            databaseReference.child("Orders").child("order " + 1).child("Product").setValue(dataSnapshot.child("Cart").child("Cart").getValue());
+                            databaseReference.child("Orders").setValue(order);
                         }
-
-                            //databaseReference.child("Orders").child("totalPrice").setValue(dataSnapshot.child("Cart").child("totalPrice").getValue());
-
-
+                        Intent intent = new Intent(getBaseContext(), MyOrder.class);
+                        startActivity(intent);
                     }
                 });
             }
