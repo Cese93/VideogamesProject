@@ -4,7 +4,6 @@
     android:layout_height="wrap_content">
 
 
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -13,7 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="vertical">
-
 
 
             <LinearLayout
@@ -57,7 +55,7 @@
                         android:id="@+id/radioPaypal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Prepagate Paypal" />
+                        android:text="Prepagata Paypal" />
 
                     <RadioButton
                         android:id="@+id/radioAmericanExpress"
@@ -124,11 +122,31 @@
                     android:text="Data di scadenza: "
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-                <EditText
-                    android:id="@+id/txtExpiredDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:onClick="datePicker"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/txtMonthExpiredDate"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp" />
+
+                    <EditText
+                        android:id="@+id/txtYearExpiredDate"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_alignEnd="@+id/txtMonthExpiredDate" />
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="mm/aa"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,17 +241,17 @@
                     android:id="@+id/txtTotalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
 
             <Button
+                android:id="@+id/btnProceedToRecap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/btnProceedToRecap"
-                android:text="Procedi con l'acquisto"/>
+                android:text="Procedi con l'acquisto" />
 
 
         </LinearLayout>

@@ -21,7 +21,7 @@ public class User {
     private String address;
     private String streetNumber;
     private int CAP;
-    private ArrayList<Card> payments;
+    private Card payments;
 
 
     User(){}
@@ -110,11 +110,11 @@ public class User {
         this.CAP = CAP;
     }
 
-    public ArrayList<Card> getPayments() {
+    public Card getPayments() {
         return payments;
     }
 
-    public void setPayments(ArrayList<Card> payments) {
+    public void setPayments(Card payments) {
         this.payments = payments;
     }
 

@@ -1,19 +1,20 @@
 package com.example.erik.videogamesproject;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Erik on 30/11/2016.
  */
 
-public class Card implements Serializable{
+public class Card implements Serializable {
     private String paymentMethod;
     private int code;
     private int pin;
-    private String expiredDate;
+    private Map<String, Integer> expiredDate;
 
-    public Card(){
+    public Card() {
 
     }
 
@@ -42,11 +43,11 @@ public class Card implements Serializable{
         this.code = code;
     }
 
-    public String getExpiredDate() {
+    public Map<String, Integer> getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(String expiredDate) {
+    public void setExpiredDate(Map<String, Integer> expiredDate) {
         this.expiredDate = expiredDate;
     }
 
