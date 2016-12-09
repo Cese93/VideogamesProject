@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -44,6 +45,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private TextView txtTotalPrice;
     private Button btnConfirmOrder;
     private Order order;
+    private Map<String, Order> orders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
         btnConfirmOrder = (Button) findViewById(R.id.btnConfirmOrder);
 
 
+        orders = new HashMap<>();
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + firebaseAuth.getCurrentUser().getDisplayName());
         adapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.two_line_list_item, databaseReference.child("Cart").child("Cart")) {

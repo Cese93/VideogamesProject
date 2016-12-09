@@ -126,12 +126,20 @@ public class OrderActivity extends AppCompatActivity {
                 }
                 txtName.setText(dataSnapshot.child("name").getValue().toString());
                 txtSurname.setText(dataSnapshot.child("surname").getValue().toString());
-                txtState.setText(dataSnapshot.child("state").getValue().toString());
-                txtRegion.setText(dataSnapshot.child("region").getValue().toString());
-                txtCity.setText(dataSnapshot.child("city").getValue().toString());
-                txtAddress.setText(dataSnapshot.child("address").getValue().toString());
-                txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
-                txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
+                if(dataSnapshot.child("state").exists())
+                    txtState.setText(dataSnapshot.child("state").getValue().toString());
+                if(dataSnapshot.child("region").exists())
+                    txtRegion.setText(dataSnapshot.child("region").getValue().toString());
+                if(dataSnapshot.child("city").exists())
+                    txtCity.setText(dataSnapshot.child("city").getValue().toString());
+                if(dataSnapshot.child("address").exists())
+                    txtAddress.setText(dataSnapshot.child("address").getValue().toString());
+                if(dataSnapshot.child("streetNumber").exists())
+                    txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
+                if(dataSnapshot.child("cap").exists())
+                    txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
+
+
             }
 
             @Override
