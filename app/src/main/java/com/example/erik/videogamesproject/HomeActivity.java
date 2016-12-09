@@ -2,8 +2,10 @@ package com.example.erik.videogamesproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,10 +14,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +29,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -38,6 +53,11 @@ public class HomeActivity extends AppCompatActivity {
     private TextView txtHeaderEmail;
     private ProgressDialog progressDialog;
 
+    private  TextView nameLastVideogame;
+    private  ImageView imageHome;
+
+
+    private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private StorageReference storageReference;
@@ -54,6 +74,9 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
 
+        HomeFragment homeFragment = new  HomeFragment();
+        setFragment(homeFragment);
+
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         progressDialog = new ProgressDialog(this);
@@ -64,6 +87,10 @@ public class HomeActivity extends AppCompatActivity {
 
         user = firebaseAuth.getCurrentUser();
         Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+
+
+       // final ImageView imgCover = (ImageView) findViewById(R.id.imgCoverHome);
+
 
         //Inizializzazione NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -87,6 +114,10 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
+                        HomeFragment homeFragment = new  HomeFragment();
+                        setFragment(homeFragment);
+                        return true;
+                    case R.id.videogames:
                         VideogamesFragment videogamesFragment = new VideogamesFragment();
                         setFragment(videogamesFragment);
                         return true;
@@ -218,4 +249,5 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -2,8 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Prodotti">
         <menu>
+
             <item
-            android:id="@+id/home"
+             android:id="@+id/home"
+             android:checked="false"
+             android:icon="@drawable/videogames"
+             android:title="Home" />
+
+            <item
+            android:id="@+id/videogames"
             android:checked="false"
             android:icon="@drawable/videogames"
             android:title="Videogiochi" />

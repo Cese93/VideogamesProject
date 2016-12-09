@@ -13,6 +13,7 @@ public class Product implements Serializable{
     private String image;
     private String imageTitle;
     private int quantity;
+    private int soldQuantity;
 
 
     public Product() {
@@ -59,11 +60,19 @@ public class Product implements Serializable{
         this.imageTitle = imageTitle;
     }
 
-    public int getQuantity() {
+    public int getSoldQuantity () {
+        return soldQuantity;
+    }
+
+    public void setSoldQuantity ( int soldQuantity ) {
+        this.soldQuantity = soldQuantity;
+    }
+
+    public int getQuantity () {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity ( int quantity ) {
         this.quantity = quantity;
     }
 

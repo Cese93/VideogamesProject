@@ -72,24 +72,24 @@ public class LastReleaseAccessory extends Fragment {
         return v;
     }
 
-    public static class ViewHolderAccessory extends RecyclerView.ViewHolder {
+  public static class ViewHolderAccessory extends RecyclerView.ViewHolder {
 
-        TextView txtName;
-        TextView txtDeveloper;
-        TextView txtPrice;
-        ImageView imgAccessory;
+    TextView txtName;
+    TextView txtDeveloper;
+    TextView txtPrice;
+    ImageView imgAccessory;
 
-        public ViewHolderAccessory(View itemView) {
+    public ViewHolderAccessory(View itemView) {
 
-            super(itemView);
+        super(itemView);
 
-            itemView.setSelected(true);
+        itemView.setSelected(true);
 
-            txtName = (TextView) itemView.findViewById(R.id.txtNameAccessory);
-            txtDeveloper = (TextView) itemView.findViewById(R.id.txtProducerAccessory);
-            txtPrice = (TextView) itemView.findViewById(R.id.txtPriceAccessory);
-            imgAccessory = (ImageView) itemView.findViewById(R.id.imgAccessory);
+        txtName = (TextView) itemView.findViewById(R.id.txtNameAccessory);
+        txtDeveloper = (TextView) itemView.findViewById(R.id.txtProducerAccessory);
+        txtPrice = (TextView) itemView.findViewById(R.id.txtPriceAccessory);
+        imgAccessory = (ImageView) itemView.findViewById(R.id.imgAccessory);
 
-        }
     }
+}
 }

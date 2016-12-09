@@ -16,6 +16,7 @@ public class Videogame extends Product implements Serializable {
     private String developer;
     private String publishers;
     private ArrayList<String> platforms;
+    private ArrayList<String> languages;
     private Date releaseDate;
     private String plot;
     private String trailer;
@@ -65,7 +66,6 @@ public class Videogame extends Product implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-
     public String getPlot() {
         return plot;
     }
@@ -81,5 +81,14 @@ public class Videogame extends Product implements Serializable {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
+
+    public ArrayList<String> getLanguages () {
+        return languages;
+    }
+
+    public void setLanguages ( ArrayList<String> languages ) {
+        this.languages = languages;
+    }
+
 
 }

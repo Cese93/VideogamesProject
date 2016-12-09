@@ -247,6 +247,7 @@ public class Cart {
                     int totalQuantity = quantity;
                     while(iterator.hasNext()){
 
+
                         Map.Entry entry = (Map.Entry)iterator.next();
 
                         if(entry.getKey().equals(platform)){

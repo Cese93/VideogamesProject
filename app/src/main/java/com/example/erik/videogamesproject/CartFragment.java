@@ -68,6 +68,7 @@ public class CartFragment extends Fragment {
 
         cart = new Cart(firebaseAuth.getCurrentUser());
 
+
         Log.v("UserInCart", user.getDisplayName());
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
 

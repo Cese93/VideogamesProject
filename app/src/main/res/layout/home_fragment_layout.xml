@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/mainCart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+            <TextView
+                android:id="@+id/txtLastVideogameHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                />
+
+            <ImageView
+                android:id="@+id/imageHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/txtlastRelease"
+                android:layout_below="@+id/mainCart"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:text="Ultime Uscite"
+                android:textSize="20dp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/TopSellerlist"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/txtlastRelease"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/topSellerGames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+          </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/txtTopSeller"
+                android:layout_below="@+id/TopSellerlist"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:text="I piu venduti"
+                android:textSize="20dp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/lastReleGamesList"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtTopSeller"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lastReleGames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/txtTopRated"
+        android:layout_below="@+id/lastReleGamesList"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:text="I più votati"
+        android:textSize="20dp"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/TopRatedGamesList"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtTopRated"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:orientation="horizontal"
+            >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/TopRatedGames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+         </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
