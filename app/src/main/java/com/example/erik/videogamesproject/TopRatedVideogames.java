@@ -5,11 +5,16 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +32,8 @@ public class TopRatedVideogames extends Fragment {
     private DatabaseReference databaseReference;
     private LinearLayoutManager linearLayoutManager;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tabs_layout, container, false);
@@ -37,6 +44,7 @@ public class TopRatedVideogames extends Fragment {
         recyclerViewVideogames.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere i videogiochi più votati in cima
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewVideogames.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
@@ -70,6 +78,8 @@ public class TopRatedVideogames extends Fragment {
 
         recyclerViewVideogames.setAdapter(videogamesAdapter);
         return v;
+
+
     }
 
     public static class ViewHolderVideogames extends RecyclerView.ViewHolder {

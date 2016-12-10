@@ -36,6 +36,7 @@ public class LastReleaseAccessory extends Fragment {
         recyclerViewAccessory.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi accessori usciti in cima
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");

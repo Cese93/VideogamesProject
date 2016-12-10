@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
        // topRatedRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
         //topRatedRecyclerView.setHasFixedSize(true);
         layoutManagerTopRated.setReverseLayout(true);
+        layoutManagerTopRated.setStackFromEnd(true);
         topRatedRecyclerView.setLayoutManager(layoutManagerTopRated);
 
         topRatedAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(
@@ -92,6 +93,7 @@ public class HomeFragment extends Fragment {
 
         LinearLayoutManager layoutManagerTopSeller = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManagerTopSeller.setReverseLayout(true);
+        layoutManagerTopSeller.setStackFromEnd(true);
         topSellerRecyclerView.setLayoutManager(layoutManagerTopSeller);
 
 
@@ -125,6 +127,7 @@ public class HomeFragment extends Fragment {
 
         LinearLayoutManager layoutManagerLastRelease = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         layoutManagerLastRelease.setReverseLayout(true);
+        layoutManagerLastRelease.setStackFromEnd(true);
         lastReleaseRecyclerView.setLayoutManager(layoutManagerLastRelease);
 
         lastReleaseAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(

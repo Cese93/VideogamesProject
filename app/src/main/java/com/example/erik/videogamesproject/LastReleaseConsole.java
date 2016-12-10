@@ -37,6 +37,7 @@ public class LastReleaseConsole extends Fragment {
         recyclerViewConsole.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere le ultime console uscite in cima la lista
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewConsole.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Console");

@@ -26,6 +26,7 @@ public class TopSellerVideogames extends Fragment {
     private RecyclerView recyclerViewVideogames;
     private FirebaseRecyclerAdapter videogamesAdapter;
     private DatabaseReference databaseReference;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +34,13 @@ public class TopSellerVideogames extends Fragment {
 
         recyclerViewVideogames = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         //Aggiunta decorator a ogni elemento della listview
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere le ultime console uscite in cima la lista
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewVideogames.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewVideogames.setHasFixedSize(true);
-        recyclerViewVideogames.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewVideogames.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
         //Creazione adapter per la recyclerView

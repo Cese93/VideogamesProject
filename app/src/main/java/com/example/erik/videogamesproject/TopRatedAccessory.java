@@ -36,6 +36,7 @@ public class TopRatedAccessory extends Fragment {
         recyclerViewAccessory.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi accessoru usciti in cima la lista
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewAccessory.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
