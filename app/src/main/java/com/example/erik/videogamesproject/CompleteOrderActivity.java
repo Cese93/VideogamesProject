@@ -3,6 +3,7 @@ package com.example.erik.videogamesproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -84,7 +85,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
         };
         recapListView.setAdapter(adapter);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 txtPaymentMethod.setText(dataSnapshot.child("payments").child("paymentMethod").getValue().toString());
@@ -106,16 +107,46 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 order.setOrderDate(df.format(c.getTime()));
+
                 btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (dataSnapshot.hasChild("Orders")) {
+                        if (dataSnapshot.child("Orders").hasChild("orders")) {
                             //order.setNumberOrder(order.getNumberOrder() + 1);
-                            databaseReference.child("Orders").setValue(order);
+                            orders = (Map<String, Order>) dataSnapshot.child("Orders").child("orders").getValue();
+                            Log.e("mappa", String.valueOf(orders));
+                            Long orderNumber = (Long) dataSnapshot.child("Orders").child("orderNumber").getValue();
+                            Log.e("NUMERO", dataSnapshot.child("Orders").child("orderNumber").getValue().toString());
+                            orders.put("order " + orderNumber++, order);
+                            databaseReference.child("Orders").child("orders").setValue(orders);
+                            databaseReference.child("Orders").child("orderNumber").setValue(orderNumber++);
                         } else {
-                            databaseReference.child("Orders").setValue(order);
+                            orders.put("order 1", order);
+                            databaseReference.child("Orders").child("orders").setValue(orders);
+                            databaseReference.child("Orders").child("orderNumber").setValue(1);
                         }
-                        Intent intent = new Intent(getBaseContext(), MyOrder.class);
+
+                        //Salvataggio dei dati dell'utente
+                        User user = new User();
+                        Card paymentCard = new Card();
+                        user.setName(dataSnapshot.child("name").getValue().toString());
+                        user.setSurname(dataSnapshot.child("surname").getValue().toString());
+                        user.setEmail(dataSnapshot.child("email").getValue().toString());
+                        user.setState(dataSnapshot.child("state").getValue().toString());
+                        user.setRegion(dataSnapshot.child("region").getValue().toString());
+                        user.setCity(dataSnapshot.child("city").getValue().toString());
+                        user.setAddress(dataSnapshot.child("address").getValue().toString());
+                        user.setStreetNumber(dataSnapshot.child("streetNumber").getValue().toString());
+                        user.setCAP(Integer.parseInt(dataSnapshot.child("cap").getValue().toString()));
+                        paymentCard.setCode(Integer.parseInt(dataSnapshot.child("payments").child("code").getValue().toString()));
+                        paymentCard.setPaymentMethod(dataSnapshot.child("payments").child("paymentMethod").getValue().toString());
+                        paymentCard.setPin(Integer.parseInt(dataSnapshot.child("payments").child("pin").getValue().toString()));
+                        paymentCard.setExpiredDate((Map<String, Integer>) dataSnapshot.child("payments").child("expiredDate").getValue());
+                        user.setPayments(paymentCard);
+                        Log.e("NUMERO", dataSnapshot.child("Orders").child("orderNumber").getValue().toString());
+                        databaseReference.child("Orders").child("orders").child("order " + dataSnapshot.child("Orders").child("orderNumber").getValue()).child("holder").setValue(user);
+
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }
                 });

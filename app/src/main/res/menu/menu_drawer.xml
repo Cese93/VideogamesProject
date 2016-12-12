@@ -35,13 +35,13 @@
         <menu>
 
         <item
-            android:id="@+id/drafts"
+            android:id="@+id/myOrder"
             android:checked="false"
             android:icon="@drawable/myorder"
             android:title="I miei ordini" />
 
         <item
-            android:id="@+id/allmail"
+            android:id="@+id/cart"
             android:checked="false"
             android:icon="@drawable/cart"
             android:title="Carrello" />

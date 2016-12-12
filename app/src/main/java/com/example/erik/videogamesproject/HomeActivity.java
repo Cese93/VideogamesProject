@@ -131,13 +131,13 @@ public class HomeActivity extends AppCompatActivity {
                         AccessoryFragment accessoryFragment = new AccessoryFragment();
                         setFragment(accessoryFragment);
                         return true;
-                    case R.id.drafts:
-                        Toast.makeText(getApplicationContext(), "Drafts Selected", Toast.LENGTH_SHORT).show();
+                    case R.id.myOrder:
+                        MyOrderFragment myOrderFragment = new MyOrderFragment();
+                        setFragment(myOrderFragment);
                         return true;
-                    case R.id.allmail:
+                    case R.id.cart:
                         CartFragment cartFragment = new CartFragment();
                         setFragment(cartFragment);
-                        Toast.makeText(getApplicationContext(), "All Mail Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.trash:
                         Toast.makeText(getApplicationContext(), "Trash Selected", Toast.LENGTH_SHORT).show();

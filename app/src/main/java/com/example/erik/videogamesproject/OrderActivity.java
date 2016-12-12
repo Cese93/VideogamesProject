@@ -235,6 +235,7 @@ public class OrderActivity extends AppCompatActivity {
                 databaseReference.child("streetNumber").setValue(streetNumber);
                 databaseReference.child("cap").setValue(cap);
 
+
                 Intent intent = new Intent(getBaseContext(), CompleteOrderActivity.class);
                 startActivity(intent);
 

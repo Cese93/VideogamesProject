@@ -11,7 +11,6 @@ import java.util.Map;
 public class Order {
     private Map<String, Product> products;
     private String orderDate;
-    private int numberOrder;
     private double total;
 
     public Map<String, Product> getProducts() {
@@ -28,14 +27,6 @@ public class Order {
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public int getNumberOrder() {
-        return numberOrder;
-    }
-
-    public void setNumberOrder(int numberOrder) {
-        this.numberOrder = numberOrder;
     }
 
     public double getTotal() {

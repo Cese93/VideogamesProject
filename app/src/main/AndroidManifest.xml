@@ -36,10 +36,8 @@
         <activity android:name=".CompleteOrderActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".MyOrder"
-            android:label="I miei ordini"
-            android:theme="@style/AppThemeWithToolbar"/>
-
+        <activity android:name=".OrderInfo"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
