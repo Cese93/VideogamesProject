@@ -66,10 +66,8 @@ public class MyOrderFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(final ViewHolderOrders viewHolder, final Order model, final int position) {
-
-
                 viewHolder.txtOrderDate.setText(model.getOrderDate());
-                viewHolder.txtTotalPrice.setText(String.valueOf(model.getTotal()));
+                viewHolder.txtTotalPrice.setText(String.valueOf(model.getTotal()) + "€");
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -90,30 +88,12 @@ public class MyOrderFragment extends Fragment {
     public static class ViewHolderOrders extends RecyclerView.ViewHolder {
         TextView txtOrderDate;
         TextView txtTotalPrice;
-        TextView txtPaymentMethod;
-        TextView txtName;
-        TextView txtSurname;
-        TextView txtState;
-        TextView txtRegion;
-        TextView txtCity;
-        TextView txtAddress;
-        TextView txtCAP;
 
         public ViewHolderOrders(View itemView) {
             super(itemView);
             itemView.setSelected(true);
             txtOrderDate = (TextView) itemView.findViewById(R.id.txtOrderDate);
             txtTotalPrice = (TextView) itemView.findViewById(R.id.txtTotalPrice);
-            txtPaymentMethod = (TextView) itemView.findViewById(R.id.txtPaymentMethod);
-            txtName = (TextView) itemView.findViewById(R.id.txtName);
-            txtSurname = (TextView) itemView.findViewById(R.id.txtSurname);
-            txtState = (TextView) itemView.findViewById(R.id.txtState);
-            txtRegion = (TextView) itemView.findViewById(R.id.txtRegion);
-            txtCity = (TextView) itemView.findViewById(R.id.txtCity);
-            txtAddress = (TextView) itemView.findViewById(R.id.txtAddress);
-            txtCAP = (TextView) itemView.findViewById(R.id.txtCAP);
-
-
         }
     }
 }

@@ -47,6 +47,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private Button btnConfirmOrder;
     private Order order;
     private Map<String, Order> orders;
+    private Integer orderNumber = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,8 @@ public class CompleteOrderActivity extends AppCompatActivity {
         };
         recapListView.setAdapter(adapter);
 
+        order = new Order();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -101,7 +104,6 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
                 txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
                 txtTotalPrice.setText(dataSnapshot.child("Cart").child("totalPrice").getValue().toString() + "€");
-                order = new Order();
                 order.setProducts((Map<String, Product>) dataSnapshot.child("Cart").child("Cart").getValue());
                 order.setTotal(Double.parseDouble(dataSnapshot.child("Cart").child("totalPrice").getValue().toString()));
                 Calendar c = Calendar.getInstance();
@@ -111,20 +113,6 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (dataSnapshot.child("Orders").hasChild("orders")) {
-                            //order.setNumberOrder(order.getNumberOrder() + 1);
-                            orders = (Map<String, Order>) dataSnapshot.child("Orders").child("orders").getValue();
-                            Log.e("mappa", String.valueOf(orders));
-                            Long orderNumber = (Long) dataSnapshot.child("Orders").child("orderNumber").getValue();
-                            Log.e("NUMERO", dataSnapshot.child("Orders").child("orderNumber").getValue().toString());
-                            orders.put("order " + orderNumber++, order);
-                            databaseReference.child("Orders").child("orders").setValue(orders);
-                            databaseReference.child("Orders").child("orderNumber").setValue(orderNumber++);
-                        } else {
-                            orders.put("order 1", order);
-                            databaseReference.child("Orders").child("orders").setValue(orders);
-                            databaseReference.child("Orders").child("orderNumber").setValue(1);
-                        }
 
                         //Salvataggio dei dati dell'utente
                         User user = new User();
@@ -143,9 +131,21 @@ public class CompleteOrderActivity extends AppCompatActivity {
                         paymentCard.setPin(Integer.parseInt(dataSnapshot.child("payments").child("pin").getValue().toString()));
                         paymentCard.setExpiredDate((Map<String, Integer>) dataSnapshot.child("payments").child("expiredDate").getValue());
                         user.setPayments(paymentCard);
-                        Log.e("NUMERO", dataSnapshot.child("Orders").child("orderNumber").getValue().toString());
-                        databaseReference.child("Orders").child("orders").child("order " + dataSnapshot.child("Orders").child("orderNumber").getValue()).child("holder").setValue(user);
 
+                        if (dataSnapshot.child("Orders").hasChild("orders")) {
+                            orders = (Map<String, Order>) dataSnapshot.child("Orders").child("orders").getValue();
+                            orderNumber = Integer.parseInt(dataSnapshot.child("Orders").child("orderNumber").getValue().toString());
+                            orderNumber++;
+                            orders.put("order " + orderNumber, order);
+                            databaseReference.child("Orders").child("orders").setValue(orders);
+                            databaseReference.child("Orders").child("orders").child("order " + orderNumber).child("holder").setValue(user);
+                            databaseReference.child("Orders").child("orderNumber").setValue(orderNumber);
+                        } else {
+                            orders.put("order " + orderNumber, order);
+                            databaseReference.child("Orders").child("orders").setValue(orders);
+                            databaseReference.child("Orders").child("orders").child("order " + orderNumber).child("holder").setValue(user);
+                            databaseReference.child("Orders").child("orderNumber").setValue(orderNumber);
+                        }
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
                     }
