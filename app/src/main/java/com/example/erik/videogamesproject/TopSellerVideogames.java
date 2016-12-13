@@ -50,7 +50,7 @@ public class TopSellerVideogames extends Fragment {
                 Videogame.class,
                 R.layout.videogames_row_layout,
                 LastReleaseVideogames.ViewHolderVideogames.class,
-                databaseReference
+                databaseReference.orderByChild("soldQuantity")
 
         ) {
             @Override

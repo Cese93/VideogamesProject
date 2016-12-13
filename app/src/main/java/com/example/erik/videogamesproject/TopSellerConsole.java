@@ -47,7 +47,7 @@ public class TopSellerConsole extends Fragment {
                 Console.class,
                 R.layout.console_row_layout,
                 LastReleaseConsole.ViewHolderConsole.class,
-                databaseReference
+                databaseReference.orderByChild("soldQuantity")
 
         ) {
             @Override

@@ -46,7 +46,7 @@ public class TopSellerAccessory extends Fragment {
                 Accessory.class,
                 R.layout.accessory_row_layout,
                 LastReleaseAccessory.ViewHolderAccessory.class,
-                databaseReference
+                databaseReference.orderByChild("soldQuantity")
 
         ) {
             @Override
