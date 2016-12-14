@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         HomeFragment homeFragment = new  HomeFragment();
         setFragment(homeFragment);
 
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         progressDialog = new ProgressDialog(this);
@@ -89,7 +90,6 @@ public class HomeActivity extends AppCompatActivity {
 
         user = firebaseAuth.getCurrentUser();
         Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-
 
        // final ImageView imgCover = (ImageView) findViewById(R.id.imgCoverHome);
 

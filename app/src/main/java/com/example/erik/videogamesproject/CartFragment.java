@@ -42,6 +42,7 @@ public class CartFragment extends Fragment {
     private TextView txtTotalPrice;
     private TextView txtProcessOrder;
     private Cart cart;
+
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cart_fragment_layout, container, false);
 
@@ -69,10 +70,8 @@ public class CartFragment extends Fragment {
         cart = new Cart(firebaseAuth.getCurrentUser());
 
 
-        Log.v("UserInCart", user.getDisplayName());
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
 
-        
         cartAdapter = new FirebaseRecyclerAdapter<Product, CartViewHolder>(
                 Product.class,
                 R.layout.cart_row_layout,
@@ -105,7 +104,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        cart.deleteProduct(model,getContext(),inflater);
+                        cart.deleteProduct(model, getContext(), inflater);
 
                     }
                 });
@@ -117,11 +116,11 @@ public class CartFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.child("totalPrice").getValue() == null){
-
+                if (dataSnapshot.child("totalPrice").getValue() == null) {
+                    txtProcessOrder.setVisibility(View.INVISIBLE);
                     return;
 
-                }else {
+                } else {
 
                     txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue());
                 }

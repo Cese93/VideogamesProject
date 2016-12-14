@@ -108,9 +108,12 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 txtAddress.setText(dataSnapshot.child("User").child(loggedUser).child("address").getValue().toString());
                 txtStreetNumber.setText(dataSnapshot.child("User").child(loggedUser).child("streetNumber").getValue().toString());
                 txtCAP.setText(dataSnapshot.child("User").child(loggedUser).child("cap").getValue().toString());
-                txtTotalPrice.setText(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString() + "€");
-                order.setProducts((Map<String, Product>) dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").getValue());
-                order.setTotal(Double.parseDouble(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString()));
+                if(dataSnapshot.child("User").child(loggedUser).hasChild("Cart")){
+                    txtTotalPrice.setText(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString() + "€");
+                    order.setProducts((Map<String, Product>) dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").getValue());
+                    order.setTotal(Double.parseDouble(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString()));
+                }
+
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 order.setOrderDate(df.format(c.getTime()));
@@ -172,9 +175,9 @@ public class CompleteOrderActivity extends AppCompatActivity {
 
                         }
 
+                        databaseReference.child("User").child(loggedUser).child("Cart").removeValue();
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
-                        //databaseReference.child("User").child(loggedUser).child("Cart").removeValue();
                     }
                 });
             }

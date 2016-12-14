@@ -31,12 +31,15 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".OrderActivity"
+            android:label="Ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".CompleteOrderActivity"
+            android:label="Completa il tuo ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".OrderInfo"
+            android:label="Il mio ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
