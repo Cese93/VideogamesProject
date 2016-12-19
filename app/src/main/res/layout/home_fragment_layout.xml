@@ -12,37 +12,39 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+        <!--
+            <TextView
+                android:id="@+id/txtTopSellerEver"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:text="Il piu venduto"
+                android:textSize="30dp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                />
 
         <android.support.v7.widget.CardView
-            android:id="@+id/mainCart"
+            android:id="@+id/mainCard"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="250dp"
+            android:layout_below="@+id/txtTopSellerEver"
+            >
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/topSellerEver"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/txtLastVideogameHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                />
+            </android.support.v7.widget.RecyclerView>
 
-            <ImageView
-                android:id="@+id/imageHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-            </LinearLayout>
         </android.support.v7.widget.CardView>
+            -->
 
             <TextView
                 android:id="@+id/txtlastRelease"
-                android:layout_below="@+id/mainCart"
+                android:layout_below="@+id/mainCard"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="match_parent"
