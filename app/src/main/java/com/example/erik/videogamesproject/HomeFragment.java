@@ -5,26 +5,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by Marco on 06/12/2016.
@@ -32,57 +23,47 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    private TextView titleHome;
-    private ImageView imageHome;
+
     private DatabaseReference databaseReference;
     private RecyclerView topRatedRecyclerView;
     private RecyclerView topSellerRecyclerView;
     private RecyclerView lastReleaseRecyclerView;
-    private RecyclerView topSellerEverRecyclerView;
     private FirebaseRecyclerAdapter topRatedAdapter;
     private FirebaseRecyclerAdapter topSellerAdapter;
     private FirebaseRecyclerAdapter lastReleaseAdapter;
-    private FirebaseRecyclerAdapter topSellereverAdapter;
-
 
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.home_fragment_layout, container, false);
-
-        //imageHome = (ImageView)v.findViewById(R.id.imageHome);
 
         topRatedRecyclerView = (RecyclerView) v.findViewById(R.id.TopRatedGames);
         topSellerRecyclerView = (RecyclerView) v.findViewById(R.id.lastReleGames);
         lastReleaseRecyclerView = (RecyclerView) v.findViewById(R.id.topSellerGames);
-        //topSellerEverRecyclerView = (RecyclerView) v.findViewById(R.id.topSellerEver);
-
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
 
         LinearLayoutManager layoutManagerTopRated = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-       // topRatedRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        //topRatedRecyclerView.setHasFixedSize(true);
         layoutManagerTopRated.setReverseLayout(true);
         layoutManagerTopRated.setStackFromEnd(true);
         topRatedRecyclerView.setLayoutManager(layoutManagerTopRated);
 
-        topRatedAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(
+        topRatedAdapter = new FirebaseRecyclerAdapter<Videogame, ViewHolderHome>(
                 Videogame.class,
                 R.layout.row_home_list_layout,
                 ViewHolderHome.class,
                 databaseReference.child("Videogames").orderByChild("rating").limitToLast(3)) {
 
             @Override
-            protected void populateViewHolder (ViewHolderHome viewHolder, final Videogame model, int position ) {
+            protected void populateViewHolder ( ViewHolderHome viewHolder, final Videogame model, int position ) {
                 viewHolder.txtName.setText(model.getName().toString());
-                viewHolder.txtPrice.setText(String.valueOf(model.getPrice())+"€");
+                viewHolder.txtPrice.setText(String.valueOf(model.getPrice()) + "€");
                 viewHolder.txtDeveloper.setText(model.getDeveloper());
-                Picasso.with(getContext()).load(model.getImage()).resize(200,250).into(viewHolder.imgHome);
+                Picasso.with(getContext()).load(model.getImage()).resize(200, 250).into(viewHolder.imgHome);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getActivity(), VideogameInfo.class);
                         intent.putExtra("Videogame", model);
                         startActivity(intent);
@@ -91,6 +72,7 @@ public class HomeFragment extends Fragment {
 
             }
         };
+
         topRatedRecyclerView.setAdapter(topRatedAdapter);
 
         LinearLayoutManager layoutManagerTopSeller = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -98,30 +80,27 @@ public class HomeFragment extends Fragment {
         layoutManagerTopSeller.setStackFromEnd(true);
         topSellerRecyclerView.setLayoutManager(layoutManagerTopSeller);
 
-
-
-        topSellerAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(
+        topSellerAdapter = new FirebaseRecyclerAdapter<Videogame, ViewHolderHome>(
                 Videogame.class,
                 R.layout.row_home_list_layout,
                 ViewHolderHome.class,
                 databaseReference.child("Videogames").orderByChild("soldQuantity").limitToLast(3)) {
 
             @Override
-            protected void populateViewHolder (ViewHolderHome viewHolder, final Videogame model, int position ) {
+            protected void populateViewHolder ( ViewHolderHome viewHolder, final Videogame model, int position ) {
                 viewHolder.txtName.setText(model.getName().toString());
-                viewHolder.txtPrice.setText(String.valueOf(model.getPrice())+"€");
+                viewHolder.txtPrice.setText(String.valueOf(model.getPrice()) + "€");
                 viewHolder.txtDeveloper.setText(model.getDeveloper());
-                Picasso.with(getContext()).load(model.getImage()).resize(200,250).into(viewHolder.imgHome);
+                Picasso.with(getContext()).load(model.getImage()).resize(200, 250).into(viewHolder.imgHome);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getActivity(), VideogameInfo.class);
                         intent.putExtra("Videogame", model);
                         startActivity(intent);
                     }
                 });
-
 
             }
         };
@@ -132,7 +111,7 @@ public class HomeFragment extends Fragment {
         layoutManagerLastRelease.setStackFromEnd(true);
         lastReleaseRecyclerView.setLayoutManager(layoutManagerLastRelease);
 
-        lastReleaseAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(
+        lastReleaseAdapter = new FirebaseRecyclerAdapter<Videogame, ViewHolderHome>(
                 Videogame.class,
                 R.layout.row_home_list_layout,
                 ViewHolderHome.class,
@@ -141,13 +120,13 @@ public class HomeFragment extends Fragment {
             @Override
             protected void populateViewHolder ( ViewHolderHome viewHolder, final Videogame model, int position ) {
                 viewHolder.txtName.setText(model.getName().toString());
-                viewHolder.txtPrice.setText(String.valueOf(model.getPrice())+"€");
+                viewHolder.txtPrice.setText(String.valueOf(model.getPrice()) + "€");
                 viewHolder.txtDeveloper.setText(model.getDeveloper());
-                Picasso.with(getContext()).load(model.getImage()).resize(200,250).into(viewHolder.imgHome);
+                Picasso.with(getContext()).load(model.getImage()).resize(200, 250).into(viewHolder.imgHome);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getActivity(), VideogameInfo.class);
                         intent.putExtra("Videogame", model);
                         startActivity(intent);
@@ -158,80 +137,8 @@ public class HomeFragment extends Fragment {
         };
         lastReleaseRecyclerView.setAdapter(lastReleaseAdapter);
 
-        /*
-        LinearLayoutManager layoutManagerTopSellerEver = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        layoutManagerTopSellerEver.setReverseLayout(true);
-        layoutManagerTopSellerEver.setStackFromEnd(true);
-        topSellerEverRecyclerView.setLayoutManager(layoutManagerTopSellerEver);
-
-        topSellereverAdapter = new FirebaseRecyclerAdapter<Videogame,ViewHolderHome>(
-                Videogame.class,
-                R.layout.row_home_list_layout,
-                ViewHolderHome.class,
-                databaseReference.child("Videogames").orderByChild("soldQuantity").limitToLast(1)) {
-
-            @Override
-            protected void populateViewHolder ( ViewHolderHome viewHolder, final Videogame model, int position ) {
-
-                Picasso.with(getContext()).load(model.getImageTitle()).resize(500,600).into(viewHolder.imgHome);
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), VideogameInfo.class);
-                        intent.putExtra("Videogame", model);
-                        startActivity(intent);
-                    }
-                });
-
-            }
-        };
-        topSellerEverRecyclerView.setAdapter(topSellereverAdapter);
-
-
-
-        /*
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
-
-        databaseReference.child("Videogames").orderByChild("soldQuantity").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange ( DataSnapshot dataSnapshot ) {
-                Log.v("Sono dentro OnDataChange",dataSnapshot.getValue().toString());
-                Log.v("Sono la classe",dataSnapshot.getValue().getClass().toString());
-                HashMap videogame = (HashMap) dataSnapshot.getValue();
-
-                Iterator iterator = videogame.entrySet().iterator();
-                while(iterator.hasNext()){
-
-                    Map.Entry entry = (Map.Entry)iterator.next();
-
-                    Log.v("Sono il videogame",entry.getValue().toString());
-                    HashMap list = (HashMap) entry.getValue();
-
-                    Log.v("Sono la lista",list.get("developer").toString());
-                   // titleHome.setText(list.get("name").toString());
-                    String imageTitle = list.get("imageTitle").toString();
-                    Picasso.with(getContext()).load(imageTitle).into(imageHome);
-
-
-                    Log.v("Sono il Link",imageTitle);
-                    Log.v("Sono la entry",entry.toString());
-
-                }
-                // Picasso.with(HomeActivity.this).load(videogame.getImage()).resize(150, 200).into(imgCover);
-                // nameLastVideogame.setText(videogame.getName().toString());
-
-            }
-
-            @Override
-            public void onCancelled ( DatabaseError databaseError ) {
-
-            }
-        });
-            */
         return v;
     }
-
 
     public static class ViewHolderHome extends RecyclerView.ViewHolder {
 
@@ -240,7 +147,7 @@ public class HomeFragment extends Fragment {
         TextView txtDeveloper;
         ImageView imgHome;
 
-        public ViewHolderHome( final View itemView) {
+        public ViewHolderHome ( final View itemView ) {
 
             super(itemView);
 
@@ -253,5 +160,4 @@ public class HomeFragment extends Fragment {
 
         }
     }
-
 }

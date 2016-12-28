@@ -3,7 +3,6 @@ package com.example.erik.videogamesproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,7 +30,6 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private FirebaseListAdapter<Product> adapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
-    private DatabaseReference databaseReferenceProduct;
     private TextView txtPaymentMethod;
     private TextView txtCode;
     private TextView txtPIN;
@@ -52,7 +50,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
     private String loggedUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_order);
 
@@ -79,11 +77,10 @@ public class CompleteOrderActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         loggedUser = firebaseAuth.getCurrentUser().getDisplayName();
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
-        //databaseReferenceProduct = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
 
         adapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.two_line_list_item, databaseReference.child("User").child(loggedUser).child("Cart").child("Cart")) {
             @Override
-            protected void populateView(View v, Product model, int position) {
+            protected void populateView ( View v, Product model, int position ) {
                 TextView txtName = (TextView) v.findViewById(android.R.id.text1);
                 txtName.setText(model.getName());
                 TextView txtQuantity = (TextView) v.findViewById(android.R.id.text2);
@@ -95,7 +92,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
+            public void onDataChange ( final DataSnapshot dataSnapshot ) {
                 txtPaymentMethod.setText(dataSnapshot.child("User").child(loggedUser).child("payments").child("paymentMethod").getValue().toString());
                 txtCode.setText(dataSnapshot.child("User").child(loggedUser).child("payments").child("code").getValue().toString());
                 txtPIN.setText(dataSnapshot.child("User").child(loggedUser).child("payments").child("pin").getValue().toString());
@@ -108,7 +105,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
                 txtAddress.setText(dataSnapshot.child("User").child(loggedUser).child("address").getValue().toString());
                 txtStreetNumber.setText(dataSnapshot.child("User").child(loggedUser).child("streetNumber").getValue().toString());
                 txtCAP.setText(dataSnapshot.child("User").child(loggedUser).child("cap").getValue().toString());
-                if(dataSnapshot.child("User").child(loggedUser).hasChild("Cart")){
+                if (dataSnapshot.child("User").child(loggedUser).hasChild("Cart")) {
                     txtTotalPrice.setText(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString() + "€");
                     order.setProducts((Map<String, Product>) dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").getValue());
                     order.setTotal(Double.parseDouble(dataSnapshot.child("User").child(loggedUser).child("Cart").child("totalPrice").getValue().toString()));
@@ -120,7 +117,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
 
                 btnConfirmOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         //Salvataggio dei dati dell'utente
                         User user = new User();
                         Card paymentCard = new Card();
@@ -159,17 +156,17 @@ public class CompleteOrderActivity extends AppCompatActivity {
                         for (Map.Entry<String, Product> entry : order.getProducts().entrySet()) {
                             if (dataSnapshot.child("Videogames").hasChild(entry.getKey())) {
                                 int soldQuantity = Integer.parseInt(dataSnapshot.child("Videogames").child(entry.getKey()).child("soldQuantity").getValue().toString());
-                                soldQuantity+= Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
+                                soldQuantity += Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
                                 databaseReference.child("Videogames").child(entry.getKey()).child("soldQuantity").setValue(soldQuantity);
                             }
                             if (dataSnapshot.child("Console").hasChild(entry.getKey())) {
                                 int soldQuantity = Integer.parseInt(dataSnapshot.child("Console").child(entry.getKey()).child("soldQuantity").getValue().toString());
-                                soldQuantity+= Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
+                                soldQuantity += Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
                                 databaseReference.child("Console").child(entry.getKey()).child("soldQuantity").setValue(soldQuantity);
                             }
                             if (dataSnapshot.child("Accessory").hasChild(entry.getKey())) {
                                 int soldQuantity = Integer.parseInt(dataSnapshot.child("Accessory").child(entry.getKey()).child("soldQuantity").getValue().toString());
-                                soldQuantity+= Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
+                                soldQuantity += Integer.parseInt(dataSnapshot.child("User").child(loggedUser).child("Cart").child("Cart").child(entry.getKey()).child("quantity").getValue().toString());
                                 databaseReference.child("Accessory").child(entry.getKey()).child("soldQuantity").setValue(soldQuantity);
                             }
 
@@ -183,7 +180,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
         });

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -29,14 +28,14 @@ public class LastReleaseConsole extends Fragment {
     private LinearLayoutManager linearLayoutManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.tabs_layout, container, false);
 
         recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
         recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewConsole.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere le ultime console uscite in cima la lista
+        linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerViewConsole.setLayoutManager(linearLayoutManager);
 
@@ -49,7 +48,7 @@ public class LastReleaseConsole extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(ViewHolderConsole viewHolder, final Console model, final int position) {
+            protected void populateViewHolder ( ViewHolderConsole viewHolder, final Console model, final int position ) {
                 Picasso.with(getContext()).load(model.getImage()).resize(250, 150).into(viewHolder.imgConsole);
                 viewHolder.txtName.setText(model.getName().toString());
                 viewHolder.txtDeveloper.setText(model.getDeveloper().toString());
@@ -57,7 +56,7 @@ public class LastReleaseConsole extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getActivity(), ConsoleInfo.class);
                         intent.putExtra("Console", model);
                         startActivity(intent);
@@ -79,7 +78,7 @@ public class LastReleaseConsole extends Fragment {
         TextView txtPrice;
         ImageView imgConsole;
 
-        public ViewHolderConsole(View itemView) {
+        public ViewHolderConsole ( View itemView ) {
 
             super(itemView);
 
@@ -88,7 +87,7 @@ public class LastReleaseConsole extends Fragment {
             txtName = (TextView) itemView.findViewById(R.id.txtNameConsole);
             txtDeveloper = (TextView) itemView.findViewById(R.id.txtDeveloperConsole);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPriceConsole);
-            imgConsole = (ImageView)itemView.findViewById(R.id.imgConsole);
+            imgConsole = (ImageView) itemView.findViewById(R.id.imgConsole);
 
         }
     }

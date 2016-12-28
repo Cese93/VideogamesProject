@@ -25,7 +25,7 @@ public class ConsoleFragment extends Fragment {
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.products_fragment, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewPager);
@@ -35,17 +35,16 @@ public class ConsoleFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         getPageIcon();
 
-
         return v;
     }
 
-    public void getPageIcon() {
+    public void getPageIcon () {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager ( ViewPager viewPager ) {
 
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(new LastReleaseConsole());

@@ -1,7 +1,6 @@
 package com.example.erik.videogamesproject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -14,40 +13,37 @@ public class Card implements Serializable {
     private int pin;
     private Map<String, Integer> expiredDate;
 
-    public Card() {
+    public Card () {
 
     }
 
-    public String getPaymentMethod() {
+    public String getPaymentMethod () {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod ( String paymentMethod ) {
         this.paymentMethod = paymentMethod;
     }
 
+    public int getPin () { return pin; }
 
-    public int getPin() {
-        return pin;
-    }
-
-    public void setPin(int pin) {
+    public void setPin ( int pin ) {
         this.pin = pin;
     }
 
-    public int getCode() {
+    public int getCode () {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode ( int code ) {
         this.code = code;
     }
 
-    public Map<String, Integer> getExpiredDate() {
+    public Map<String, Integer> getExpiredDate () {
         return expiredDate;
     }
 
-    public void setExpiredDate(Map<String, Integer> expiredDate) {
+    public void setExpiredDate ( Map<String, Integer> expiredDate ) {
         this.expiredDate = expiredDate;
     }
 

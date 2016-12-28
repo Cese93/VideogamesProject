@@ -13,31 +13,31 @@ public class Console extends Product implements Serializable {
     private String description;
     private Date releaseDate;
 
-    public Console() {
+    public Console () {
         super();
     }
 
-    public String getDeveloper() {
+    public String getDeveloper () {
         return developer;
     }
 
-    public void setDeveloper(String developer) {
+    public void setDeveloper ( String developer ) {
         this.developer = developer;
     }
 
-    public String getDescription() {
+    public String getDescription () {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription ( String description ) {
         this.description = description;
     }
 
-    public Date getReleaseDate() {
+    public Date getReleaseDate () {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate ( Date releaseDate ) {
         this.releaseDate = releaseDate;
     }
 }

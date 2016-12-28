@@ -55,7 +55,7 @@ public class ConsoleInfo extends Activity {
     private Cart consoleCart;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.consoleinformation_layout);
 
@@ -84,7 +84,7 @@ public class ConsoleInfo extends Activity {
             int scrollRange = -1;
 
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            public void onOffsetChanged ( AppBarLayout appBarLayout, int verticalOffset ) {
 
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
@@ -115,7 +115,7 @@ public class ConsoleInfo extends Activity {
 
 
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
+            public void onDataChange ( final DataSnapshot dataSnapshot ) {
                 communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
 
                 totalRating = Integer.parseInt(dataSnapshot.child("totalRating").getValue().toString());
@@ -123,12 +123,10 @@ public class ConsoleInfo extends Activity {
 
                 userRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
-                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    public void onRatingChanged ( RatingBar ratingBar, float rating, boolean fromUser ) {
 
                         communityRating = ((communityRating * totalRating) + userRatingBar.getRating()) / (totalRating + 1);
-
                         databaseReference.child("totalRating").setValue(totalRating + 1);
-
                         databaseReference.child("rating").setValue(communityRating);
 
                     }
@@ -138,7 +136,7 @@ public class ConsoleInfo extends Activity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
         });
@@ -147,7 +145,7 @@ public class ConsoleInfo extends Activity {
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick ( View v ) {
                 snackbar.openSnackbar();
                 snackbar.getSnackbar().show();
             }
@@ -163,17 +161,17 @@ public class ConsoleInfo extends Activity {
         private ElegantNumberButton btnQuantity;
         private FirebaseAuth firebaseAuth;
 
-        public SnackbarManagement() {
+        public SnackbarManagement () {
         }
 
-        public void openSnackbar() {
+        public void openSnackbar () {
             firebaseAuth = FirebaseAuth.getInstance();
             snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick ( View view ) {
                             consoleCart = new Cart(firebaseAuth.getCurrentUser());
-                            consoleCart.addProduct(console, console.getName(),Integer.parseInt(btnQuantity.getNumber()),console.getPrice());
+                            consoleCart.addProduct(console, console.getName(), Integer.parseInt(btnQuantity.getNumber()), console.getPrice());
                             Toast.makeText(ConsoleInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
@@ -184,7 +182,7 @@ public class ConsoleInfo extends Activity {
         }
 
 
-        public Snackbar getSnackbar() {
+        public Snackbar getSnackbar () {
             return snackbar;
         }
     }

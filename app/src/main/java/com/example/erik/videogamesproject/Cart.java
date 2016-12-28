@@ -27,17 +27,17 @@ public class Cart {
     DatabaseReference databaseReference;
 
 
-    public Cart(FirebaseUser user) {
+    public Cart ( FirebaseUser user ) {
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
     }
 
-    public void addProduct(final Product product, final String name, final int quantity, final double price) {
+    public void addProduct ( final Product product, final String name, final int quantity, final double price ) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             private double totalPrice;
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange ( DataSnapshot dataSnapshot ) {
 
                 if (dataSnapshot.child("Cart").child("Cart").hasChild(name)) {
 
@@ -47,7 +47,7 @@ public class Cart {
 
 
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                    setTotalPrice(totalPrice,price,quantity);
+                    setTotalPrice(totalPrice, price, quantity);
 
 
                 } else {
@@ -66,13 +66,13 @@ public class Cart {
 
 
                         totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                        setTotalPrice(totalPrice,price,quantity);
+                        setTotalPrice(totalPrice, price, quantity);
                     }
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
 
@@ -80,21 +80,19 @@ public class Cart {
 
     }
 
-
-    public void deleteProduct (final Product product, final Context context, final LayoutInflater inflater) {
+    public void deleteProduct ( final Product product, final Context context, final LayoutInflater inflater ) {
 
         databaseReference.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
+            public void onDataChange ( final DataSnapshot dataSnapshot ) {
 
                 if (dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue() == null ||
                         dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class) <= 0) {
 
                     databaseReference.child("Cart").child("Cart").child(product.getName()).removeValue();
 
-                }
-                  else if (dataSnapshot.child("Cart").child(product.getName()).hasChild("platforms")) {
+                } else if (dataSnapshot.child("Cart").child(product.getName()).hasChild("platforms")) {
 
 
                     final View alertLayout = inflater.inflate(R.layout.custom_alertdialog_videogame, null);
@@ -108,113 +106,87 @@ public class Cart {
 
                     alertProduct.setAdapter(adapter, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(final DialogInterface dialog, int which) {
+                        public void onClick ( final DialogInterface dialog, int which ) {
 
                         }
                     });
 
                     alertProduct.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(final DialogInterface dialog, int which) {
+                        public void onClick ( final DialogInterface dialog, int which ) {
 
-                                    Map<String,Integer> mapToPut = adapter.getMap();
+                            Map<String, Integer> mapToPut = adapter.getMap();
 
-                                    databaseReference.child("Cart").child("Cart").child(product.getName())
-                                            .child("platforms").setValue(mapToPut);
+                            databaseReference.child("Cart").child("Cart").child(product.getName())
+                                    .child("platforms").setValue(mapToPut);
 
-                                    double totalPrice = dataSnapshot.child("totalPrice").getValue(Double.class);
-                                    int quantity = dataSnapshot.child("Cart")
-                                            .child(product.getName()).child("quantity").getValue(Integer.class);
+                            double totalPrice = dataSnapshot.child("totalPrice").getValue(Double.class);
+                            int quantity = dataSnapshot.child("Cart")
+                                    .child(product.getName()).child("quantity").getValue(Integer.class);
 
-                                    if((adapter.getCountQuantity() - quantity) <= 0 ){
+                            if ((adapter.getCountQuantity() - quantity) <= 0) {
 
-                                        int quantityToAdd = adapter.getCountQuantity() - quantity;
-                                        setTotalPrice(totalPrice,product.getPrice(),quantityToAdd);
+                                int quantityToAdd = adapter.getCountQuantity() - quantity;
+                                setTotalPrice(totalPrice, product.getPrice(), quantityToAdd);
 
-                                        databaseReference.child("Cart").child("Cart").child(product.getName())
-                                                .child("quantity").setValue(adapter.getCountQuantity());
+                                databaseReference.child("Cart").child("Cart").child(product.getName())
+                                        .child("quantity").setValue(adapter.getCountQuantity());
 
-                                        dialog.dismiss();
+                                dialog.dismiss();
 
-                                    }else{
+                            } else {
 
-                                        int quantityToDelete = quantity - adapter.getCountQuantity();
-                                        decreaseTotalPrice(totalPrice,product.getPrice(),quantityToDelete);
+                                int quantityToDelete = quantity - adapter.getCountQuantity();
+                                decreaseTotalPrice(totalPrice, product.getPrice(), quantityToDelete);
 
-                                        databaseReference.child("Cart").child("Cart").child(product.getName())
-                                                .child("quantity").setValue(adapter.getCountQuantity());
+                                databaseReference.child("Cart").child("Cart").child(product.getName())
+                                        .child("quantity").setValue(adapter.getCountQuantity());
 
-                                        dialog.dismiss();
+                                dialog.dismiss();
 
-                                    }
-                            /*
-                            double totalPriceDecrease = dataSnapshot
-                                    .child("totalPrice").getValue(Double.class) - product.getPrice();
-
-                            totalPriceDecrease = Math.round(totalPriceDecrease * 100.0) / 100.0;
-                            databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
-
-                            Log.v("Quantity", String.valueOf(adapter.getCountQuantity()));
-                            Log.v("Mappa Nel Cart",mapToPut.toString());
-                            */
-                                }
+                            }
+                        }
                     });
 
                     alertProduct.show();
 
                 } else {
 
-                     /*
-                    if (dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue() == null) {
 
-                        return;
+                    databaseReference.child("Cart").child("Cart").child(product.getName())
+                            .child("quantity").setValue(dataSnapshot.child("Cart")
+                            .child(product.getName()).child("quantity").getValue(Integer.class) - 1);
 
-                    } else if (dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class) <= 1) {
-
-                        databaseReference.child("Cart").child("Cart").child(product.getName()).removeValue();
-
-                    } else {
-
-                    */
-                        databaseReference.child("Cart").child("Cart").child(product.getName())
-                                .child("quantity").setValue(dataSnapshot.child("Cart")
-                                .child(product.getName()).child("quantity").getValue(Integer.class) - 1);
-
-                        double totalPriceDecrease = dataSnapshot
-                                .child("totalPrice").getValue(Double.class) - product.getPrice();
-                          totalPriceDecrease = Math.round(totalPriceDecrease * 100.0) / 100.0;
-                          databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
-
-                    }/*
                     double totalPriceDecrease = dataSnapshot
                             .child("totalPrice").getValue(Double.class) - product.getPrice();
                     totalPriceDecrease = Math.round(totalPriceDecrease * 100.0) / 100.0;
                     databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
-                    */
+
                 }
+            }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
         });
 
     }
 
-    public void setProductVideogame(final Videogame videogame, final String platform,final int quantity){
+    public void setProductVideogame ( final Videogame videogame, final String platform, final int quantity ) {
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             private double totalPrice;
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange ( DataSnapshot dataSnapshot ) {
 
                 if (!dataSnapshot.child("Cart").child("Cart").hasChild(videogame.getName())) {
 
-                    HashMap<String,Integer> mapToCart = new HashMap<>();
+                    HashMap<String, Integer> mapToCart = new HashMap<>();
 
-                    mapToCart.put(platform,quantity);
+                    mapToCart.put(platform, quantity);
 
                     databaseReference.child("Cart").child("Cart").child(videogame.getName()).setValue(videogame);
                     databaseReference.child("Cart").child("Cart").child(videogame.getName()).child("platforms").setValue(mapToCart);
@@ -230,7 +202,7 @@ public class Cart {
                     } else {
 
                         totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                        setTotalPrice(totalPrice,videogame.getPrice(),quantity);
+                        setTotalPrice(totalPrice, videogame.getPrice(), quantity);
 
                     }
                 } else {
@@ -239,57 +211,53 @@ public class Cart {
                             .setValue(dataSnapshot.child("Cart").child("Cart").child(videogame.getName()).child("quantity")
                                     .getValue(Integer.class) + quantity);
 
-
-                    HashMap<String,Integer> mapToCart = (HashMap<String, Integer>) dataSnapshot.child("Cart").child("Cart")
+                    HashMap<String, Integer> mapToCart = (HashMap<String, Integer>) dataSnapshot.child("Cart").child("Cart")
                             .child(videogame.getName()).child("platforms").getValue();
 
                     Iterator iterator = mapToCart.entrySet().iterator();
                     int totalQuantity = quantity;
-                    while(iterator.hasNext()){
+                    while (iterator.hasNext()) {
 
+                        Map.Entry entry = (Map.Entry) iterator.next();
 
-                        Map.Entry entry = (Map.Entry)iterator.next();
-
-                        if(entry.getKey().equals(platform)){
+                        if (entry.getKey().equals(platform)) {
 
                             totalQuantity = (Integer.parseInt(entry.getValue().toString()) + quantity);
                         }
                     }
 
-                    mapToCart.put(platform,totalQuantity);
+                    mapToCart.put(platform, totalQuantity);
 
                     databaseReference.child("Cart").child("Cart").child(videogame.getName())
-                                .child("platforms").setValue(mapToCart);
+                            .child("platforms").setValue(mapToCart);
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                    setTotalPrice(totalPrice,videogame.getPrice(),quantity);
-
-
+                    setTotalPrice(totalPrice, videogame.getPrice(), quantity);
 
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
 
         });
     }
 
-    private void setTotalPrice(double totalPrice,double price,int quantity){
+    private void setTotalPrice ( double totalPrice, double price, int quantity ) {
 
 
-        double totalPriceCart = ((totalPrice) + (price*quantity));
-        double formatTotalPrice = Math.round(totalPriceCart*100.0)/100.0;
+        double totalPriceCart = ((totalPrice) + (price * quantity));
+        double formatTotalPrice = Math.round(totalPriceCart * 100.0) / 100.0;
 
         databaseReference.child("Cart").child("totalPrice").setValue(formatTotalPrice);
 
     }
 
-    private void decreaseTotalPrice (double totalPrice,double price,int quantity){
+    private void decreaseTotalPrice ( double totalPrice, double price, int quantity ) {
 
-        double totalPriceCart = ((totalPrice) - (price*quantity));
-        double formatTotalPrice = Math.round(totalPriceCart*100.0)/100.0;
+        double totalPriceCart = ((totalPrice) - (price * quantity));
+        double formatTotalPrice = Math.round(totalPriceCart * 100.0) / 100.0;
 
         databaseReference.child("Cart").child("totalPrice").setValue(formatTotalPrice);
 

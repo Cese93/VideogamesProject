@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.snapshot.DoubleNode;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
-import org.w3c.dom.Text;
 
 /**
  * Created by Marco on 16/11/2016.
@@ -43,7 +38,7 @@ public class CartFragment extends Fragment {
     private TextView txtProcessOrder;
     private Cart cart;
 
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.cart_fragment_layout, container, false);
 
         recyclerViewCart = (RecyclerView) v.findViewById(R.id.recyclerViewCart);
@@ -52,7 +47,7 @@ public class CartFragment extends Fragment {
 
         txtProcessOrder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick ( View v ) {
                 Intent intent = new Intent(getActivity(), OrderActivity.class);
                 intent.putExtra("TOTAL", txtTotalPrice.getText());
                 startActivity(intent);
@@ -69,7 +64,6 @@ public class CartFragment extends Fragment {
 
         cart = new Cart(firebaseAuth.getCurrentUser());
 
-
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
 
         cartAdapter = new FirebaseRecyclerAdapter<Product, CartViewHolder>(
@@ -81,16 +75,16 @@ public class CartFragment extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(final CartViewHolder viewHolder, final Product model, int position) {
+            protected void populateViewHolder ( final CartViewHolder viewHolder, final Product model, int position ) {
 
                 databaseReference.child("Cart").child("Cart").child(model.getName()).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange ( DataSnapshot dataSnapshot ) {
                         viewHolder.txtQuantity.setText(String.valueOf(dataSnapshot.child("quantity").getValue()));
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled ( DatabaseError databaseError ) {
 
                     }
                 });
@@ -102,7 +96,7 @@ public class CartFragment extends Fragment {
                 viewHolder.txtPrice.setText("Prezzo x1: " + String.valueOf(model.getPrice() + "€"));
                 viewHolder.imgDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
 
                         cart.deleteProduct(model, getContext(), inflater);
 
@@ -114,7 +108,7 @@ public class CartFragment extends Fragment {
 
         databaseReference.child("Cart").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange ( DataSnapshot dataSnapshot ) {
 
                 if (dataSnapshot.child("totalPrice").getValue() == null) {
                     txtProcessOrder.setVisibility(View.INVISIBLE);
@@ -127,7 +121,7 @@ public class CartFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
         });
@@ -144,7 +138,7 @@ public class CartFragment extends Fragment {
         ImageView imgDelete;
         ImageView imageView;
 
-        public CartViewHolder(View itemView) {
+        public CartViewHolder ( View itemView ) {
             super(itemView);
             itemView.setSelected(true);
             txtName = (TextView) itemView.findViewById(R.id.txtTitle);

@@ -9,7 +9,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -51,10 +50,9 @@ public class AccessoryInfo extends Activity {
     private int totalRating;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accessoryinformation_layout);
-
 
         Intent intent = getIntent();
         accessory = (Accessory) intent.getSerializableExtra("Accessory");
@@ -70,22 +68,17 @@ public class AccessoryInfo extends Activity {
         numOfReview = (TextView) findViewById(R.id.numOfReview);
         btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
-
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory/" + accessory.getName());
-        //Creazione adapter per la recyclerView
-
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
 
             boolean isShow = false;
             int scrollRange = -1;
 
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            public void onOffsetChanged ( AppBarLayout appBarLayout, int verticalOffset ) {
 
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
@@ -102,7 +95,6 @@ public class AccessoryInfo extends Activity {
             }
         });
 
-
         Picasso.with(this).load(accessory.getImage()).resize(200, 200).into(cover);
         Picasso.with(this).load(accessory.getImageTitle()).resize(750, 400).into(imgTitle);
         features.setText(accessory.getFeatures());
@@ -111,17 +103,16 @@ public class AccessoryInfo extends Activity {
 
         databaseReference.addValueEventListener(new ValueEventListener() {
 
-
             @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                    communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
+            public void onDataChange ( final DataSnapshot dataSnapshot ) {
+                communityRating = Float.parseFloat(dataSnapshot.child("rating").getValue().toString());
 
                 totalRating = Integer.parseInt(dataSnapshot.child("totalRating").getValue().toString());
                 numOfReview.setText(totalRating + " valutazioni");
 
                 userRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
-                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    public void onRatingChanged ( RatingBar ratingBar, float rating, boolean fromUser ) {
 
                         communityRating = ((communityRating * totalRating) + userRatingBar.getRating()) / (totalRating + 1);
 
@@ -131,12 +122,11 @@ public class AccessoryInfo extends Activity {
 
                     }
                 });
-
                 communityRatingBar.setRating(Float.parseFloat(dataSnapshot.child("rating").getValue().toString()));
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled ( DatabaseError databaseError ) {
 
             }
         });
@@ -145,7 +135,7 @@ public class AccessoryInfo extends Activity {
 
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick ( View v ) {
                 snackbar.openSnackbar();
                 snackbar.getSnackbar().show();
             }
@@ -161,17 +151,17 @@ public class AccessoryInfo extends Activity {
         private ElegantNumberButton btnQuantity;
         private FirebaseAuth firebaseAuth;
 
-        public SnackbarManagement() {
+        public SnackbarManagement () {
         }
 
-        public void openSnackbar() {
+        public void openSnackbar () {
             firebaseAuth = FirebaseAuth.getInstance();
             snackbar = Snackbar.make(coordinatorLayout, "", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Aggiungi", new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick ( View view ) {
                             accessoryCart = new Cart(firebaseAuth.getCurrentUser());
-                            accessoryCart.addProduct(accessory, accessory.getName(),Integer.parseInt(btnQuantity.getNumber()),accessory.getPrice());
+                            accessoryCart.addProduct(accessory, accessory.getName(), Integer.parseInt(btnQuantity.getNumber()), accessory.getPrice());
                             Toast.makeText(AccessoryInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);
@@ -181,7 +171,7 @@ public class AccessoryInfo extends Activity {
             snackbarLayout.addView(snackView, 0);
         }
 
-        public Snackbar getSnackbar() {
+        public Snackbar getSnackbar () {
             return snackbar;
         }
     }

@@ -1,14 +1,11 @@
 package com.example.erik.videogamesproject;
 
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
@@ -23,10 +20,10 @@ import java.util.Map;
 public class MapAdapter extends BaseAdapter {
 
     private final ArrayList mData;
-    private Map<String,Integer> mapPlatforms;
+    private Map<String, Integer> mapPlatforms;
 
 
-    public MapAdapter(Map<String,Integer> map){
+    public MapAdapter ( Map<String, Integer> map ) {
 
         mData = new ArrayList();
         mData.addAll(map.entrySet());
@@ -34,41 +31,40 @@ public class MapAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount () {
         return mData.size();
     }
 
     @Override
-    public Map.Entry<String,Integer> getItem(int position) {
+    public Map.Entry<String, Integer> getItem ( int position ) {
         return (Map.Entry) mData.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId ( int position ) {
         return 0;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView ( final int position, View convertView, ViewGroup parent ) {
 
         final View result;
         final TextView textPlatform;
         final ElegantNumberButton quantity;
         Button button;
 
-        if(convertView == null){
+        if (convertView == null) {
 
-            result = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_alertdialog_listview, parent,false);
+            result = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_alertdialog_listview, parent, false);
 
-        }
-        else{
+        } else {
 
             result = convertView;
         }
 
-        Map.Entry<String,Integer> item = getItem(position);
+        Map.Entry<String, Integer> item = getItem(position);
 
-        textPlatform =  (TextView) result.findViewById(R.id.namePlatform);
+        textPlatform = (TextView) result.findViewById(R.id.namePlatform);
         quantity = (ElegantNumberButton) result.findViewById(R.id.quantityToDelete);
         button = (Button) result.findViewById(R.id.buttonAdapterConfirm);
 
@@ -76,33 +72,30 @@ public class MapAdapter extends BaseAdapter {
         quantity.setNumber(String.valueOf(item.getValue()));
 
 
-        button.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick ( View view ) {
 
                 mapPlatforms.put(textPlatform.getText().toString(), Integer.valueOf(quantity.getNumber()));
-
-
             }
         });
-
 
         return result;
     }
 
-    public Map<String,Integer> getMap(){
+    public Map<String, Integer> getMap () {
 
         return mapPlatforms;
 
     }
 
-    public int getCountQuantity(){
+    public int getCountQuantity () {
 
         Iterator iterator = mapPlatforms.entrySet().iterator();
         int countQuantity = 0;
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
 
-            Map.Entry entry = (Map.Entry)iterator.next();
+            Map.Entry entry = (Map.Entry) iterator.next();
 
             countQuantity = countQuantity + Integer.parseInt(entry.getValue().toString());
         }

@@ -2,10 +2,8 @@ package com.example.erik.videogamesproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,16 +11,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,20 +24,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -55,11 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView txtHeaderEmail;
     private ProgressDialog progressDialog;
 
-    private  TextView nameLastVideogame;
-    private  ImageView imageHome;
 
-
-    private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private StorageReference storageReference;
@@ -67,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate ( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Firebase.setAndroidContext(this);
@@ -76,10 +55,9 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
 
-        HomeFragment homeFragment = new  HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
         setFragment(homeFragment);
 
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/");
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         progressDialog = new ProgressDialog(this);
@@ -91,9 +69,6 @@ public class HomeActivity extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
         Toast.makeText(this, "Benvenuto " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-       // final ImageView imgCover = (ImageView) findViewById(R.id.imgCoverHome);
-
-
         //Inizializzazione NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
@@ -102,8 +77,7 @@ public class HomeActivity extends AppCompatActivity {
 
             //Metodo invocato dal click di un elemento del Drawer
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
+            public boolean onNavigationItemSelected ( MenuItem menuItem ) {
 
                 //Controlla se un elemento è cliccato o meno, se non lo è lo imposta a true
                 if (menuItem.isChecked()) menuItem.setChecked(true);
@@ -116,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     //Lancia il fragment relativo ai videogiochi
                     case R.id.home:
-                        HomeFragment homeFragment = new  HomeFragment();
+                        HomeFragment homeFragment = new HomeFragment();
                         setFragment(homeFragment);
                         return true;
                     case R.id.videogames:
@@ -159,13 +133,13 @@ public class HomeActivity extends AppCompatActivity {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
-            public void onDrawerClosed(View drawerView) {
+            public void onDrawerClosed ( View drawerView ) {
                 //Codice eseguito alla chiusura del Drawer
                 super.onDrawerClosed(drawerView);
             }
 
             @Override
-            public void onDrawerOpened(View drawerView) {
+            public void onDrawerOpened ( View drawerView ) {
                 //Codice eseguito all'apertura del Drawer
                 super.onDrawerOpened(drawerView);
                 imgProfile = (ImageView) findViewById(R.id.imgProfile);
@@ -173,15 +147,15 @@ public class HomeActivity extends AppCompatActivity {
                 txtHeaderEmail = (TextView) findViewById(R.id.txtHeaderEmail);
                 txtHeaderUsername.setText("Benvenuto " + user.getDisplayName());
                 txtHeaderEmail.setText(user.getEmail());
-                if(user.getPhotoUrl() == null){
+                if (user.getPhotoUrl() == null) {
                     imgProfile.setImageDrawable(getResources().getDrawable(R.drawable.profile1));
-                }else {
+                } else {
                     Picasso.with(HomeActivity.this).load(user.getPhotoUrl()).fit().centerCrop().into(imgProfile);
                 }
 
                 imgProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
                         startActivityForResult(intent, GALLERY_INTENT);
@@ -198,9 +172,8 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data ) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
@@ -210,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
             StorageReference filepath = storageReference.child("Photos").child(uri.getLastPathSegment());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                public void onSuccess ( UploadTask.TaskSnapshot taskSnapshot ) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
                     UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder().setPhotoUri(downloadUri).build();
                     user.updateProfile(userProfileChangeRequest);
@@ -224,25 +197,23 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //Metodo che server per settare un fragment, utilizzato nel navigation drawer quando si clicca su un elemento del menu
-    public void setFragment(Fragment fragment) {
+    public void setFragment ( Fragment fragment ) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu ( Menu menu ) {
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected ( MenuItem item ) {
         int id = item.getItemId();
 
-        if(id == R.id.search){
-          return true;
+        if (id == R.id.search) {
+            return true;
         }
 
         if (id == R.id.action_settings) {
