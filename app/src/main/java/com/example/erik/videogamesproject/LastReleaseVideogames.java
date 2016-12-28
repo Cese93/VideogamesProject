@@ -104,7 +104,7 @@ public class LastReleaseVideogames extends Fragment {
                     recyclerViewVideogames.setHasFixedSize(true);
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     //linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi videogiochi usciti in cima
-                    linearLayoutManager.setStackFromEnd(true);
+                    //linearLayoutManager.setStackFromEnd(true);
                     recyclerViewVideogames.setLayoutManager(linearLayoutManager);
 
                     databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames");
@@ -113,7 +113,7 @@ public class LastReleaseVideogames extends Fragment {
                             Videogame.class,
                             R.layout.videogames_row_layout,
                             ViewHolderVideogames.class,
-                            databaseReference.orderByKey()
+                            databaseReference.orderByChild("name").equalTo(newText)
 
                     ) {
                         @Override

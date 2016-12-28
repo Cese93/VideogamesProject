@@ -34,7 +34,8 @@ public class TopSellerConsole extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tabs_layout, container, false);
 
-        recyclerViewConsole = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
+
+
         recyclerViewConsole.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewConsole.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
