@@ -35,23 +35,23 @@ public class TopRatedAccessory extends Fragment {
         recyclerViewAccessory.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).build());
         recyclerViewAccessory.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);//Inversione della lista, in modo da avere gli ultimi accessoru usciti in cima la lista
+        linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerViewAccessory.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
-        accessoryAdapter = new FirebaseRecyclerAdapter<Accessory, LastReleaseAccessory.ViewHolderAccessory>(
+        accessoryAdapter = new FirebaseRecyclerAdapter<Accessory, ViewHolderAccessory>(
                 Accessory.class,
                 R.layout.accessory_row_layout,
-                LastReleaseAccessory.ViewHolderAccessory.class,
+                ViewHolderAccessory.class,
                 databaseReference.orderByChild("rating")
 
         ) {
             @Override
-            protected void populateViewHolder(LastReleaseAccessory.ViewHolderAccessory viewHolder, final Accessory model, final int position) {
+            protected void populateViewHolder(ViewHolderAccessory viewHolder, final Accessory model, final int position) {
                 Picasso.with(getContext()).load(model.getImage()).resize(200, 200).into(viewHolder.imgAccessory);
                 viewHolder.txtName.setText(model.getName().toString());
-                viewHolder.txtDeveloper.setText(model.getProducer().toString());
+                viewHolder.txtProducer.setText(model.getProducer().toString());
                 viewHolder.txtPrice.setText(String.valueOf(model.getPrice() + "€"));
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -72,22 +72,19 @@ public class TopRatedAccessory extends Fragment {
     }
 
     public static class ViewHolderAccessory extends RecyclerView.ViewHolder {
-
         TextView txtName;
         TextView txtProducer;
         TextView txtPrice;
         ImageView imgAccessory;
 
         public ViewHolderAccessory(View itemView) {
-
             super(itemView);
-
             itemView.setSelected(true);
 
             txtName = (TextView) itemView.findViewById(R.id.txtNameAccessory);
             txtProducer = (TextView) itemView.findViewById(R.id.txtProducerAccessory);
             txtPrice = (TextView) itemView.findViewById(R.id.txtPriceAccessory);
-            imgAccessory = (ImageView)itemView.findViewById(R.id.imgAccessory);
+            imgAccessory = (ImageView) itemView.findViewById(R.id.imgAccessory);
 
         }
     }

@@ -3,8 +3,6 @@ package com.example.erik.videogamesproject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Marco on 13/10/2016.
@@ -82,11 +80,11 @@ public class Videogame extends Product implements Serializable {
         this.trailer = trailer;
     }
 
-    public ArrayList<String> getLanguages () {
+    public ArrayList<String> getLanguages() {
         return languages;
     }
 
-    public void setLanguages ( ArrayList<String> languages ) {
+    public void setLanguages(ArrayList<String> languages) {
         this.languages = languages;
     }
 

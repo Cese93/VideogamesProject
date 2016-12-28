@@ -113,9 +113,6 @@ public class HomeActivity extends AppCompatActivity {
                         CartFragment cartFragment = new CartFragment();
                         setFragment(cartFragment);
                         return true;
-                    case R.id.trash:
-                        Toast.makeText(getApplicationContext(), "Trash Selected", Toast.LENGTH_SHORT).show();
-                        return true;
                     case R.id.logout:
                         firebaseAuth.signOut();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -210,20 +207,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected ( MenuItem item ) {
-        int id = item.getItemId();
-
-        if (id == R.id.search) {
-            return true;
-        }
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_logout) {
-            firebaseAuth.signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

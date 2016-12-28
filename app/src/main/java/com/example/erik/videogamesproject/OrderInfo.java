@@ -1,10 +1,7 @@
 package com.example.erik.videogamesproject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,8 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by erik_ on 12/12/2016.
@@ -63,7 +58,7 @@ public class OrderInfo extends Activity {
 
         position++;
 
-       productAdapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.two_line_list_item, databaseReference.child("Orders").child("orders").child("order " + position).child("products")) {
+        productAdapter = new FirebaseListAdapter<Product>(this, Product.class, android.R.layout.two_line_list_item, databaseReference.child("Orders").child("orders").child("order " + position).child("products")) {
             @Override
             protected void populateView(View v, final Product model, int position) {
                 TextView textView = (TextView) v.findViewById(android.R.id.text1);
@@ -72,7 +67,6 @@ public class OrderInfo extends Activity {
                 txtQuantity.setText("Quantità: " + String.valueOf(model.getQuantity()));
             }
         };
-
 
         databaseReference.child("Orders").child("orders").child("order " + position++).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,7 +88,6 @@ public class OrderInfo extends Activity {
 
             }
         });
-
 
         productsListView.setAdapter(productAdapter);
     }

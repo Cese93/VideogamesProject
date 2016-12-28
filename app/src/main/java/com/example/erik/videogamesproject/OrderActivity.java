@@ -1,16 +1,10 @@
 package com.example.erik.videogamesproject;
 
-
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,15 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -116,7 +102,7 @@ public class OrderActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("payments").exists()){
+                if (dataSnapshot.child("payments").exists()) {
                     txtCode.setText(dataSnapshot.child("payments").child("code").getValue().toString());
                     txtPIN.setText(dataSnapshot.child("payments").child("pin").getValue().toString());
                     txtMonthExpiredDate.setText(dataSnapshot.child("payments").child("expiredDate").child("month").getValue().toString());
@@ -126,17 +112,17 @@ public class OrderActivity extends AppCompatActivity {
                 }
                 txtName.setText(dataSnapshot.child("name").getValue().toString());
                 txtSurname.setText(dataSnapshot.child("surname").getValue().toString());
-                if(dataSnapshot.child("state").exists())
+                if (dataSnapshot.child("state").exists())
                     txtState.setText(dataSnapshot.child("state").getValue().toString());
-                if(dataSnapshot.child("region").exists())
+                if (dataSnapshot.child("region").exists())
                     txtRegion.setText(dataSnapshot.child("region").getValue().toString());
-                if(dataSnapshot.child("city").exists())
+                if (dataSnapshot.child("city").exists())
                     txtCity.setText(dataSnapshot.child("city").getValue().toString());
-                if(dataSnapshot.child("address").exists())
+                if (dataSnapshot.child("address").exists())
                     txtAddress.setText(dataSnapshot.child("address").getValue().toString());
-                if(dataSnapshot.child("streetNumber").exists())
+                if (dataSnapshot.child("streetNumber").exists())
                     txtStreetNumber.setText(dataSnapshot.child("streetNumber").getValue().toString());
-                if(dataSnapshot.child("cap").exists())
+                if (dataSnapshot.child("cap").exists())
                     txtCAP.setText(dataSnapshot.child("cap").getValue().toString());
 
 
@@ -147,7 +133,6 @@ public class OrderActivity extends AppCompatActivity {
 
             }
         });
-
 
         btnProceedToRecap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,20 +157,20 @@ public class OrderActivity extends AppCompatActivity {
                     txtPIN.setError("Inserire il PIN");
                     return;
                 }
-                if(txtYearExpiredDate.getText().toString().trim().isEmpty() || !isNumber(yearExpiredDate)) {
+                if (txtYearExpiredDate.getText().toString().trim().isEmpty() || !isNumber(yearExpiredDate)) {
                     Toast.makeText(getBaseContext(), "Errore! Inserire l'anno di scadenza della propria carta", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(txtMonthExpiredDate.getText().toString().trim().isEmpty() || !isNumber(monthExpiredDate) ||
-                        Integer.parseInt(monthExpiredDate) < 1 || Integer.parseInt(monthExpiredDate) > 12){
+                if (txtMonthExpiredDate.getText().toString().trim().isEmpty() || !isNumber(monthExpiredDate) ||
+                        Integer.parseInt(monthExpiredDate) < 1 || Integer.parseInt(monthExpiredDate) > 12) {
                     Toast.makeText(getBaseContext(), "Errore! Inserire il mese di scadenza della propria carta", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(name.isEmpty()){
+                if (name.isEmpty()) {
                     txtName.setError("Inserire il nome");
                     return;
                 }
-                if(surname.isEmpty()){
+                if (surname.isEmpty()) {
                     txtSurname.setError("Inserire il cognome");
                     return;
                 }
@@ -224,8 +209,6 @@ public class OrderActivity extends AppCompatActivity {
                 paymentCard.setPin(Integer.parseInt(pin));
                 paymentCard.setExpiredDate(expiredDate);
                 databaseReference.child("payments").setValue(paymentCard);
-                //databaseReference.child("payments").child("expiredDate").child("year").setValue(yearExpiredDate);
-                //databaseReference.child("payments").child("expiredDate").child("month").setValue(monthExpiredDate);
                 databaseReference.child("name").setValue(name);
                 databaseReference.child("surname").setValue(surname);
                 databaseReference.child("state").setValue(state);
@@ -234,7 +217,6 @@ public class OrderActivity extends AppCompatActivity {
                 databaseReference.child("address").setValue(address);
                 databaseReference.child("streetNumber").setValue(streetNumber);
                 databaseReference.child("cap").setValue(cap);
-
 
                 Intent intent = new Intent(getBaseContext(), CompleteOrderActivity.class);
                 startActivity(intent);

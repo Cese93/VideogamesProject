@@ -1,35 +1,24 @@
 package com.example.erik.videogamesproject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Erik on 10/10/2016.
@@ -71,15 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
         usernameText = (EditText) findViewById(R.id.txtRegisterUsername);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
-
-
         rootRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User");
-
         firebaserAuth = FirebaseAuth.getInstance();
 
-
         progressDialog = new ProgressDialog(this);
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void clickRegister() {
 
         name = nameText.getText().toString().trim();
-        surname  = surnameText.getText().toString().trim();
+        surname = surnameText.getText().toString().trim();
         email = emailText.getText().toString().trim();
         password = passwordText.getText().toString().trim();
         confirmPassword = confirmPasswordText.getText().toString().trim();
@@ -124,29 +108,26 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-       rootRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
-           @Override
-           public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+        rootRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
 
-               if(dataSnapshot.hasChild(username)){
+                if (dataSnapshot.hasChild(username)) {
+                    Toast.makeText(RegisterActivity.this, "Username Gia inserito", Toast.LENGTH_LONG).show();
+                } else {
+                    saveUser();
+                }
+            }
 
-                   Log.v("Usernameee Ugualeeee",username);
-                   Toast.makeText(RegisterActivity.this,"Username Gia inserito",Toast.LENGTH_LONG).show();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-               }else{
-                   saveUser();
-               }
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       });
+            }
+        });
 
     }
 
-    public void saveUser(){
+    public void saveUser() {
 
         progressDialog.setMessage("Registrazione...");
         progressDialog.show();

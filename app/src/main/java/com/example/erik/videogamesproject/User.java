@@ -1,9 +1,5 @@
 package com.example.erik.videogamesproject;
 
-import java.util.ArrayList;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by Marco on 16/10/2016.
  */
@@ -23,8 +19,8 @@ public class User {
     private int CAP;
     private Card payments;
 
-
-    User(){}
+    User() {
+    }
 
     public String getName() {
         return name;
@@ -42,7 +38,9 @@ public class User {
         return password;
     }
 
-    public String getUsername(){ return username; }
+    public String getUsername() {
+        return username;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -60,7 +58,9 @@ public class User {
         this.password = password;
     }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getState() {
         return state;

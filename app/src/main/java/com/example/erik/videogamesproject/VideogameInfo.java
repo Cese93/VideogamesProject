@@ -31,10 +31,8 @@ import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * Created by Marco on 26/10/2016.
@@ -87,10 +85,7 @@ public class VideogameInfo extends YouTubeBaseActivity {
         genres = (TextView) findViewById(R.id.txtGenres);
         consoleAvailable = (TextView) findViewById(R.id.txtConsoleAvaible);
         btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
-
-
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Videogames/" + videogame.getName());
-        //Creazione adapter per la recyclerView
 
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
 
@@ -134,14 +129,10 @@ public class VideogameInfo extends YouTubeBaseActivity {
         };
 
         youTubePlayerView.initialize("AIzaSyABeoS0O_2ZG4kVb-6CcxWbCFHS1ys8LSo", onInitializedListener);
-
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-
 
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
-
             boolean isShow = false;
             int scrollRange = -1;
 
@@ -163,21 +154,15 @@ public class VideogameInfo extends YouTubeBaseActivity {
             }
         });
 
-
         Picasso.with(this).load(videogame.getImage()).resize(200, 300).into(cover);
         Picasso.with(this).load(videogame.getImageTitle()).resize(800, 400).into(imgTitle);
-
-
         plot.setText(videogame.getPlot());
-
         development.setText(videogame.getDeveloper());
         price.setText(String.valueOf(videogame.getPrice()) + "€");
         publisher.setText(videogame.getPublishers());
 
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = new GregorianCalendar(videogame.getReleaseDate().getYear(), videogame.getReleaseDate().getMonth(), videogame.getReleaseDate().getDate());
-
         releaseDate.setText(simpleDateFormat.format(calendar.getTime()));
         genres.setText(videogame.getGenres());
 
@@ -210,11 +195,8 @@ public class VideogameInfo extends YouTubeBaseActivity {
                 userRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
                         communityRating = ((communityRating * totalRating) + userRatingBar.getRating()) / (totalRating + 1);
-
                         databaseReference.child("totalRating").setValue(totalRating + 1);
-
                         databaseReference.child("rating").setValue(communityRating);
 
                     }
@@ -230,7 +212,6 @@ public class VideogameInfo extends YouTubeBaseActivity {
         });
 
         final SnackbarManagement snackbar = new SnackbarManagement();
-
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,14 +223,12 @@ public class VideogameInfo extends YouTubeBaseActivity {
 
 
     private class SnackbarManagement {
-
         private Snackbar.SnackbarLayout snackbarLayout;
         private Snackbar snackbar;
         private View snackView;
         private ElegantNumberButton btnQuantity;
         private Spinner consoleSpinner;
         private FirebaseAuth firebaseAuth;
-        List<Videogame> producCart;
 
         public SnackbarManagement() {
         }
@@ -263,9 +242,8 @@ public class VideogameInfo extends YouTubeBaseActivity {
                         @Override
                         public void onClick(View view) {
                             videogameCart = new Cart(firebaseAuth.getCurrentUser());
-                           // videogameCart.addProduct(videogame, videogame.getName(),Integer.parseInt(btnQuantity.getNumber()), videogame.getPrice());
-                            videogameCart.setProductVideogame(videogame,consoleSpinner.getSelectedItem().toString(),
-                                             Integer.parseInt(btnQuantity.getNumber()));
+                            videogameCart.setProductVideogame(videogame, consoleSpinner.getSelectedItem().toString(),
+                                    Integer.parseInt(btnQuantity.getNumber()));
                             Toast.makeText(VideogameInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);

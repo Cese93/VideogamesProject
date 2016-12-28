@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home">
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:checked="false"
+                android:icon="@drawable/home"
+                android:title="Home" />
+        </menu>
+    </item>
+
     <item android:title="Prodotti">
         <menu>
 
             <item
-             android:id="@+id/home"
-             android:checked="false"
-             android:icon="@drawable/videogames"
-             android:title="Home" />
+                android:id="@+id/videogames"
+                android:checked="false"
+                android:icon="@drawable/videogames"
+                android:title="Videogiochi" />
 
             <item
-            android:id="@+id/videogames"
-            android:checked="false"
-            android:icon="@drawable/videogames"
-            android:title="Videogiochi" />
+                android:id="@+id/console"
+                android:checked="false"
+                android:icon="@drawable/console"
+                android:title="Console" />
 
             <item
-            android:id="@+id/console"
-            android:checked="false"
-            android:icon="@drawable/console"
-            android:title="Console"
-                />
-
-            <item
-            android:id="@+id/accessory"
-            android:checked="false"
-            android:icon="@drawable/headset"
-            android:title="Accessori" />
+                android:id="@+id/accessory"
+                android:checked="false"
+                android:icon="@drawable/headset"
+                android:title="Accessori" />
 
         </menu>
     </item>
@@ -34,34 +37,25 @@
     <item android:title="I miei ordini">
         <menu>
 
-        <item
-            android:id="@+id/myOrder"
-            android:checked="false"
-            android:icon="@drawable/myorder"
-            android:title="I miei ordini" />
+            <item
+                android:id="@+id/myOrder"
+                android:checked="false"
+                android:icon="@drawable/myorder"
+                android:title="I miei ordini" />
 
-        <item
-            android:id="@+id/cart"
-            android:checked="false"
-            android:icon="@drawable/cart"
-            android:title="Carrello" />
+            <item
+                android:id="@+id/cart"
+                android:checked="false"
+                android:icon="@drawable/cart"
+                android:title="Carrello" />
         </menu>
     </item>
 
-    <item android:title="Impostazioni account">
-        <menu>
-        <item
-            android:id="@+id/trash"
-            android:checked="false"
-            android:icon="@drawable/settings"
-            android:title="Impostazioni" />
-        <item
-            android:id="@+id/logout"
-            android:checked="false"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
-            </menu>
-        </item>
+    <item
+        android:id="@+id/logout"
+        android:checked="false"
+        android:icon="@drawable/logout"
+        android:title="Logout" />
 
 
 </menu>

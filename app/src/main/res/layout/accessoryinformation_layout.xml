@@ -82,8 +82,6 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         app:layout_anchorGravity="bottom|left|end"
-                        app:srcCompat="@drawable/android_black"
-
                         />
 
                     <LinearLayout

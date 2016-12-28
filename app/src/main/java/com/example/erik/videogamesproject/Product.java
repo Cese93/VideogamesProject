@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by erik_ on 17/11/2016.
  */
 
-public class Product implements Serializable{
+public class Product implements Serializable {
     private String name;
     private double price;
     private double rating;
@@ -17,7 +17,6 @@ public class Product implements Serializable{
 
 
     public Product() {
-
     }
 
     public String getName() {
@@ -60,19 +59,19 @@ public class Product implements Serializable{
         this.imageTitle = imageTitle;
     }
 
-    public int getSoldQuantity () {
+    public int getSoldQuantity() {
         return soldQuantity;
     }
 
-    public void setSoldQuantity ( int soldQuantity ) {
+    public void setSoldQuantity(int soldQuantity) {
         this.soldQuantity = soldQuantity;
     }
 
-    public int getQuantity () {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity ( int quantity ) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
