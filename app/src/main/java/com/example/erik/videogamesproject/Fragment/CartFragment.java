@@ -15,6 +15,7 @@ import com.example.erik.videogamesproject.Model.Cart;
 import com.example.erik.videogamesproject.Model.Product;
 import com.example.erik.videogamesproject.Activity.OrderActivity;
 import com.example.erik.videogamesproject.R;
+import com.firebase.client.snapshot.DoubleNode;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -114,12 +115,11 @@ public class CartFragment extends Fragment {
             @Override
             public void onDataChange ( DataSnapshot dataSnapshot ) {
 
-                if (dataSnapshot.child("totalPrice").getValue() == null) {
+                if (Double.parseDouble(dataSnapshot.child("totalPrice").getValue().toString()) == 0) {
                     txtProcessOrder.setVisibility(View.INVISIBLE);
+                    txtTotalPrice.setVisibility(View.INVISIBLE);
                     return;
-
                 } else {
-
                     txtTotalPrice.setText("Prezzo totale:" + dataSnapshot.child("totalPrice").getValue());
                 }
             }
