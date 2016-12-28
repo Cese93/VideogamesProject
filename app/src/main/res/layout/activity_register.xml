@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingLeft="40dp"
     android:paddingRight="40dp">
 
@@ -9,53 +10,60 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterName"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/txtRegisterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:hint="Nome" />
+            android:hint="Nome"
+            android:inputType="textCapWords" />
     </android.support.design.widget.TextInputLayout>
-
 
     <!-- Cognome Label -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterSurname"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+        <EditText
+            android:id="@+id/txtRegisterSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:hint="Cognome"/>
+            android:hint="Cognome"
+            android:inputType="textCapWords" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Email label  -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterEmail"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+        <EditText
+            android:id="@+id/txtRegisterEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="Email"/>
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- username label -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterUsername"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+        <EditText
+            android:id="@+id/txtRegisterUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:hint="Username"/>
+            android:hint="Username"
+            android:inputType="textCapWords" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Password label -->
@@ -63,26 +71,30 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterPassword"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+        <EditText
+            android:id="@+id/txtRegisterPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Password"/>
+            android:hint="Password"
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- confirm password -->
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp">
-        <EditText android:id="@+id/txtRegisterConfirmPassword"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp">
+
+        <EditText
+            android:id="@+id/txtRegisterConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Conferma Password"/>
+            android:hint="Conferma Password"
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -93,6 +105,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:padding="12dp"
-        android:text="Conferma"/>
+        android:text="Conferma" />
 
 </LinearLayout>

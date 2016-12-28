@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"
+        <activity android:name=".Activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,28 +17,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
+        <activity android:name=".Activity.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".Activity.HomeActivity" />
 
-        <activity android:name=".VideogameInfo"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".ConsoleInfo"
+        <activity android:name=".Activity.VideogameInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".AccessoryInfo"
+        <activity android:name=".Activity.ConsoleInfo"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".OrderActivity"
+        <activity android:name=".Activity.AccessoryInfo"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".Activity.OrderActivity"
             android:label="Ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".CompleteOrderActivity"
+        <activity android:name=".Activity.CompleteOrderActivity"
             android:label="Completa il tuo ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".OrderInfo"
+        <activity android:name=".Activity.OrderInfoActivity"
             android:label="Il mio ordine"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

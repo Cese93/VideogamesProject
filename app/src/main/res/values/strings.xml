@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VideogamesProject</string>
+    <string name="app_name">GamerShop</string>
     <string name="openDrawer">Open drawer</string>
     <string name="closeDrawer">Close drawer</string>
 </resources>
