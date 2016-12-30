@@ -3,6 +3,7 @@ package com.example.erik.videogamesproject.Model;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -33,7 +34,7 @@ public class Cart {
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/User/" + user.getDisplayName());
     }
 
-    public void addProduct (final Product product, final String name, final int quantity, final double price ) {
+    public void addProduct (final Product product,final int quantity) {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             private double totalPrice;
@@ -41,26 +42,26 @@ public class Cart {
             @Override
             public void onDataChange ( DataSnapshot dataSnapshot ) {
 
-                if (dataSnapshot.child("Cart").child("Cart").hasChild(name)) {
+                if (dataSnapshot.child("Cart").child("Cart").hasChild(product.getName())) {
 
-                    databaseReference.child("Cart").child("Cart").child(name).child("quantity")
-                            .setValue(dataSnapshot.child("Cart").child("Cart").child(name).child("quantity")
+                    databaseReference.child("Cart").child("Cart").child(product.getName()).child("quantity")
+                            .setValue(dataSnapshot.child("Cart").child("Cart").child(product.getName()).child("quantity")
                                     .getValue(Integer.class) + quantity);
 
 
                     totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                    setTotalPrice(totalPrice, price, quantity);
+                    setTotalPrice(totalPrice, product.getPrice(), quantity);
 
 
                 } else {
 
-                    databaseReference.child("Cart").child("Cart").child(name).setValue(product);
-                    databaseReference.child("Cart").child("Cart").child(name).child("quantity").setValue(quantity);
+                    databaseReference.child("Cart").child("Cart").child(product.getName()).setValue(product);
+                    databaseReference.child("Cart").child("Cart").child(product.getName()).child("quantity").setValue(quantity);
 
 
                     if (dataSnapshot.child("Cart").child("totalPrice").getValue() == null) {
 
-                        double totalPriceCart = (price * quantity);
+                        double totalPriceCart = (product.getPrice() * quantity);
 
                         databaseReference.child("Cart").child("totalPrice").setValue(totalPriceCart);
 
@@ -68,7 +69,7 @@ public class Cart {
 
 
                         totalPrice = dataSnapshot.child("Cart").child("totalPrice").getValue(Double.class);
-                        setTotalPrice(totalPrice, price, quantity);
+                        setTotalPrice(totalPrice, product.getPrice(), quantity);
                     }
                 }
             }
@@ -89,88 +90,89 @@ public class Cart {
             @Override
             public void onDataChange ( final DataSnapshot dataSnapshot ) {
 
-                if (dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue() == null ||
+                if (Integer.parseInt(dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue().toString()) == 0 ||
                         dataSnapshot.child("Cart").child(product.getName()).child("quantity").getValue(Integer.class) <= 0) {
 
                     databaseReference.child("Cart").child("Cart").child(product.getName()).removeValue();
 
                 } else if (dataSnapshot.child("Cart").child(product.getName()).hasChild("platforms")) {
 
+                        final View alertLayout = inflater.inflate(R.layout.alertdialog_videogame, null);
+                        final AlertDialog.Builder alertProduct = new AlertDialog.Builder(context)
+                                .setTitle("Modifica la quantità");
 
-                    final View alertLayout = inflater.inflate(R.layout.alertdialog_videogame, null);
-                    final AlertDialog.Builder alertProduct = new AlertDialog.Builder(context)
-                            .setTitle("Modifica la quantità");
+                        alertProduct.setView(alertLayout);
 
-                    alertProduct.setView(alertLayout);
+                        final MapAdapter adapter = new MapAdapter((Map<String, Integer>) dataSnapshot.child("Cart").child(product.getName())
+                                .child("platforms").getValue());
 
-                    final MapAdapter adapter = new MapAdapter((Map<String, Integer>) dataSnapshot.child("Cart").child(product.getName())
-                            .child("platforms").getValue());
-
-                    alertProduct.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick ( final DialogInterface dialog, int which ) {
-
-                        }
-                    });
-
-                    alertProduct.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick ( final DialogInterface dialog, int which ) {
-
-                            Map<String, Integer> mapToPut = adapter.getMap();
-
-                            databaseReference.child("Cart").child("Cart").child(product.getName())
-                                    .child("platforms").setValue(mapToPut);
-
-                            double totalPrice = dataSnapshot.child("totalPrice").getValue(Double.class);
-                            int quantity = dataSnapshot.child("Cart")
-                                    .child(product.getName()).child("quantity").getValue(Integer.class);
-
-                            if ((adapter.getCountQuantity() - quantity) <= 0) {
-
-                                int quantityToAdd = adapter.getCountQuantity() - quantity;
-                                setTotalPrice(totalPrice, product.getPrice(), quantityToAdd);
-
-                                databaseReference.child("Cart").child("Cart").child(product.getName())
-                                        .child("quantity").setValue(adapter.getCountQuantity());
-
-                                dialog.dismiss();
-
-                            } else {
-
-                                int quantityToDelete = quantity - adapter.getCountQuantity();
-                                decreaseTotalPrice(totalPrice, product.getPrice(), quantityToDelete);
-
-                                databaseReference.child("Cart").child("Cart").child(product.getName())
-                                        .child("quantity").setValue(adapter.getCountQuantity());
-
-                                dialog.dismiss();
+                        alertProduct.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick ( final DialogInterface dialog, int which ) {
 
                             }
+                        });
+
+                        alertProduct.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick ( final DialogInterface dialog, int which ) {
+
+                        Map<String, Integer> mapToPut = adapter.getMap();
+
+                        databaseReference.child("Cart").child("Cart").child(product.getName())
+                                .child("platforms").setValue(mapToPut);
+
+                        double totalPrice = dataSnapshot.child("totalPrice").getValue(Double.class);
+                        int quantity = dataSnapshot.child("Cart")
+                                .child(product.getName()).child("quantity").getValue(Integer.class);
+
+                        if ((adapter.getCountQuantity() - quantity) <= 0) {
+
+                            int quantityToAdd = adapter.getCountQuantity() - quantity;
+                            setTotalPrice(totalPrice, product.getPrice(), quantityToAdd);
+
+                            databaseReference.child("Cart").child("Cart").child(product.getName())
+                                    .child("quantity").setValue(adapter.getCountQuantity());
+
+                            dialog.dismiss();
+
+                        } else {
+
+                            int quantityToDelete = quantity - adapter.getCountQuantity();
+                            decreaseTotalPrice(totalPrice, product.getPrice(), quantityToDelete);
+
+                            databaseReference.child("Cart").child("Cart").child(product.getName())
+                                    .child("quantity").setValue(adapter.getCountQuantity());
+
+                            dialog.dismiss();
+
                         }
-                    });
+                    }
+                });
 
-                    alertProduct.show();
+                alertProduct.show();
 
-                } else {
+            } else {
 
 
-                    databaseReference.child("Cart").child("Cart").child(product.getName())
-                            .child("quantity").setValue(dataSnapshot.child("Cart")
-                            .child(product.getName()).child("quantity").getValue(Integer.class) - 1);
+                databaseReference.child("Cart").child("Cart").child(product.getName())
+                        .child("quantity").setValue(dataSnapshot.child("Cart")
+                        .child(product.getName()).child("quantity").getValue(Integer.class) - 1);
 
-                    double totalPriceDecrease = dataSnapshot
-                            .child("totalPrice").getValue(Double.class) - product.getPrice();
-                    totalPriceDecrease = Math.round(totalPriceDecrease * 100.0) / 100.0;
-                    databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
+                double totalPriceDecrease = dataSnapshot
+                        .child("totalPrice").getValue(Double.class) - product.getPrice();
+                totalPriceDecrease = Math.round(totalPriceDecrease * 100.0) / 100.0;
+                databaseReference.child("Cart").child("totalPrice").setValue(totalPriceDecrease);
 
-                }
-            }
-
-            @Override
-            public void onCancelled ( DatabaseError databaseError ) {
 
             }
+
+        }
+
+        @Override
+        public void onCancelled ( DatabaseError databaseError ) {
+
+        }
         });
 
     }
@@ -246,7 +248,7 @@ public class Cart {
         });
     }
 
-    private void setTotalPrice ( double totalPrice, double price, int quantity ) {
+    public void setTotalPrice ( double totalPrice, double price, int quantity ) {
 
 
         double totalPriceCart = ((totalPrice) + (price * quantity));
@@ -256,7 +258,7 @@ public class Cart {
 
     }
 
-    private void decreaseTotalPrice ( double totalPrice, double price, int quantity ) {
+    public void decreaseTotalPrice ( double totalPrice, double price, int quantity ) {
 
         double totalPriceCart = ((totalPrice) - (price * quantity));
         double formatTotalPrice = Math.round(totalPriceCart * 100.0) / 100.0;

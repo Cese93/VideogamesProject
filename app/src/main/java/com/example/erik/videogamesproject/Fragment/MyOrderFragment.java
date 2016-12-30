@@ -31,7 +31,7 @@ public class MyOrderFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.my_order_fragment_layout, container, false);
 
         ordersRecyclerView = (RecyclerView) v.findViewById(R.id.ordersRecyclerView);
@@ -50,12 +50,12 @@ public class MyOrderFragment extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(final ViewHolderOrders viewHolder, final Order model, final int position) {
+            protected void populateViewHolder ( final ViewHolderOrders viewHolder, final Order model, final int position ) {
                 viewHolder.txtOrderDate.setText(model.getOrderDate());
                 viewHolder.txtTotalPrice.setText(String.valueOf(model.getTotal()) + "€");
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getContext(), OrderInfoActivity.class);
                         intent.putExtra("POSITION", position);
                         startActivity(intent);
@@ -73,7 +73,7 @@ public class MyOrderFragment extends Fragment {
         TextView txtOrderDate;
         TextView txtTotalPrice;
 
-        public ViewHolderOrders(View itemView) {
+        public ViewHolderOrders ( View itemView ) {
             super(itemView);
             itemView.setSelected(true);
             txtOrderDate = (TextView) itemView.findViewById(R.id.txtOrderDate);

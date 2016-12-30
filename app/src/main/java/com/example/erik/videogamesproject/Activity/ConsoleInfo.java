@@ -174,7 +174,7 @@ public class ConsoleInfo extends Activity {
                         @Override
                         public void onClick ( View view ) {
                             consoleCart = new Cart(firebaseAuth.getCurrentUser());
-                            consoleCart.addProduct(console, console.getName(), Integer.parseInt(btnQuantity.getNumber()), console.getPrice());
+                            consoleCart.addProduct(console, Integer.parseInt(btnQuantity.getNumber()));
                             Toast.makeText(ConsoleInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);

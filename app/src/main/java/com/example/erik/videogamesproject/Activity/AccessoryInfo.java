@@ -164,7 +164,7 @@ public class AccessoryInfo extends Activity {
                         @Override
                         public void onClick ( View view ) {
                             accessoryCart = new Cart(firebaseAuth.getCurrentUser());
-                            accessoryCart.addProduct(accessory, accessory.getName(), Integer.parseInt(btnQuantity.getNumber()), accessory.getPrice());
+                            accessoryCart.addProduct(accessory, Integer.parseInt(btnQuantity.getNumber()));
                             Toast.makeText(AccessoryInfo.this, "Prodotto aggiunto nel carrello", Toast.LENGTH_SHORT).show();
                         }
                     }).setActionTextColor(Color.WHITE);

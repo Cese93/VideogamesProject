@@ -33,7 +33,7 @@ public class TopSellerVideogames extends Fragment {
     private LinearLayoutManager linearLayoutManager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView ( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
         View v = inflater.inflate(R.layout.tabs_layout, container, false);
 
         recyclerViewVideogames = (RecyclerView) v.findViewById(R.id.recyclerViewTabs);
@@ -41,12 +41,12 @@ public class TopSellerVideogames extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit ( String query ) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange ( String newText ) {
 
                 videogamesAdapter.cleanup();
 
@@ -63,11 +63,11 @@ public class TopSellerVideogames extends Fragment {
                             Videogame.class,
                             R.layout.row_videogames_layout,
                             LastReleaseVideogames.ViewHolderVideogames.class,
-                            databaseReference.orderByChild("releaseDate/year")
+                            databaseReference.orderByChild("soldQuantity")
 
                     ) {
                         @Override
-                        protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position) {
+                        protected void populateViewHolder ( LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position ) {
                             Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                             viewHolder.txtTitle.setText(model.getName().toString());
                             viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -75,7 +75,7 @@ public class TopSellerVideogames extends Fragment {
                             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
-                                public void onClick(View v) {
+                                public void onClick ( View v ) {
                                     Intent intent = new Intent(getActivity(), VideogameInfo.class);
                                     intent.putExtra("Videogame", model);
                                     startActivity(intent);
@@ -102,7 +102,7 @@ public class TopSellerVideogames extends Fragment {
 
                     ) {
                         @Override
-                        protected void populateViewHolder(LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position) {
+                        protected void populateViewHolder ( LastReleaseVideogames.ViewHolderVideogames viewHolder, final Videogame model, final int position ) {
                             Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                             viewHolder.txtTitle.setText(model.getName().toString());
                             viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -110,7 +110,7 @@ public class TopSellerVideogames extends Fragment {
                             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
-                                public void onClick(View v) {
+                                public void onClick ( View v ) {
                                     Intent intent = new Intent(getActivity(), VideogameInfo.class);
                                     intent.putExtra("Videogame", model);
                                     startActivity(intent);
@@ -138,11 +138,11 @@ public class TopSellerVideogames extends Fragment {
                 Videogame.class,
                 R.layout.row_videogames_layout,
                 ViewHolderVideogames.class,
-                databaseReference.orderByChild("releaseDate/year")
+                databaseReference.orderByChild("soldQuantity")
 
         ) {
             @Override
-            protected void populateViewHolder(ViewHolderVideogames viewHolder, final Videogame model, final int position) {
+            protected void populateViewHolder ( ViewHolderVideogames viewHolder, final Videogame model, final int position ) {
                 Picasso.with(getContext()).load(model.getImage()).resize(150, 200).into(viewHolder.imgVideogame);
                 viewHolder.txtTitle.setText(model.getName().toString());
                 viewHolder.txtPublisher.setText(model.getPublishers().toString());
@@ -150,7 +150,7 @@ public class TopSellerVideogames extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onClick ( View v ) {
                         Intent intent = new Intent(getActivity(), VideogameInfo.class);
                         intent.putExtra("Videogame", model);
                         startActivity(intent);
@@ -171,7 +171,7 @@ public class TopSellerVideogames extends Fragment {
         TextView txtYear;
         ImageView imgVideogame;
 
-        public ViewHolderVideogames(View itemView) {
+        public ViewHolderVideogames ( View itemView ) {
             super(itemView);
             itemView.setSelected(true);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
