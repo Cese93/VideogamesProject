@@ -1,7 +1,5 @@
 package com.example.erik.videogamesproject.Fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.erik.videogamesproject.Adapter.MapAdapter;
 import com.example.erik.videogamesproject.Model.Cart;
 import com.example.erik.videogamesproject.Model.Product;
 import com.example.erik.videogamesproject.Activity.OrderActivity;
@@ -29,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
-
-import java.util.Map;
 
 
 /**
@@ -108,46 +103,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick ( View v ) {
 
-
-                       databaseReference.addValueEventListener(new ValueEventListener() {
-                           @Override
-                           public void onDataChange ( DataSnapshot dataSnapshot ) {
-
-                               if(dataSnapshot.child("Cart").child("Cart").child(model.getName()).hasChild("platforms")){
-
-
-                                   final View alertLayout = inflater.inflate(R.layout.alertdialog_videogame, null);
-                                   final AlertDialog.Builder alertProduct = new AlertDialog.Builder(getContext())
-                                           .setTitle("Modifica la quantità");
-
-                                   alertProduct.setView(alertLayout);
-
-                                   final MapAdapter adapter = new MapAdapter((Map<String, Integer>) dataSnapshot.child("Cart").child(model.getName())
-                                           .child("platforms").getValue());
-
-                                   alertProduct.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick ( final DialogInterface dialog, int which ) {
-
-                                       }
-                                   });
-
-
-
-                               }
-
-
-                           }
-
-                           @Override
-                           public void onCancelled ( DatabaseError databaseError ) {
-
-                           }
-                       });
-
-
-
-                      //  cart.deleteProduct(model, getContext(), inflater);
+                        cart.deleteProduct(model, getContext(), inflater);
 
                     }
                 });
