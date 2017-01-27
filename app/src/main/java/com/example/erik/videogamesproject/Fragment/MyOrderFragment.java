@@ -46,7 +46,7 @@ public class MyOrderFragment extends Fragment {
                 Order.class,
                 R.layout.row_my_order_list_layout,
                 ViewHolderOrders.class,
-                databaseReference.child("Orders").child("orders")
+                databaseReference.child("Orders").child("orders").orderByChild("orderDate")
 
         ) {
             @Override

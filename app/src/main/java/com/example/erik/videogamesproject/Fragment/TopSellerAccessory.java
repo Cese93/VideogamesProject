@@ -61,14 +61,14 @@ public class TopSellerAccessory extends Fragment {
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     linearLayoutManager.setReverseLayout(true);
                     linearLayoutManager.setStackFromEnd(true);
-                    recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerViewAccessory.setLayoutManager(linearLayoutManager);
 
                     databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
                     accessoryAdapter = new FirebaseRecyclerAdapter<Accessory, LastReleaseAccessory.ViewHolderAccessory>(
                             Accessory.class,
                             R.layout.row_accessory_layout,
                             LastReleaseAccessory.ViewHolderAccessory.class,
-                            databaseReference.orderByChild("releaseDate/year")
+                            databaseReference.orderByChild("soldQuantity")
 
                     ) {
                         @Override
@@ -101,7 +101,7 @@ public class TopSellerAccessory extends Fragment {
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     linearLayoutManager.setReverseLayout(true);
                     linearLayoutManager.setStackFromEnd(true);
-                    recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerViewAccessory.setLayoutManager(linearLayoutManager);
 
                     databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
                     accessoryAdapter = new FirebaseRecyclerAdapter<Accessory, LastReleaseAccessory.ViewHolderAccessory>(
@@ -144,14 +144,14 @@ public class TopSellerAccessory extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        recyclerViewAccessory.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewAccessory.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://videogamesproject-cfd9f.firebaseio.com/Accessory");
         accessoryAdapter = new FirebaseRecyclerAdapter<Accessory, LastReleaseAccessory.ViewHolderAccessory>(
                 Accessory.class,
                 R.layout.row_accessory_layout,
                 LastReleaseAccessory.ViewHolderAccessory.class,
-                databaseReference.orderByChild("releaseDate/year")
+                databaseReference.orderByChild("soldQuantity")
 
         ) {
             @Override

@@ -67,7 +67,7 @@ public class LastReleaseAccessory extends Fragment {
                             Accessory.class,
                             R.layout.row_accessory_layout,
                             ViewHolderAccessory.class,
-                            databaseReference.orderByChild("releaseDate/year")
+                            databaseReference
 
                     ) {
                         @Override
@@ -150,7 +150,7 @@ public class LastReleaseAccessory extends Fragment {
                 Accessory.class,
                 R.layout.row_accessory_layout,
                 ViewHolderAccessory.class,
-                databaseReference.orderByChild("releaseDate/year")
+                databaseReference
 
         ) {
             @Override
